@@ -15,7 +15,7 @@ ul{
     font-size: 0;
 }
 .wrapper{
-	background-image:url('../../img/homepage/bg.jpg');
+	background-image:url('../img/bg.jpg');
 
 background-repeat: no-repeat;   
 background-attachment: fixed; 
@@ -173,18 +173,23 @@ background-attachment: fixed;
 	line-height:60px;
 	font-size: 22px;
 	font-weight: bold;
-	padding-left: 20px;
+	/* padding-left: 20px; */
 	float:left;
+	position: relative;
+	left: 20px;
+	top: -530px;
 }
 .title li{
 	float: left;
 	margin-right:10px;
 	width: 110px;
+	
 }
 .title a{
 	display: block;
 	padding-right: 10px;
 	color: #7c808c;
+	
 }
 .title span{
 	display: inline-block;
@@ -194,6 +199,7 @@ background-attachment: fixed;
 	text-align: center;
 	background-color: #2b324e;
 	margin: -30px 6px 0 2px;
+	
 }
 .content{
 	margin:0 20px;
@@ -257,6 +263,9 @@ background-attachment: fixed;
 	margin-bottom: 5px;
 	background-color: #f3f3f3;
 	float: left;
+	position: relative;
+	left: 250px;
+	top: -530px;
 }
 .js li:nth-child(even){
 	margin-right: 0px;
@@ -326,17 +335,23 @@ background-attachment: fixed;
 }
 
 .parttwo{
-	height: 392px;
-	background-color: #fff;
-	margin: 10px 0;
+	font-size: 23px;
+	color: #22529a;
+	height: 60px;
+	line-height: 60px;
+	padding-left: 20px;
+	padding-right: 20px;
+	position: relative;
+	top: 20px;
+	left: -800px;
 }
 .parttwo h2{
 	font-size: 23px;
-	color: #22529a;
-	height:60px;
-	line-height:60px;
-	padding-left:20px;
-	padding-right:20px;
+	color: rgb(34, 82, 154);
+	height: 60px;
+	line-height: 60px;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 .parttwo h2 span:nth-child(1){
 	font-size: 14px;
@@ -347,6 +362,8 @@ background-attachment: fixed;
 	float: right;
 	height:60px;
 	line-height:60px;
+	position: relative;
+	left: 800px;
 }
 .parttwo h2 span:nth-child(2),.parttwo h2 span:nth-child(3),.parttwo h2 span:nth-child(4){
 	display: inline-block;
@@ -600,3 +617,4 @@ button span{
 	background-color: #2b324e;
 	margin: 25px 2px 0 2px;
 }
+
