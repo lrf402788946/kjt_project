@@ -1,24 +1,9 @@
 <template lang="html">
   <div id="schoolListPage">
     <div class="wrapper">
-      <menus></menus>
+      <headers></headers>
       <div class="main" style=" height:1364px !important;">
-        <div class="oneleft">
-          <ul>
-            <li>
-              <a href="#"><img src="${contextPath}/WebPages_170421/img/supermarket/keji.jpg" style="vertical-align: middle;" /> 商务分类</a>
-            </li>
-            <li><a href="${contextPath}/Supermarket/toEnterprisePage?storetype=GXYS">高校院所</a></li>
-            <li><a href="">科研院所</a></li>
-            <li><a href="${contextPath}/Supermarket/toEnterprisePage?storetype=QYJT">科技企业</a></li>
-            <li><a href="${contextPath}/Supermarket/toEnterprisePage?storetype=JGTT">机构团体</a></li>
-            <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=YJKF">研发服务</a></li>
-            <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=JSCG">技术成果</a></li>
-            <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=CXCP">创新产品</a></li>
-            <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=ZXFW">咨询服务</a></li>
-            <li><a href="${contextPath}/Talent/toTech">创新人才</a></li>
-          </ul>
-        </div>
+        <menus></menus>
         <div class="list">
           <div class="sou">
             <form class="sout" action="${contextPath}/Supermarket/search?type=ALL" method="post">
@@ -57,6 +42,18 @@
                 </div>
               </div>
               <!--差个分页-->
+              <b-pagination
+                style="padding-left: 30%;padding-top: 20px;"
+                v-model="currentPage"
+                :total-rows="200"
+                :limit="5"
+                :per-page="5"
+                @change="toSearch"
+                first-text="首页"
+                prev-text="<"
+                next-text=">"
+                last-text="末页"
+              ></b-pagination>
             </div>
           </div>
         </div>
@@ -66,11 +63,16 @@
 </template>
 
 <script>
+import headers from '@/components/headers.vue';
 import menus from '@/components/menus.vue';
 export default {
   name: 'schoolListPage',
+  metaInfo: {
+    title: '科技超时-高校院所',
+  },
   components: {
     menus,
+    headers,
   },
   data() {
     return {
@@ -78,26 +80,16 @@ export default {
         search: require('@/assets/img/search.jpg'),
         defalut_gif: require('@/assets/img/logo.gif'),
       },
+      currentPage: 1,
+      totalRow: 20,
+      skip: 0,
     };
   },
   computed: {},
   methods: {
-    tim() {
-      var date = new Date();
-      var seperator1 = '-';
-      var year = date.getFullYear();
-      var month = date.getMonth() + 1;
-      var strDate = date.getDate();
-      if (month >= 1 && month <= 9) {
-        month = '0' + month;
-      }
-      if (strDate >= 0 && strDate <= 9) {
-        strDate = '0' + strDate;
-      }
-      var mydate = new Date();
-      var myddy = mydate.getDay();
-      var weekday = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-      document.getElementById('days').innerHTML = year + seperator1 + month + seperator1 + strDate + '&nbsp;&nbsp;' + weekday[myddy];
+    toSearch(item) {
+      console.log('in function:');
+      console.log(item);
     },
   },
 };

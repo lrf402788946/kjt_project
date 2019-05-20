@@ -91,7 +91,9 @@ background-attachment: fixed;
 }
 /*ie*/
 .nav a:hover{
-	background-color: #215299;
+  background-color: #215299;
+  color: #fff !important;
+  text-decoration: none !important;
 }
 .main{
 	margin-top: 10px auto;

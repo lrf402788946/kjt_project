@@ -1,32 +1,21 @@
 <template lang="html">
   <div id="menus">
-    <div class="topbar">
-      <div class="some">
-        <div class="date" id="days"></div>
-        <div class="sign">
-          <a style="float:left;" href="${contextPath}/productUser/toindex?typeCode=0&kjcsType=0">注册</a>
-          <div style="float:left; color:#fff; margin-left:10px;">|</div>
-          <a style="float:left;" href="${contextPath}/productUser/toindex?typeCode=1&kjcsType=0">登录</a>
-        </div>
-      </div>
-    </div>
-    <div class="contents">
-      <div class="head">
-        <div class="logo">
-          <img :src="logo" />
-        </div>
-        <div class="nav">
-          <a href="${contextPath}/">首页</a>
-          <a href="${contextPath}/GovernmentAffairs">科技政务</a>
-          <a href="${contextPath}/Policy/findListByType?typeCode=ZHZDZC&pageNumber=1">科技政策</a>
-          <a href="${contextPath}/Supermarket">科技超市</a>
-          <a href="${contextPath}/Data/toindex">科技数据</a>
-          <a href="${contextPath}/Service/toInnovativeServices">创新服务</a>
-          <a href="${contextPath}/mapApply/getMap">创新资源</a>
-          <a href="${contextPath}/Talent/toTech">创新人才</a>
-          <a href="#this">创新联盟</a>
-        </div>
-      </div>
+    <div class="oneleft">
+      <ul>
+        <li>
+          <a href="#"><img :src="img.keji" style="vertical-align: middle;" /> 商务分类</a>
+        </li>
+        <li><a href="${contextPath}/Supermarket/toEnterprisePage?storetype=GXYS">高校院所</a></li>
+        <li><a href="">科研院所</a></li>
+        <li><a href="${contextPath}/Supermarket/toEnterprisePage?storetype=QYJT">科技企业</a></li>
+        <li><a href="${contextPath}/Supermarket/toEnterprisePage?storetype=JGTT">机构团体</a></li>
+        <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=YJKF">研发服务</a></li>
+        <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=JSCG">技术成果</a></li>
+        <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=CXCP">创新产品</a></li>
+        <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=ZXFW">咨询服务</a></li>
+        <li><a href="${contextPath}/Talent/toTech">创新人才</a></li>
+      </ul>
+      <slot></slot>
     </div>
   </div>
 </template>
@@ -37,7 +26,9 @@ export default {
   components: {},
   data() {
     return {
-      logo: require('@/assets/img/logo.png'),
+      img: {
+        keji: require('@a/img/keji.jpg'),
+      },
     };
   },
   computed: {},

@@ -122,7 +122,9 @@ background-attachment: fixed;
 }
 /*ie*/
 .nav a:hover{
-	background-color: #215299;
+  background-color: #215299;
+  color: #fff !important;
+  text-decoration: none !important;
 }
 .main{
 	margin-top: 10px auto;
@@ -194,7 +196,7 @@ select::-ms-expand{
 .listtitle{
 	height: 60px;
 	border-bottom:1px dashed #ccc; 
-	margin-left:20px;
+	
 	
 }
 .listtitle h2{

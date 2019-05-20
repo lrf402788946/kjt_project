@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+	<link rel="shortcut icon" href="favicon.ico"/>
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+    <title></title>
+
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0"> 
+    <link rel="stylesheet" href="${contextPath}/WebPages_170421/css/supermarket/productDetails.css">
+    <link rel="stylesheet" href="${contextPath}/WebPages_170421/css/supermarket/ProductsDetails2.css">
+	<link rel="stylesheet" type="text/css" href="${contextPath}/WebPages_170421/css/bootstrap/bootstrap-theme.css" />
+	<link rel="stylesheet" type="text/css" href="${contextPath}/WebPages_170421/css/bootstrap/bootstrap-theme.min.css" />
+	<link rel="stylesheet" type="text/css" href="${contextPath}/WebPages_170421/css/bootstrap/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="${contextPath}/WebPages_170421/css/bootstrap/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="${contextPath}/WebPages_170421/css/bootstrap/font-awesome.min.css" />
+    <script type="text/javascript" src="${contextPath}/WebPages_170421/js/jquery.SuperSlide2.js"></script>
+	
+
+	<script type="text/javascript" src="${contextPath}/WebPages_170421/js/jquery.js"></script>
+	<script type="text/javascript" src="${contextPath}/WebPages_170421/js/jquery.imgbox.pack.js"></script>
+    <script type="text/javascript" src="${contextPath}/WebPages_170421/js/supermarket/productDetails.js"></script>
+    <script type="text/javascript" src="${contextPath}/WebPages_170421/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="${contextPath}/WebPages_170421/js/jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="${contextPath}/WebPages_170421/js/zzsc.js"></script>
+    <script type="text/javascript" src="${contextPath}/WebPages_170421/js/jquery.tiny-draggble.js"></script>
+    <script type="text/javascript" src="${contextPath}/WebPages_170421/js/jquery.tiny-draggble.min.js"></script>
+    <script type="text/javascript">
+    	$('#item3').tinyDraggable({ exclude: '.exclude_me, input' });
+	</script>
+	<script type="text/javascript">
+
+	</script>
+	<%if(msg!'' == 1){%>  
+		<script>
+			alert('交易申请提交成功！');
+		</script>
+	<%}else if(msg!'' == 2){%> 
+		<script>
+			alert('交易申请提交失败！');
+		</script>
+	<%}else if(msg!'' == 3){%> 
+		<script>
+			alert('交易申请修改成功！');
+		</script>
+	<%}else if(msg!'' == 4){%> 
+		<script>
+			alert('交易申请修改失败！');
+		</script>
+	<%}else if(msg!'' == 5){%> 
+		<script>
+			alert('账号或密码错误,请重新登录！');
+		</script>
+	<%}%> 
+
+
+ 	<script type='text/javascript'>
+	function tim(){
+		    var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+		var mydate=new Date();
+		var myddy=mydate.getDay();
+		var weekday=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+		document.getElementById('days').innerHTML=year+seperator1+month+seperator1+strDate+'&nbsp;&nbsp;'+weekday[myddy];
+	}
+	setInterval(tim,1000);
+	
+  </script>
+  <script type="text/javascript">
+    	$('#item3').tinyDraggable({ exclude: '.exclude_me, input' });
+	</script>
+	
+<script type="text/javascript">
+	
+		$(function(){
+	        $("#img1").click(function(){
+	        	
+	            var width = $(this).width();
+	            if(width==112)
+	            {
+	                $(this).width(451);
+	                $(this).height(601);
+	            }
+	            else
+	            {
+	                $(this).width(112);
+	                $(this).height(150);
+	            }
+	        });
+	    });
+ 
+</script>
+  
+</head>
+<body>
+<div class="wrapper">
+	<%include("/WebPages_170421/commonPage/menu.html"){}%>
+	<div class="main">
+		<div class="leftL">
+			  <div class="oneleft">
+	             <ul>
+	                 <li style="color:#fff;"><img src="${contextPath}/WebPages_170421/img/supermarket/keji.jpg" style="vertical-align: middle;"> 商务分类</li>
+	                 <li><a href="${contextPath}/Supermarket/toEnterprisePage?storetype=GXYS">高校院所</a></li>
+                  <li><a href="">科研院所</a></li>
+                  <li><a href="${contextPath}/Supermarket/toEnterprisePage?storetype=QYJT">科技企业</a></li>
+                  <li><a href="${contextPath}/Supermarket/toEnterprisePage?storetype=JGTT">机构团体</a></li>
+                  <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=YJKF">研发服务</a></li>
+                  <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=JSCG">技术成果</a></li>
+                  <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=CXCP">创新产品</a></li>
+                  <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=ZXFW">咨询服务</a></li>
+                  <li><a href="${contextPath}/Talent/toTech">创新人才</a></li>
+	             </ul>
+        	</div>
+        	<div class="riginfo">
+					<div class="simils" style="margin-top: 20px; margin-left:20px; width:200px;">
+						<p><span></span>相似产品<span></span></p>
+					</div>
+					<div class="similpro">
+						<%for(productxs in productxslist){%>
+		                <dl class="dlR">
+		                	<%if(isSupplydemand!'' == 1){%>
+				                <a href="${contextPath}/Supermarket/toSupplydemandDetailsPage?id=${productxs.id!''}">
+				                    <dt><img src="${contextPath}/imageFile/getImage?imagePath=${productxs.image1!''}"></dt>
+				                    <dd>
+				                    	<div class="ddName">${productxs.name!''}</div>
+				                    	<div class="ddPrice">
+				                    	<div class="priceL">${productxs.price!''}</div>
+				                    	<div class="priceR">机械</div>
+				                    	</div>
+				                    </dd>
+				                </a>
+			                <%}else{%>
+			                	<a href="${contextPath}/Supermarket/toProductDetailsPage?id=${productxs.id!''}">
+				                    <dt><img src="${contextPath}/imageFile/getImage?imagePath=${productxs.image1!''}"></dt>
+				                    <dd>
+				                    	<div class="ddName">${productxs.name!''}</div>
+				                    	<div class="ddPrice">
+				                    	<div class="priceL">${productxs.price!''}</div>
+				                    	<div class="priceR">机械</div>
+				                    	</div>
+				                    </dd>
+				                </a>
+				            <%}%>
+		                </dl>
+		                <%}elsefor{%>
+		                	<p>没找到相似产品</p>
+		                <%}%>
+						<!-- <p>没有找到相似产品</p> -->
+					</div>
+				</div>
+		</div>
+		
+            
+		<div class="list">
+			<%if(isSupplydemand!'' == 1){%>
+	                <div class="listtitle">
+						<span>供需详情</span>
+					</div>
+            	<%}else{%>
+	                <div class="listtitle"><span>产品详情</span></div>
+            	<%}%>
+			<div class="pros" style="height: auto;">
+				<div class="leftimg" style="margin: 30px; height: auto;">
+					<!-- <div class="bigpic">
+						<img src="img/pros_03.jpg">
+
+					</div>
+					<div class="litpic">
+						
+					</div> -->
+			      	<div id="preview">
+                    <!--产品参数开始-->
+                        <!--<div class="spec-preview">-->
+                            <div class="jqzoom" id="spec-n1" >
+                            	<%if(product.image1!'' != ""){%>
+                                	<img style="width: 350px; height: 350px;" src="${contextPath}/imageFile/getImage?imagePath=${product.image1!''}"  jqimg="${contextPath}/imageFile/getImage?imagePath=${product.image1!''}">
+                            	<%}else{%>
+                                	<img style="width: 350px; height: 350px;" src="${contextPath}/WebPages_170421/img/supermarket/d1.gif"  jqimg="${contextPath}/WebPages_170421/img/supermarket/d1.gif">
+                            	<%}%>
+                            </div>
+                        <!--</div>-->
+                        <!--缩图开始-->
+                        <div class="spec-scroll" id="spec-n5">
+                            <a class="prev">&lt;</a>
+                            <a class="next">&gt;</a>
+                            <div class="items" id="spec-list">
+                                <ul class="list-h">
+                                	<%if(product.image1!'' != ""){%>
+	                                	<li><img src="${contextPath}/imageFile/getImage?imagePath=${product.image1!''}"></li>
+	                            	<%}else{%>
+	                                	<li><img src="${contextPath}/WebPages_170421/img/supermarket/nophoto.png"></li>
+	                            	<%}%>
+	                            	
+                                	<%if(product.image2!'' != ""){%>
+	                                	<li><img src="${contextPath}/imageFile/getImage?imagePath=${product.image2!''}"></li>
+	                                <%}else{%>
+	                                	<li><img src="${contextPath}/WebPages_170421/img/supermarket/nophoto.png"></li>
+	                            	<%}%>
+	                            	
+                                	<%if(product.image3!'' != ""){%>
+	                                	<li><img src="${contextPath}/imageFile/getImage?imagePath=${product.image3!''}"></li>
+                                	<%}else{%>
+                                	<li><img src="${contextPath}/WebPages_170421/img/supermarket/nophoto.png"></li>
+	                            	<%}%>
+                                	<%if(product.image4!'' != ""){%>
+	                                	<li><img src="${contextPath}/imageFile/getImage?imagePath=${product.image4!''}"></li>
+	                                <%}else{%>
+	                                	<li><img src="${contextPath}/WebPages_170421/img/supermarket/nophoto.png"></li>
+	                            	<%}%>
+                                	<%if(product.image5!'' != ""){%>
+	                                	<li><img src="${contextPath}/imageFile/getImage?imagePath=${product.image5!''}"></li>
+	                                <%}else{%>
+	                                	<li><img src="${contextPath}/WebPages_170421/img/supermarket/nophoto.png"></li>
+	                            	<%}%>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--缩图结束-->
+                  </div>
+                  <!--#preview end-->
+				</div>
+				<div class="midinfo" style="height: auto; margin-bottom: 30px;">
+					<div class="proname">
+						<p>${product.name!''} </p>
+						<p class="lb"><span><b>类别</b>：${producttypename.name!''}</span><span>上架时间：${product.createDate!''}</span>
+				    <div class="clear"></div></p>
+					</div>
+					<div class="price">
+						<p>收费标准：<span>￥${product.price!''}元/${product.priceunit!''}</span></p>
+					</div>
+					<div class="morepro">
+						<p class="lb"><span>所属企业：${store.name!''}</span>
+							<span>认证状态：
+
+                    	<%if(store.state=="1"){%>
+							<font style="color:#00c71c;">已认证</font>
+						<%}else{%>
+							已认证
+						<%}%>
+							</span>
+							<div class="clear"></div></p>
+							<p>${product.introduction!''}</p>
+						<!-- <p>南京明睿CSI-II型锻造炉前铁水分析仪，非专业人员经简单培训即可操作。成分测定完毕，用户可以根据产品要求的碳、硅、锰含量修改目标值重新计算合金的调整加入量，使调整后的铁水成分更能满足产品要求。测定孕育后灰铸铁铁水抗拉强度和硬度，结果精度更高。
+						</p>
+						<p>
+						用于炉前快速测定灰铸铁和球墨铸铁铁水的碳当量（CE）、碳含量（C%）、硅含量（Si%）、锰含量（Mn%）；预测普通灰铸铁的抗拉强度等。非专业人员经简单培训即可操作；设有多条检测线（即材质或产品名称，用户可根据本公司的实际情况任意添加），针对不同牌号的铁水以及各厂的实际情况选择恰当的检测线，可使检测结果更准确。</p> -->
+					</div>
+				</div>
+				
+				<div class="clear"></div>
+      </div>
+      <!--pros end-->
+			<div class="chanQUan" style="height:180px; z-index:9999;">
+				<div class="chanQUanL">知识产权</div>
+				<div class="chanQUanR"  style="height:180px; z-index:9999; position: relative;">
+					<%if(product.zscq!'' != ""){%>
+						<img id="img1" style="width:112px;height:150px;z-index:9999; position: absolute; left: 0; top: 0;" src="${contextPath}/imageFile/getImage?imagePath=${product.zscq!''}">
+					<%}else{%>
+						<img id="img1" style="width:112px;height:150px;z-index:9999; position: absolute; left: 0; top: 0;" alt="" src="${contextPath}/WebPages_170421/img/supermarket/chanQuan.jpg">
+					<%}%>
+				</div>
+			</div>
+			<div style="clear:both;"></div>
+			
+			<div class="rightInput" style="height: 197px;margin-left: 30px;">
+          <div class="inputTxt">
+              产品参数
+          </div>
+          <div class="write">
+              <input class="writeInpt writeBg" value="参数名称">
+              <input class="writeInpt writeBg" value="参数内容" style="border-right: none;">
+              <% if( null != productArgsList! ) {
+            for(tempDate1 in productArgsList!) {
+              %>
+              <input class="writeInpt" name="argsName" value="${tempDate1.name!''}">
+              <input class="writeInpt" name="argsMemo" value="${tempDate1.memo!''}" style="border-right: none;">
+            <%}}%>
+          </div>
+
+      </div>
+             
+             
+        <div class="rightInput" style="margin-left: 30px;">
+            <div class="inputTxt">
+                  交易方式
+            </div>
+            <div class="selt">
+                <div class="seltOne">
+                    转让
+                </div>
+                <div class="seltOne">
+                    公用
+                </div>
+                
+            </div>
+        </div>
+        <div class="botDashed">
+        </div>
+
+			
+			<div class="listtitle3">
+				<!-- <h2 onclick="shenqing1()">发起交易申请<div class="jiao"></div></h2> -->
+				
+				
+				<%if(type == 1){%>
+                		<div class="logoin" style="margin-top:108px;">
+                			<h2 onclick="logoin()">登录后查看信息<div class="jiao"></div></h2>
+		                    <!-- <input type="button" class="rt" onclick="logoin()" value="登录后查看信息"> -->
+		                </div>
+                	<%}else if(type == 2){%>
+                		<div class="logoin" style="margin-top:108px;">
+                			<h2 onclick="shenqing1()">发起交易申请<div class="jiao"></div></h2>
+                			<!-- <input type="button" class="rt" onclick="shenqing1()" value="发起交易申请"> -->
+                		</div>
+                	<%}else if(type == 3){%>
+                		<div class="logoin" style="margin-top:108px;">
+                			<h2 onclick="">交易申请审核中..</h2>
+                			<!-- <input type="button" class="rt" onclick="" value="交易申请审核中.."> -->
+                		</div>
+                	<%}else if(type == 4){%>
+                		<div class="tel">
+		                    <div class="phone">
+		                        <p class="ming">联系电话：</p>
+		                    <p class="hao">${store.contact!''}</p>
+		                    </div>
+		                    <div class="phone">
+		                        <p class="ming dizhi">联系地址：</p>
+		                        <p class="hao">${store.addr!''}</p>
+		                    </div>
+		                </div>
+		            <%}else if(type == 5){%>
+		            	<div class="logoin" style="margin-top:108px;">
+		            		<h2 onclick="shenqing2()">交易申请未通过</h2>
+		            		<!-- <input type="button" class="rt" onclick="shenqing2()" value="交易申请未通过"> -->
+		            	</div>
+                	<%}%>
+				
+			</div>
+		</div>
+
+  	</div>
+  	
+  	
+  	<div class="draggable_container">
+		<div id="item3" class="obj pure-form" style="top:1200px;left:550px">
+		    <div class="box">
+			    <div class="tp">用户登录</div>
+			    <form class="login1" action="${contextPath}/product/FrontloginNew" method="post">
+			        <div class="name">
+			            <div class="lt1">用户名</div>
+			            <input type="text" class="rt1" name="userName">
+			        </div>
+			        <div class="name">
+			            <div class="lt1 pabg">密&nbsp;&nbsp;&nbsp;码</div>
+			            <input type="password" class="rt1 " name="userPwd">
+			        </div>
+			        <div class="buttn">
+			            <input type="submit" onclick="yes()" class="btn1" value="登 录">
+			            <input type="button" onclick="no()" style="margin-right:0 !important;" class="btn1 mr0 btn2" value="取 消">
+			        </div>
+			    </form>
+		    </div>
+		</div>
+    </div>
+     <div class="draggable_container">
+		<div id="item4" class="obj pure-form" style="top:1200px;left:550px">
+		    <div class="box1">
+			    <div class="tp">交易申请说明</div>
+			    <form class="login1" action="${contextPath}/product/edittransactionApplicationNew" method="post">
+			    	<input id="productId" name="productId" hidden="true" value="${product.id}">
+			        <textarea name="description" class="name1"></textarea>
+			        <div class="buttn">
+			            <input type="submit" onclick="yes1()" class="btn1" value="提交">
+			            <input type="button" onclick="no1()" style="margin-right:0 !important;" class="btn1 mr0 btn2" value="取 消">
+			        </div>
+			    </form>
+		    </div>
+		</div>
+    </div>
+     <div class="draggable_container">
+		<div id="item5" class="obj pure-form" style="top:1200px;left:550px">
+		    <div class="box2">
+			    <div class="tp">交易申请修改</div>
+			    <form class="login1" action="${contextPath}/Supermarket/edittransactionApplication" method="post">
+			    	<input id="transactionId" name="transactionId" hidden="true" value="${transactionId!''}">
+					<%if(isSupplydemand!'' == 1){%>
+			    		<input id="supplyDemandId" name="supplyDemandId" hidden="true" value="${product.id}">
+			    	<%}else{%>
+			    		<input id="productId" name="productId" hidden="true" value="${product.id}">
+			    	<%}%>
+			        <div class="name3">
+			            <p>${resDescribe!''}</p>
+			        </div>
+			        <textarea name="description" class="name2"></textarea>
+			        <div class="buttn">
+			            <input type="submit" onclick="yes2()" class="btn1" value="提交">
+			            <input type="button" onclick="no2()" style="margin-right:0 !important;" class="btn1 mr0 btn2" value="取 消">
+			        </div>
+			    </form>
+		    </div>
+		</div>
+    </div>
+    
+    	
+	<div class="footer">
+		<div>
+		<p>版权所有：吉林省计算中心</p>
+		<p>技术支持：长春市福瑞科技有限公司</p>
+		<p>邮编：130000</p>
+		<p>传真：239823982</p>
+		<p>地址：吉林省长春市朝阳区前进大街1244号</p>
+		<p>电话：0431-1234567</p>
+		<p>邮箱：123456@163.com</p></div>
+	</div>
+</div></div>
+
+
+
+</body>
+</html>
