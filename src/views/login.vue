@@ -180,7 +180,7 @@ export default {
   },
   data() {
     return {
-      isLogin: true,
+      isLogin: this.$route.query.type === '0',
     };
   },
   methods: {

@@ -4,10 +4,9 @@
       <div class="some">
         <div class="date" id="days">{{ tim() }}</div>
         <div class="sign">
-          <el-link style="float:left;" href="https://element.eleme.io" target="_blank">默认链接</el-link>
-          <!-- <a style="float:left;" href="${contextPath}/productUser/toindex?typeCode=0&kjcsType=0">注册</a> -->
+          <el-link style="float:left;color:white;" href="#login?type=0" :underline="false" target="_blank">注册</el-link>
           <div style="float:left; color:#fff; margin-left:10px;">|</div>
-          <a style="float:left;" href="${contextPath}/productUser/toindex?typeCode=1&kjcsType=0">登录</a>
+          <el-link style="float:left;color:white;" href="#login?type=1" :underline="false" target="_blank">登录</el-link>
         </div>
       </div>
     </div>
