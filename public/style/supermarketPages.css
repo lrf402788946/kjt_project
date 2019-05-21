@@ -216,6 +216,7 @@ background-attachment: fixed;
 	float: right;
 	height: 600px;
 	width: 950px;
+	position: relative;
 }
 
 .pro{

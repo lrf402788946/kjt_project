@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+	<link rel="shortcut icon" href="favicon.ico"/>
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+    <title></title>
+
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0"> 
+	
+    <link rel="stylesheet" href="${contextPath}/WebPages_170421/css/supermarket/businessConglomerateListPage.css">
+
+	<script type="text/javascript" src="${contextPath}/WebPages_170421/js/jquery.js"></script>
+    <script type="text/javascript" src="${contextPath}/WebPages_170421/js/supermarket/productDetails.js"></script>
+    <script type="text/javascript" src="${contextPath}/WebPages_170421/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="${contextPath}/WebPages_170421/js/jquery-1.4.2.js"></script>
+	<style type="text/css">
+		.page {
+		    height: 28px;
+		    margin-top: 30px !important;
+		    margin-left: 380px;
+		    }
+	</style>
+
+ 	<script type='text/javascript'>
+	function tim(){
+		    var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+		var mydate=new Date();
+		var myddy=mydate.getDay();
+		var weekday=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
+		document.getElementById('days').innerHTML=year+seperator1+month+seperator1+strDate+'&nbsp;&nbsp;'+weekday[myddy];
+	}
+	setInterval(tim,1000);
+	
+  </script>
+</head>
+<body>
+	<div class="wrapper">
+	<%include("/WebPages_170421/commonPage/menu.html"){}%>
+	<div class="main" style="height:1190px;">
+	
+		<div class="oneleft">
+	           <ul>
+	               <li><a href="#"><img src="${contextPath}/WebPages_170421/img/supermarket/keji.jpg" style="vertical-align: middle;"> 商务分类</a></li>
+	               <li><a href="${contextPath}/Supermarket/toEnterprisePage?storetype=GXYS">高校院所</a></li>
+                   <li><a href="">科研院所</a></li>
+                   <li><a href="${contextPath}/Supermarket/toEnterprisePage?storetype=QYJT">科技企业</a></li>
+                   <li><a href="${contextPath}/Supermarket/toEnterprisePage?storetype=JGTT">机构团体</a></li>
+                   <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=YJKF">研发服务</a></li>
+                   <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=JSCG">技术成果</a></li>
+                   <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=CXCP">创新产品</a></li>
+                   <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=ZXFW">咨询服务</a></li>
+                   <li><a href="${contextPath}/Talent/toTech">创新人才</a></li>
+	           </ul>
+	       </div>
+	       
+	       
+		<div class="list">
+		
+		<div class="sou">
+                    <form class="sout" action="${contextPath}/Supermarket/search?type=ALL" method="post">
+                        <select name="type">
+                            <option value="全部企业">全部企业</option>
+							<option value="国有企业">国有企业</option>
+							<option value="集体所有制">集体所有制</option>
+							<option value="私营企业">私营企业</option>
+							<option value="股份制企业">股份制企业</option>
+						</select>
+                    </form>
+                    <form class="soub" action="${contextPath}/Supermarket/search?type=ZGX" method="post">
+                        <input type="text" name="name" style="width:355px;" placeholder="请输入名称">
+                        <button><img src="${contextPath}/WebPages_170421/img/homepage/search.jpg"><span>搜索</span></button>
+                    </form>
+             </div>
+             
+		<div style="background:#fff; height:1110px;">
+			<div class="listtitle">
+				<h2>科技企业</h2>
+			</div>
+			<div class="wai">
+			<div style="min-height:943px;">
+			 <%for(store in storelist){%>
+				<div class="qys">	
+					<div class="qyright">
+						<div class="qytopOne">
+							<div class="qytop">${store.name!''}</div>
+							<div class="adrs">
+								<img src="${contextPath}/WebPages_170421/img/dingwei.gif">
+								<span>${store.homepage!''}</span>
+							</div>
+						</div>
+						<div class="qycenter">
+							<div class="qycenOne">
+							地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：<span>${store.addr!''}</span>
+							</div>
+						</div>
+						<div class="qycenter">
+							<div class="qycenOne">
+							<div style=" float:left;">企业简介：</div><span class="jianjie">${store.introduction!''}</span>
+							</div>
+						</div>
+					</div>
+			   </div>
+			    <%}elsefor{%>
+                	<p style="width: 1118px; padding-left:20px;  height: 600px; margin: 33px 0 0 0;">无相关企业</p>
+            	<%}%>
+	
+			</div>
+		</div>
+            <%include("/WebPages_170421/commonPage/c_paginate.html", {"currentPage": pageNumber!1, "totalPage": totalPage!1, "totalRow": totalRow!0, "actionUrl": contextPath+"/Supermarket/toEnterprisePage?typeCode=" + typeCode! + "&type=" + type! + "&pageNumber=", "urlParas": urlParas!''}){}%> 
+			
+		</div>
+
+</div>
+	
+
+
+
+  	</div>	
+	<div class="footer">
+		<div>
+		<p>版权所有：吉林省计算中心</p>
+		<p>技术支持：长春市福瑞科技有限公司</p>
+		<p>邮编：130000</p>
+		<p>传真：239823982</p>
+		<p>地址：吉林省长春市朝阳区前进大街1244号</p>
+		<p>电话：0431-1234567</p>
+		<p>邮箱：123456@163.com</p></div>
+	</div>
+</div></div>
+ <script type="text/javascript">
+
+</script>
+</body>
+</html>
