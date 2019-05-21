@@ -1,6 +1,7 @@
 <template lang="html">
   <div id="supermarketPages">
     <div class="wrapper">
+      <headers></headers>
       <div class="main">
         <div class="partone">
           <div class="oneleft">
@@ -117,3 +118,13 @@
     </div>
   </div>
 </template>
+<script>
+import headers from '@/components/headers.vue';
+import menus from '@/components/menus.vue';
+export default {
+  components: {
+    menus,
+    headers,
+  },
+}
+</script>
