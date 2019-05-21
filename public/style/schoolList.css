@@ -196,14 +196,12 @@ select::-ms-expand{
 .listtitle{
 	height: 60px;
 	border-bottom:1px dashed #ccc; 
-	
-	
 }
 .listtitle h2{
 	width: 135px;
     height: 60px;
     color: #215299;
-    
+    padding-left: 1%;
     line-height: 60px;
     font-weight: normal;
     font-size: 22px;

@@ -4,7 +4,8 @@
       <div class="some">
         <div class="date" id="days">{{ tim() }}</div>
         <div class="sign">
-          <a style="float:left;" href="${contextPath}/productUser/toindex?typeCode=0&kjcsType=0">注册</a>
+          <el-link style="float:left;" href="https://element.eleme.io" target="_blank">默认链接</el-link>
+          <!-- <a style="float:left;" href="${contextPath}/productUser/toindex?typeCode=0&kjcsType=0">注册</a> -->
           <div style="float:left; color:#fff; margin-left:10px;">|</div>
           <a style="float:left;" href="${contextPath}/productUser/toindex?typeCode=1&kjcsType=0">登录</a>
         </div>
@@ -15,7 +16,7 @@
         <div class="logo">
           <img :src="logo" />
         </div>
-        <div class="nav">
+        <!-- <div class="nav">
           <a href="${contextPath}/">首页</a>
           <a href="${contextPath}/GovernmentAffairs">科技政务</a>
           <a href="${contextPath}/Policy/findListByType?typeCode=ZHZDZC&pageNumber=1">科技政策</a>
@@ -25,7 +26,7 @@
           <a href="${contextPath}/mapApply/getMap">创新资源</a>
           <a href="${contextPath}/Talent/toTech">创新人才</a>
           <a href="#this">创新联盟</a>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

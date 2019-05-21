@@ -45,13 +45,24 @@
             <div class="leftimg" style="margin: 30px; height: auto;">
               <div id="preview">
                 <!--包含图片插件,之后做-->
-                <div class="jqzoom" id="spec-n1">
+                <div class="jqzoom" id="spec-n1" @mouseover="hideZoom = false">
                   <!-- <%if(product.image1!'' != ""){%> -->
-                  <img
-                    style="width: 350px; height: 350px;"
-                    src="${contextPath}/imageFile/getImage?imagePath=${product.image1!''}"
-                    jqimg="${contextPath}/imageFile/getImage?imagePath=${product.image1!''}"
-                  />
+                  <vue-photo-zoom-pro :hide-zoom="hideZoom" style="width: 350px; height: 100%;" :scale="2" :url="zoomPhoto" :out-show="true" ref="zoomPhoto">
+                  </vue-photo-zoom-pro>
+                </div>
+
+                <div class="spec-scroll" id="spec-n5">
+                  <!--@click="changeList(0)"-->
+
+                  <superslide :options="slideOptions" class="slideBox">
+                    <a class="prev">&lt;</a>
+                    <div class="items" id="spec-list">
+                      <ul class="list-h" ref="imgList">
+                        <li v-for="(item, index) in urls" :key="index" @click="changeList(index)"><img :src="item.url" /></li>
+                      </ul>
+                    </div>
+                    <a class="next">&gt;</a>
+                  </superslide>
                 </div>
               </div>
             </div>
@@ -77,26 +88,19 @@
                   </p>
                   <div class="clear"></div>
                   <p>${product.introduction!''}</p>
-                  <!-- <p>
-                    南京明睿CSI-II型锻造炉前铁水分析仪，非专业人员经简单培训即可操作。成分测定完毕，用户可以根据产品要求的碳、硅、锰含量修改目标值重新计算合金的调整加入量，使调整后的铁水成分更能满足产品要求。测定孕育后灰铸铁铁水抗拉强度和硬度，结果精度更高。
-                  </p>
-                  <p>
-                    用于炉前快速测定灰铸铁和球墨铸铁铁水的碳当量（CE）、碳含量（C%）、硅含量（Si%）、锰含量（Mn%）；预测普通灰铸铁的抗拉强度等。非专业人员经简单培训即可操作；设有多条检测线（即材质或产品名称，用户可根据本公司的实际情况任意添加），针对不同牌号的铁水以及各厂的实际情况选择恰当的检测线，可使检测结果更准确。
-                  </p> -->
                 </div>
               </div>
             </div>
             <div class="clear"></div>
           </div>
-          <div class="chanQUan" style="height:180px; z-index:9999;">
+          <div class="chanQUan" style="height:180px;">
             <div class="chanQUanL">知识产权</div>
-            <div class="chanQUanR" style="height:180px; z-index:9999; position: relative;">
+            <div class="chanQUanR" style="height:180px;position: relative;">
               <!-- <%if(product.zscq!'' != ""){%> 此处图片有点击放大效果-->
-              <img
-                id="img1"
-                style="width:112px;height:150px;z-index:9999; position: absolute; left: 0; top: 0;"
-                src="${contextPath}/imageFile/getImage?imagePath=${product.zscq!''}"
-              />
+              <img id="img1" @click="dialogImg(url)" style="width:112px;height:150px;position: absolute; left: 0; top: 0;" :src="img.default" />
+              <el-dialog :visible.sync="dialogVisible">
+                <img width="100%" :src="dialogImageUrl" alt="" />
+              </el-dialog>
             </div>
           </div>
           <div style="clear:both;"></div>
@@ -107,7 +111,7 @@
             <div class="write">
               <input class="writeInpt writeBg" value="参数名称" />
               <input class="writeInpt writeBg" value="参数内容" style="border-right: none;" />
-              <span v-for="i in 10" :key="i">
+              <span v-for="i in 5" :key="i">
                 <input class="writeInpt" name="argsName" value="name" />
                 <input class="writeInpt" name="argsMemo" value="memo" style="border-right: none;" />
               </span>
@@ -168,6 +172,7 @@
           </div>
         </div>
       </div>
+      <footers></footers>
     </div>
   </div>
 </template>
@@ -175,24 +180,81 @@
 <script>
 import headers from '@/components/headers.vue';
 import menus from '@/components/menus.vue';
+import footers from '@/components/footers.vue';
 export default {
   name: 'productDetails',
   components: {
     menus,
     headers,
+    footers,
   },
   data() {
     return {
       img: {
         default: require('@a/img/logo.gif'),
       },
+      dialogVisible: false,
+      dialogImageUrl: '',
+      hideZoom: true,
+      slideOptions: { autoPlay: false, mainCell: '.items ul', effect: 'left', vis: 5, defaultIndex: 0 },
       i: 2,
       listTitle: 1,
       list3: 1,
+      urls: [
+        { url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' },
+        {
+          url:
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1558417130414&di=461b92870c4b1f6724c2bc0366fd4134&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F15%2F68%2F59%2F71X58PICNjx_1024.jpg',
+        },
+        {
+          url: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1393987749,3422146058&fm=26&gp=0.jpg',
+        },
+        {
+          url:
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1558417529592&di=1de4aec402d70be5ca02479aa713a234&imgtype=0&src=http%3A%2F%2Fpic40.nipic.com%2F20140412%2F18428321_144447597175_2.jpg',
+        },
+        {
+          url:
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1558417529592&di=22b695e3c2a4af301fd62978e093f090&imgtype=0&src=http%3A%2F%2Fpic37.nipic.com%2F20140113%2F8800276_184927469000_2.png',
+        },
+        {
+          url:
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1558417529592&di=b4aff6eed8be58d25830e4dbeedde5a0&imgtype=0&src=http%3A%2F%2Fpic15.nipic.com%2F20110628%2F1369025_192645024000_2.jpg',
+        },
+        {
+          url:
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1558417529592&di=61c65294ae76cdc2985f979a7ea9d4cf&imgtype=0&src=http%3A%2F%2Fk.zol-img.com.cn%2Fsjbbs%2F7692%2Fa7691515_s.jpg',
+        },
+        {
+          url:
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1558417529591&di=c6f8a87fdcb3202965198c163def08c6&imgtype=0&src=http%3A%2F%2Fpic53.nipic.com%2Ffile%2F20141115%2F9448607_175255450000_2.jpg',
+        },
+        {
+          url:
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1558417529591&di=55198cd43f8de5b3e3ff893d39bb8912&imgtype=0&src=http%3A%2F%2Fpic35.nipic.com%2F20131115%2F13972544_160943053001_2.jpg',
+        },
+      ],
     };
   },
-  computed: {},
-  methods: {},
+  computed: {
+    zoomPhoto: {
+      get() {
+        return this.urls[0].url;
+      },
+      set(newValue) {
+        this.$refs.zoomPhoto.url = this.urls[newValue].url;
+      },
+    },
+  },
+  methods: {
+    dialogImg(url) {
+      this.$set(this, `dialogImageUrl`, url);
+      this.dialogVisible = true;
+    },
+    changeList(index) {
+      this.zoomPhoto = index;
+    },
+  },
 };
 </script>
 
@@ -272,7 +334,7 @@ export default {
     margin-top: 10px;
     float: left;
     margin-bottom: 10px;
-    height: 90%;
+    height: 85%;
 }
 .pros{
 	height:485px;

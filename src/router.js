@@ -3,7 +3,9 @@ import Router from 'vue-router';
 import schoolListPage from './views/schoolListPage.vue';
 import supermarketPages from './views/supermarketPages.vue';
 import productDetails from './views/productDetails.vue';
-
+import productListPage from './views/productListPage.vue';
+import login from './views/login.vue';
+import test from './views/test.vue';
 Vue.use(Router);
 
 export default new Router({
@@ -22,6 +24,21 @@ export default new Router({
       path: '/productDetails',
       name: 'productDetails',
       component: productDetails,
+    },
+    {
+      path: '/productListPage',
+      name: 'productListPage',
+      component: productListPage,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: login,
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: test,
     },
   ],
 });
