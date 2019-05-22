@@ -7,6 +7,7 @@ import productListPage from './views/productListPage.vue';
 import login from './views/login.vue';
 import test from './views/test.vue';
 import businessConglomerateListPage from './views/businessConglomerateListPage.vue';
+import test2 from './views/userAdmin/test.vue'
 
 Vue.use(Router);
 
@@ -43,9 +44,9 @@ export default new Router({
       component: businessConglomerateListPage,
     },
     {
-      path: '/test',
-      name: 'test',
-      component: test,
+      path: '/test2',
+      name: 'test2',
+      component: test2,
     },
   ],
 });
