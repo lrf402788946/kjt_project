@@ -25,18 +25,18 @@
             <div class="logBox" id="logBox">
               <!--登录页-->
               <div class="smallB" v-if="isLogin">
-                <form class="loginn" id="login" action="${contextPath}/productUser/login" method="post" style="height:auto;">
+                <form class="loginn" id="login" style="height:auto;">
                   <input type="hidden" name="kjcsType" value="0" />
                   <div class="name" style="width:500px;">
                     <div class="nameTwo">用户名称</div>
-                    <input name="userName" placeholder="用户名称" type="text" class="rt" id="login_user" onkeyup="nameEnter(event);" />
+                    <input placeholder="用户名称" v-model="form.login_id" class="rt" />
                   </div>
                   <div class="name" style="width:500px;">
                     <div class="nameTwo">用户名称</div>
-                    <input type="password" name="userPwd" placeholder="登录密码" class="rt" id="login_psw" onkeyup="pwdEnter(event);" />
+                    <input type="password" placeholder="登录密码" class="rt" v-model="form.password" />
                   </div>
                   <div style="position: absolute;">
-                    <button type="button" class="btn1" value="立即登录" @click="login()">登&nbsp;&nbsp;&nbsp;录</button>
+                    <button type="button" class="btn1" value="立即登录" @click="toLogin()">登&nbsp;&nbsp;&nbsp;录</button>
                   </div>
                   <!-- <button type="button" class="btn1" >取消登录</button> -->
                 </form>
@@ -169,38 +169,32 @@
 <script>
 import headers from '@/components/headers.vue';
 import footers from '@/components/footers.vue';
+import { mapActions } from 'vuex';
 export default {
   name: 'login',
-  props: {
-    msg: String,
-  },
   components: {
     headers,
     footers,
   },
   data() {
     return {
+      form: {},
       isLogin: this.$route.query.type === '0',
     };
   },
+  created() {},
   methods: {
-    login() {
-      let data1 = { data: "{login_id:'1',password:'111111'}" };
-      this.$http({
-        method: 'post',
-        url: 'http://10.16.11.186:80/home/user/login',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        //data: JSON.stringify(data1)
-        data: '',
-      });
+    ...mapActions(['login']),
+    toLogin() {
+      if (this.form.login_id && this.form.login_id !== '' && (this.form.password && this.form.password !== '')) {
+        this.login({ login_id: this.form.login_id, password: this.form.password });
+      }
     },
   },
 };
 </script>
 
-<style scoped>
+<style lang="css" scoped>
 .nav a:nth-child(3) {
   /* background-color: #215299; */
   border-left: 0;

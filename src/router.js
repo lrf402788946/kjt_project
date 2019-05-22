@@ -39,11 +39,6 @@ export default new Router({
       component: login,
     },
     {
-      path: '/test',
-      name: 'test',
-      component: test,
-    },
-    {
       path: '/businessConglomerateListPage',
       name: 'businessConglomerateListPage',
       component: businessConglomerateListPage,

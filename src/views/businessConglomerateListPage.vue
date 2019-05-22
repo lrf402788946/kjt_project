@@ -86,3 +86,9 @@ export default {
   },
 };
 </script>
+
+<style lang="css" scoped>
+.adrs{
+  text-align: right;
+}
+</style>
