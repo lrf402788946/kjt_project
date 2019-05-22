@@ -183,24 +183,11 @@ export default {
       isLogin: this.$route.query.type === '0',
     };
   },
-  methods: {
-    login() {
-      let data1 = { data: "{login_id:'1',password:'111111'}" };
-      this.$http({
-        method: 'post',
-        url: 'http://10.16.11.186:80/home/user/login',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        //data: JSON.stringify(data1)
-        data: '',
-      });
-    },
-  },
+  methods: {},
 };
 </script>
 
-<style scoped>
+<style lang="css" scoped>
 .nav a:nth-child(3) {
   /* background-color: #215299; */
   border-left: 0;
