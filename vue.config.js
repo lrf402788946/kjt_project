@@ -21,12 +21,12 @@ module.exports = {
     port: '8001',
     //api地址前缀
     proxy: {
-      '/zhwl': {
+      '/kjcs': {
         target: 'http://10.16.11.186:80', //10.16.11.186:80  10.16.11.227:7001
         changeOrigin: true,
         ws: true,
         pathRewrite: {
-          '/zhwl': '',
+          '/kjcs': '',
         },
       },
     },

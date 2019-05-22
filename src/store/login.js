@@ -3,6 +3,8 @@ import Vuex from 'vuex';
 import _ from 'lodash';
 import { Message } from 'element-ui';
 
+Vue.use(Vuex);
+
 const api = {
   login: '/user/login',
 };
@@ -17,21 +19,21 @@ const result_is_log = true;
  * @param uri 接口地址
  * @param data 数据(以此变量判断,若有值就是走post方法;若没有值或不传,则默认为undefined,走get方法)
  */
-const toRequest = async (uri, data = undefined) => {
-  let result;
+const toRequest = async (uri, data = undefined, axios) => {
   try {
     if (data !== undefined) {
-      result = await this.$axios.post(uri, data);
+      result = await axios.post(uri, data);
     } else {
-      result = await this.$axios.get(uri);
+      result = await axios.get(uri);
     }
-    let { returnData, returnDataList } = checkRes(result);
-    if (data !== undefined) {
-      Message.success('操作成功');
-      return { result: true };
+    let { result, msg, returnData, returnDataList } = checkRes(result);
+    if (!result) {
+      Message.error(msg);
+      return { result: false };
     } else {
+      Message.success('操作成功');
       if (!(Object.keys(returnData).length > 0) && !(returnDataList.length > 0)) console.warn(`${uri}--无数据`);
-      return { result: true, returnData, returnDataList };
+      return { result: result, returnData: returnData, returnDataList: returnDataList };
     }
   } catch (error) {
     console.error(`${uri}:${error}`);
@@ -44,12 +46,18 @@ const toRequest = async (uri, data = undefined) => {
  */
 const checkRes = result => {
   try {
-    if (result_is_log) console.log(result);
+    if (result_is_log) {
+      console.log(`result:`);
+      console.log(result);
+      console.log(`returnData:`);
+      console.log(_.get(result, 'data', {}));
+      console.log(`dataList:`);
+      console.log(_.get(result, 'dataList', []));
+    }
     if (result.rescode === 0 || result.rescode === '0') {
-      return { returnData: _.get(result, 'data', {}), returnDataList: _.get(result, 'dataList', []) };
+      return { result: true, msg: result.msg, returnData: _.get(result, 'data', {}), returnDataList: _.get(result, 'dataList', []) };
     } else {
-      Message.error(result.msg);
-      return false;
+      return { result: false, msg: result.msg };
     }
   } catch (error) {
     Message.error(error);
@@ -74,7 +82,12 @@ export const mutations = {};
 //在actions中,state和commit可以不使用,但是最少要写一个站位,否则第二个参数将会变成上述这些
 //{a,b,c,d...}=>解构函数方式的参数列表,传过来的key要一致就可以使用,如果没有传,默认值是undefined
 export const actions = {
+  /**
+   * 登录方法
+   * @param login_id 用户名
+   * @param password 密码
+   */
   async login({ commit }, { login_id, password }) {
-    let { result, returnData, returnDataList } = await toRequest(api.login, { data: { login_id: login_id, password: password } });
+    let { result, returnData, returnDataList } = await toRequest(api.login, { data: { login_id: login_id, password: password } }, this.$axios);
   },
 };

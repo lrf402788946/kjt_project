@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import login from './login';
+import * as login from './login';
 
 Vue.use(Vuex);
 
