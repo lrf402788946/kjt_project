@@ -7,7 +7,7 @@ import productListPage from './views/productListPage.vue';
 import login from './views/login.vue';
 import test from './views/test.vue';
 import businessConglomerateListPage from './views/businessConglomerateListPage.vue';
-import test2 from './views/userAdmin/test.vue'
+import test2 from './views/userAdmin/test.vue';
 
 Vue.use(Router);
 
