@@ -2,7 +2,7 @@
   <div id="schoolListPage">
     <div class="wrapper">
       <headers></headers>
-      <div class="main" style=" height:1364px !important;">
+      <div class="main">
         <menus></menus>
         <div class="list">
           <div class="sou">
@@ -58,6 +58,7 @@
           </div>
         </div>
       </div>
+      <div style="clear:both;"></div>
       <footers></footers>
     </div>
   </div>
@@ -98,11 +99,10 @@ export default {
 };
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 .main {
     margin: 10px auto;
     width: 1200px;
-    height: 1744px !important;
 }
 .page {
     height: 28px;

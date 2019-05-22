@@ -111,7 +111,7 @@
             <div class="write">
               <input class="writeInpt writeBg" value="参数名称" />
               <input class="writeInpt writeBg" value="参数内容" style="border-right: none;" />
-              <span v-for="i in 5" :key="i">
+              <span v-for="i in 15" :key="i">
                 <input class="writeInpt" name="argsName" value="name" />
                 <input class="writeInpt" name="argsMemo" value="memo" style="border-right: none;" />
               </span>
@@ -133,7 +133,7 @@
           </div>
           <div class="botDashed"></div>
           <div class="listtitle3">
-            <div v-if="list3 === 1" class="logoin" style="margin-top:108px;">
+            <div v-if="list3 === 1" class="logoin">
               <h2 onclick="logoin()">
                 登录后查看信息
                 <div class="jiao"></div>
@@ -141,7 +141,7 @@
               <!-- <input type="button" class="rt" onclick="logoin()" value="登录后查看信息"> -->
             </div>
             <!-- <%}else if(type == 2){%> -->
-            <div v-if="list3 === 2" class="logoin" style="margin-top:108px;">
+            <div v-if="list3 === 2" class="logoin">
               <h2 onclick="shenqing1()">
                 发起交易申请
                 <div class="jiao"></div>
@@ -149,29 +149,26 @@
               <!-- <input type="button" class="rt" onclick="shenqing1()" value="发起交易申请"> -->
             </div>
             <!-- <%}else if(type == 3){%> -->
-            <div v-if="list3 === 3" class="logoin" style="margin-top:108px;">
+            <div v-if="list3 === 3" class="logoin">
               <h2 onclick="">交易申请审核中..</h2>
               <!-- <input type="button" class="rt" onclick="" value="交易申请审核中.."> -->
             </div>
             <!-- <%}else if(type == 4){%> -->
             <div v-if="list3 === 4" class="tel">
               <div class="phone">
-                <p class="ming">联系电话：</p>
-                <p class="hao">${store.contact!''}</p>
-              </div>
-              <div class="phone">
-                <p class="ming dizhi">联系地址：</p>
-                <p class="hao">${store.addr!''}</p>
+                <p class="ming">联系电话：<span class="hao"> ${store.contact!''}</span></p>
+                <p class="ming dizhi">联系地址：<span class="hao"> ${store.addr!''}</span></p>
               </div>
             </div>
             <!-- <%}else if(type == 5){%> -->
-            <div v-if="list3 === 5" class="logoin" style="margin-top:108px;">
+            <div v-if="list3 === 5" class="logoin">
               <h2 onclick="shenqing2()">交易申请未通过</h2>
               <!-- <input type="button" class="rt" onclick="shenqing2()" value="交易申请未通过"> -->
             </div>
           </div>
         </div>
       </div>
+      <div style="clear:both;"></div>
       <footers></footers>
     </div>
   </div>
@@ -199,7 +196,7 @@ export default {
       slideOptions: { autoPlay: false, mainCell: '.items ul', effect: 'left', vis: 5, defaultIndex: 0 },
       i: 2,
       listTitle: 1,
-      list3: 1,
+      list3: 4,
       urls: [
         { url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' },
         {
@@ -265,7 +262,7 @@ export default {
 .riginfo{
 	float: left;
 	width: 240px;
-	height: 750px;
+	height: 550px;
 	color: #555;
 	background: #fff;
 }
@@ -334,7 +331,7 @@ export default {
     margin-top: 10px;
     float: left;
     margin-bottom: 10px;
-    height: 85%;
+    height: 98.5%;
 }
 .pros{
 	height:485px;

@@ -14,13 +14,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'schoolListPage',
-      component: schoolListPage,
+      name: 'index',
+      component: supermarketPages,
     },
     {
-      path: '/supermarketPages',
-      name: 'supermarketPages',
-      component: supermarketPages,
+      path: '/schoolListPage',
+      name: 'schoolListPage',
+      component: schoolListPage,
     },
     {
       path: '/productDetails',

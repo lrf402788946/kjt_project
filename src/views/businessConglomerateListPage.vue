@@ -2,7 +2,7 @@
   <div id="businessConglomerateListPage">
     <div class="wrapper">
       <headers></headers>
-      <div class="main" style=" height:1364px !important;">
+      <div class="main">
         <menus></menus>
         <div class="list">
           <div class="sou">
@@ -67,6 +67,7 @@
           </div>
         </div>
       </div>
+      <div style="clear:both;"></div>
       <footers></footers>
     </div>
   </div>
