@@ -1,4 +1,3 @@
-import Vue from 'vue';
 import axios from 'axios';
 // import store from '@/store/index';
 import { Loading } from 'element-ui';
@@ -8,6 +7,8 @@ import { Message } from 'element-ui';
 // let userRoleList = store.state.publics.userRoleList;
 process.env.NODE_ENV === 'production' ? (axios.defaults.baseURL = 'http://192.168.1.217') : '';
 axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
+
+const domain = '/home';
 
 axios.interceptors.request.use(
   config => {
@@ -20,7 +21,7 @@ axios.interceptors.request.use(
         text: '请求中,请耐心等待',
       });
     }
-    config.url = url;
+    config.url = domain + url;
     return config;
   },
   error => {

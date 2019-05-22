@@ -2,7 +2,7 @@
   <div id="schoolListPage">
     <div class="wrapper">
       <headers></headers>
-      <div class="main" style=" height:1364px !important;">
+      <div class="main">
         <menus></menus>
         <div class="list">
           <div class="sou">
@@ -43,7 +43,7 @@
               </div>
               <!--差个分页-->
               <b-pagination
-                style="padding-left: 30%;padding-top: 20px;"
+                style="padding-left: 30%;padding-top: 3%"
                 v-model="currentPage"
                 :total-rows="200"
                 :limit="5"
@@ -58,6 +58,8 @@
           </div>
         </div>
       </div>
+      <div style="clear:both;"></div>
+      <footers></footers>
     </div>
   </div>
 </template>
@@ -65,6 +67,7 @@
 <script>
 import headers from '@/components/headers.vue';
 import menus from '@/components/menus.vue';
+import footers from '@/components/footers.vue';
 export default {
   name: 'schoolListPage',
   metaInfo: {
@@ -73,6 +76,7 @@ export default {
   components: {
     menus,
     headers,
+    footers,
   },
   data() {
     return {
@@ -95,11 +99,10 @@ export default {
 };
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 .main {
     margin: 10px auto;
     width: 1200px;
-    height: 1744px !important;
 }
 .page {
     height: 28px;

@@ -3,8 +3,11 @@ import Router from 'vue-router';
 import schoolListPage from './views/schoolListPage.vue';
 import supermarketPages from './views/supermarketPages.vue';
 import productDetails from './views/productDetails.vue';
+import productListPage from './views/productListPage.vue';
+import login from './views/login.vue';
+import test from './views/test.vue';
 import businessConglomerateListPage from './views/businessConglomerateListPage.vue';
-import test from './views/userAdmin/test.vue'
+import test2 from './views/userAdmin/test.vue'
 
 Vue.use(Router);
 
@@ -12,13 +15,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'schoolListPage',
-      component: schoolListPage,
+      name: 'index',
+      component: supermarketPages,
     },
     {
-      path: '/supermarketPages',
-      name: 'supermarketPages',
-      component: supermarketPages,
+      path: '/schoolListPage',
+      name: 'schoolListPage',
+      component: schoolListPage,
     },
     {
       path: '/productDetails',
@@ -26,14 +29,29 @@ export default new Router({
       component: productDetails,
     },
     {
-      path: '/businessConglomerateListPage',
-      name: 'businessConglomerateListPage',
-      component: businessConglomerateListPage,
+      path: '/productListPage',
+      name: 'productListPage',
+      component: productListPage,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: login,
     },
     {
       path: '/test',
       name: 'test',
       component: test,
+    },
+    {
+      path: '/businessConglomerateListPage',
+      name: 'businessConglomerateListPage',
+      component: businessConglomerateListPage,
+    },
+    {
+      path: '/test2',
+      name: 'test2',
+      component: test2,
     },
   ],
 });
