@@ -446,7 +446,6 @@ select::-ms-expand{
 	margin-top: 10px;
 	overflow: hidden;
 	position: relative;
-	left: -600px;
 }
 .footer div{
 	width: 650px;

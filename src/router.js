@@ -4,6 +4,7 @@ import schoolListPage from './views/schoolListPage.vue';
 import supermarketPages from './views/supermarketPages.vue';
 import productDetails from './views/productDetails.vue';
 import businessConglomerateListPage from './views/businessConglomerateListPage.vue';
+import test from './views/userAdmin/test.vue'
 
 Vue.use(Router);
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/businessConglomerateListPage',
       name: 'businessConglomerateListPage',
       component: businessConglomerateListPage,
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: test,
     },
   ],
 });
