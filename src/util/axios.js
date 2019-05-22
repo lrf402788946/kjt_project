@@ -8,7 +8,7 @@ import { Message } from 'element-ui';
 process.env.NODE_ENV === 'production' ? (axios.defaults.baseURL = 'http://192.168.1.217') : '';
 axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
 
-const domain = '/home';
+const domain = '/kjcs/home';
 
 axios.interceptors.request.use(
   config => {

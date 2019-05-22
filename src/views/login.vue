@@ -183,6 +183,10 @@ export default {
       isLogin: this.$route.query.type === '0',
     };
   },
+  created() {
+    let object = { data: {}, dataList: [] };
+    console.log(Object.keys(object));
+  },
   methods: {},
 };
 </script>
