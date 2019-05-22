@@ -4,9 +4,9 @@
       <div class="some">
         <div class="date" id="days">{{ tim() }}</div>
         <div class="sign">
-          <el-link style="float:left;color:white;" href="#login?type=0" :underline="false" target="_blank">注册</el-link>
+          <el-link style="float:left;color:white;" href="#login?type=1" :underline="false">注册</el-link>
           <div style="float:left; color:#fff; margin-left:10px;">|</div>
-          <el-link style="float:left;color:white;" href="#login?type=1" :underline="false" target="_blank">登录</el-link>
+          <el-link style="float:left;color:white;" href="#login?type=0" :underline="false">登录</el-link>
         </div>
       </div>
     </div>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
 export default {
   name: 'headers',
   components: {},
@@ -40,8 +41,16 @@ export default {
       logo: require('@/assets/img/logo.png'),
     };
   },
-  computed: {},
+  computed: {
+    ...mapState({
+      userInfo: state => state.login.userInfo,
+    }),
+  },
+  async created() {
+    await this.login({});
+  },
   methods: {
+    ...mapActions(['login']),
     tim() {
       var date = new Date();
       var seperator1 = '-';

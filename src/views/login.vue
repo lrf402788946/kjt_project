@@ -185,9 +185,12 @@ export default {
   created() {},
   methods: {
     ...mapActions(['login']),
-    toLogin() {
+    async toLogin() {
       if (this.form.login_id && this.form.login_id !== '' && (this.form.password && this.form.password !== '')) {
-        this.login({ login_id: this.form.login_id, password: this.form.password });
+        let { result } = await this.login({ login_id: this.form.login_id, password: this.form.password });
+        if (result) {
+          this.$router.push({ path: '/' });
+        }
       }
     },
   },
