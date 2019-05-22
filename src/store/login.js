@@ -31,7 +31,7 @@ const toRequest = async (uri, data = undefined, axios) => {
       Message.error(msg);
       return { result: false };
     } else {
-      Message.success('操作成功');
+      data !== undefined ? Message.success(msg) : '';
       if (!(Object.keys(returnData).length > 0) && !(returnDataList.length > 0)) console.warn(`${uri}--无数据`);
       return { result: result, returnData: returnData, returnDataList: returnDataList };
     }
