@@ -1,5 +1,5 @@
 <template lang="html">
-  <div id="schoolListPage">
+  <div id="kyysListPage">
     <div class="wrapper">
       <headers></headers>
       <div class="main">
@@ -8,9 +8,9 @@
           <searchTab @toSearch="search" :type="code"></searchTab>
           <div style="background:#fff; height:60%;">
             <div class="listtitle">
-              <h2>高校院所</h2>
+              <h2>科研院所</h2>
             </div>
-            <div class="wai" style="height:100%">
+            <div class="wai">
               <div>
                 <div class="qys" v-if="list.length > 0">
                   <div class="qyleft" v-for="(item, index) in list" :key="index">
@@ -30,10 +30,11 @@
                       </div>
                     </div>
                   </div>
+                  <!-- </span> -->
                 </div>
               </div>
-              <div style="clear:both;"></div>
               <p v-if="!(list.length > 0)" style="text-align: center; height: 600px; margin: 33px 0 0 0;">无相关数据</p>
+              <!--差个分页-->
               <b-pagination
                 v-if="list.length > 0"
                 style="padding-left: 30%;padding-top: 3%"
@@ -63,9 +64,9 @@ import footers from '@/components/footers.vue';
 import searchTab from '@/components/searchTab.vue';
 import { mapActions, mapState } from 'vuex';
 export default {
-  name: 'schoolListPage',
+  name: 'kyysListPage',
   metaInfo: {
-    title: '科技超时-高校院所',
+    title: '科技超时-科研院所',
   },
   components: {
     menus,
