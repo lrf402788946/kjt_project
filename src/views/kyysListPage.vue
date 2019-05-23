@@ -20,13 +20,13 @@
                     <div class="qyleft2">
                       <div class="qytop">{{ item.name }}</div>
                       <div class="qybot">
-                        高校网址：<span>{{ item.homepage }}</span>
+                        科研网址：<span>{{ item.homepage }}</span>
                       </div>
                       <div class="qybot">
-                        高校地址：<span>{{ item.addr }}</span>
+                        科研地址：<span>{{ item.addr }}</span>
                       </div>
                       <div class="qybot">
-                        联系方式:<span>{{ item.contact }}</span>
+                        科研方式:<span>{{ item.contact }}</span>
                       </div>
                     </div>
                   </div>
