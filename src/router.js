@@ -2,11 +2,11 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import schoolListPage from './views/schoolListPage.vue';
 import supermarketPages from './views/supermarketPages.vue';
-import productDetails from './views/productDetails.vue';
+import detailPage from './views/detailPage.vue';
 import productListPage from './views/productListPage.vue';
 import login from './views/login.vue';
 import test from './views/test.vue';
-import businessConglomerateListPage from './views/businessConglomerateListPage.vue';
+import kjqyListPage from './views/kjqyListPage.vue';
 import product from './views/userAdmin/product.vue';
 
 Vue.use(Router);
@@ -24,9 +24,24 @@ export default new Router({
       component: schoolListPage,
     },
     {
-      path: '/productDetails',
-      name: 'productDetails',
-      component: productDetails,
+      path: '/kyysListPage',
+      name: 'kyysListPage',
+      component: () => import('@/views/kyysListPage.vue'),
+    },
+    {
+      path: '/jgttListPage',
+      name: 'jgttListPage',
+      component: () => import('@/views/jgttListPage.vue'),
+    },
+    {
+      path: '/kjqyListPage',
+      name: 'kjqyListPage',
+      component: kjqyListPage,
+    },
+    {
+      path: '/detailPage',
+      name: 'detailPage',
+      component: detailPage,
     },
     {
       path: '/productListPage',
@@ -37,11 +52,6 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: login,
-    },
-    {
-      path: '/businessConglomerateListPage',
-      name: 'businessConglomerateListPage',
-      component: businessConglomerateListPage,
     },
     {
       path: '/product',

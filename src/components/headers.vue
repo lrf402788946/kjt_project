@@ -4,16 +4,16 @@
       <div class="some">
         <div class="date" id="days">{{ tim() }}</div>
         <div class="sign">
-          <el-link style="float:left;color:white;" href="#login?type=1" :underline="false">注册</el-link>
+          <router-link style="float:left;color:white;" to="/login?type=1">注册</router-link>
           <div style="float:left; color:#fff; margin-left:10px;">|</div>
-          <el-link style="float:left;color:white;" href="#login?type=0" :underline="false">登录</el-link>
+          <router-link style="float:left;color:white;" to="/login?type=0">登录</router-link>
         </div>
       </div>
     </div>
     <div class="contents">
       <div class="head">
         <div class="logo">
-          <img :src="logo" />
+          <img :src="logo" @click="$router.push('/')" />
         </div>
         <!-- <div class="nav">
           <a href="${contextPath}/">首页</a>
