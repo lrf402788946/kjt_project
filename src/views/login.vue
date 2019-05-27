@@ -212,7 +212,9 @@ export default {
         let { result } = await this.register({data:this.registerForm});
         if (result) {
           console.log("注册成功");
-          this.$router.push({ path: '/login' });
+          //this.$router.push({ path: '/login' });
+          this.registerForm = {is_qy: '0'};
+          this.$set(this,"isLogin",true);
         }
     },
     // 上传前处理
