@@ -38,11 +38,12 @@
         </menus>
         <div class="list">
           <detailTitle :code="code"></detailTitle>
-          <!-- <productDetail></productDetail>
-          <property :img="img.default"></property>
-          <params></params>
-          <tradeType @toChange="changeTradeType"></tradeType>
-          <tradeBtn :type="5"></tradeBtn> -->
+          <infoDetail :code="code" :info="info"></infoDetail>
+          <!-- <productDetail></productDetail>-->
+          <property :title="`相关证件`" :img="info.file_path === null ? img.default : info.file_path"></property>
+          <!--<params></params>
+          <tradeType @toChange="changeTradeType"></tradeType>-->
+          <tradeBtn :type="5"></tradeBtn> 
         </div>
       </div>
       <div style="clear:both;"></div>
@@ -61,6 +62,7 @@ import property from '@/components/detail/property.vue';
 import params from '@/components/detail/params.vue';
 import tradeType from '@/components/detail/tradeType.vue';
 import tradeBtn from '@/components/detail/tradeBtn.vue';
+import infoDetail from '@/components/detail/infoDetail.vue';
 import { mapActions, mapState } from 'vuex';
 export default {
   name: 'productDetails',
@@ -69,11 +71,18 @@ export default {
     headers,
     footers,
     detailTitle,
+    // eslint-disable-next-line vue/no-unused-components
     productDetail,
+    // eslint-disable-next-line vue/no-unused-components
     property,
+    // eslint-disable-next-line vue/no-unused-components
     params,
+    // eslint-disable-next-line vue/no-unused-components
     tradeType,
+    // eslint-disable-next-line vue/no-unused-components
     tradeBtn,
+    // eslint-disable-next-line vue/no-unused-components
+    infoDetail,
   },
   data() {
     return {
@@ -164,33 +173,12 @@ export default {
 	color:#215299;
 }
 .list {
+    min-height: 1000px;
     width: 950px;
     background-color: #fff;
     margin-top: 10px;
     float: left;
     margin-bottom: 10px;
     height: 98.5%;
-}
-
-.write{
-	width:439px;
-	height: auto;
-	float: left;
-	border: 1px solid #ccc;
-	font-size: 18px;
-}
-.writeBg{
-	background: #f3f3f3 !important;
-}
-.writeInpt{
-	width: 218px;
-	height:39px;
-	line-height: 40px;
-	float: left;
-	border: none;
-	border-right: 1px solid #ccc;
-	border-bottom: 1px solid #ccc;
-	text-align: center;
-	font-size: 18px;
 }
 </style>
