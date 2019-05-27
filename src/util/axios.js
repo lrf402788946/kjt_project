@@ -13,6 +13,7 @@ const domain = '/kjcs/home';
 axios.interceptors.request.use(
   config => {
     let url = config.url;
+    console.log(config)
     //过滤是否是管理员,管理员则不写login_id
     // if (!(userRoleList.filter(item => item.role_code === 'ROLE_ADMIN').length > 0)) url = isLoginFilter(url);
     if (filterUrl(url)) {
