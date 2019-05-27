@@ -13,7 +13,7 @@
     <div class="contents">
       <div class="head">
         <div class="logo">
-          <img :src="logo" />
+          <img :src="logo" @click="$router.push('/')" />
         </div>
         <!-- <div class="nav">
           <a href="${contextPath}/">首页</a>

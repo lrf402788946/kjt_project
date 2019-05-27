@@ -13,7 +13,12 @@
             <div class="wai">
               <div>
                 <div class="qys" v-if="list.length > 0">
-                  <div class="qyleft" v-for="(item, index) in list" :key="index">
+                  <div
+                    class="qyleft"
+                    v-for="(item, index) in list"
+                    :key="index"
+                    @click="$router.push({ path: '/detailPage', query: { id: item.id, code: code } })"
+                  >
                     <div class="qyleft1">
                       <img :src="img.defalut_gif" />
                     </div>
@@ -66,7 +71,7 @@ import { mapActions, mapState } from 'vuex';
 export default {
   name: 'schoolListPage',
   metaInfo: {
-    title: '科技超时-高校院所',
+    title: '科技超时-机构团体',
   },
   components: {
     menus,

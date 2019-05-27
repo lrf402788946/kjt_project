@@ -11,7 +11,12 @@
               <h2>科技企业</h2>
             </div>
             <div class="wai">
-              <div style="min-height:200px;" v-for="(item, index) in list" :key="index">
+              <div
+                style="min-height:200px;"
+                v-for="(item, index) in list"
+                :key="index"
+                @click="$router.push({ path: '/detailPage', query: { id: item.id, code: code } })"
+              >
                 <div class="qys">
                   <div class="qyright">
                     <div class="qytopOne">
@@ -67,6 +72,9 @@ import searchTab from '@/components/searchTab.vue';
 import { mapActions, mapState } from 'vuex';
 export default {
   name: 'kyysListPage',
+  metaInfo: {
+    title: '科技超时-科技企业',
+  },
   components: {
     menus,
     headers,

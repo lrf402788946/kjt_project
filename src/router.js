@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import schoolListPage from './views/schoolListPage.vue';
 import supermarketPages from './views/supermarketPages.vue';
-import productDetails from './views/productDetails.vue';
+import detailPage from './views/detailPage.vue';
 import productListPage from './views/productListPage.vue';
 import login from './views/login.vue';
 import test from './views/test.vue';
@@ -39,9 +39,9 @@ export default new Router({
       component: kjqyListPage,
     },
     {
-      path: '/productDetails',
-      name: 'productDetails',
-      component: productDetails,
+      path: '/detailPage',
+      name: 'detailPage',
+      component: detailPage,
     },
     {
       path: '/productListPage',

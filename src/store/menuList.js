@@ -100,4 +100,12 @@ export const actions = {
     let { returnDataList, totalRow } = await toRequest(`${api.menuList}?skip=${skip}&limit=${limit}&code=${code}`, null, this.$axios);
     return { returnDataList, totalRow };
   },
+  /**
+   * 查询列表项的详情
+   * @param id
+   */
+  async getListDetail({ commit }, { id }) {
+    let { returnData, returnDataList } = await toRequest(`${api.listInfo}?id=${id}`, null, this.$axios);
+    return { returnDataList, returnData };
+  },
 };

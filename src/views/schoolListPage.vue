@@ -13,7 +13,12 @@
             <div class="wai" style="height:100%">
               <div>
                 <div class="qys" v-if="list.length > 0">
-                  <div class="qyleft" v-for="(item, index) in list" :key="index">
+                  <div
+                    class="qyleft"
+                    v-for="(item, index) in list"
+                    :key="index"
+                    @click="$router.push({ path: '/detailPage', query: { id: item.id, code: code } })"
+                  >
                     <div class="qyleft1">
                       <img :src="img.defalut_gif" />
                     </div>
