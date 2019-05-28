@@ -9,6 +9,7 @@ import test from './views/test.vue';
 import kjqyListPage from './views/kjqyListPage.vue';
 import product from './views/userAdmin/product.vue';
 import yffwListPage from './views/yffwListPage.vue';
+import userIndex from './views/userAdmin/userIndex.vue';
 
 Vue.use(Router);
 
@@ -73,6 +74,11 @@ export default new Router({
       path: '/jscgListPage',
       name: 'jscgListPage',
       component: () => import('@/views/jscgListPage.vue'),
+    },
+    {
+      path: '/userIndex',
+      name: 'userIndex',
+      component: userIndex,
     },
   ],
 });
