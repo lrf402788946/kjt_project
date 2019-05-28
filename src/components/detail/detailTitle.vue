@@ -12,6 +12,18 @@
     <div v-if="code === `JGTT`" class="listtitle">
       <span>机构详情</span>
     </div>
+    <div v-if="code === `YFFW`" class="listtitle">
+      <span>研发服务</span>
+    </div>
+    <div v-if="code === `JSCG`" class="listtitle">
+      <span>技术成果</span>
+    </div>
+    <div v-if="code === `CXCP`" class="listtitle">
+      <span>创新产品</span>
+    </div>
+    <div v-if="code === `ZXFW`" class="listtitle">
+      <span>咨询服务</span>
+    </div>
     <div v-if="code === ``" class="listtitle">
       <span>详&nbsp;&nbsp;情</span>
     </div>

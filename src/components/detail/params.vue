@@ -7,9 +7,9 @@
       <div class="write">
         <input class="writeInpt writeBg" value="参数名称" />
         <input class="writeInpt writeBg" value="参数内容" style="border-right: none;" />
-        <span v-for="i in 15" :key="i">
-          <input class="writeInpt" name="argsName" value="name" />
-          <input class="writeInpt" name="argsMemo" value="memo" style="border-right: none;" />
+        <span v-for="(item, index) in list" :key="index">
+          <input class="writeInpt" name="argsName" :value="item.name" />
+          <input class="writeInpt" name="argsMemo" :value="item.memo" style="border-right: none;" />
         </span>
       </div>
     </div>
@@ -21,6 +21,9 @@
 export default {
   name: 'params',
   components: {},
+  props: {
+    list: { type: Array, default: () => [] },
+  },
   data() {
     return {};
   },

@@ -36,13 +36,20 @@
             </div>
           </div>
         </menus>
-        <div class="list">
+        <div class="list" v-if="type === `product`">
+          <!--产品详情-->
           <detailTitle :code="code"></detailTitle>
-          <!-- <productDetail></productDetail>
-          <property :img="img.default"></property>
-          <params></params>
-          <tradeType @toChange="changeTradeType"></tradeType>
-          <tradeBtn :type="5"></tradeBtn> -->
+          <productDetail :info="info"></productDetail>
+          <property :title="`产权证书`" :img="info.zscq && info.file_path === null ? img.default : info.zscq"></property>
+          <params v-if="info.totaltype && (info.totaltype !== 2 || info.totaltype !== '2')" :list="paramsList"></params>
+          <tradeType :tradeType="info.jyfs"></tradeType>
+          <tradeBtn :info="info" @toBuy="toBuy"></tradeBtn>
+        </div>
+        <div class="list" v-else>
+          <!--信息详情-->
+          <detailTitle :code="code"></detailTitle>
+          <infoDetail :code="code" :info="info"></infoDetail>
+          <property :title="`相关证件`" :img="info.file_path === null ? img.default : info.file_path"></property>
         </div>
       </div>
       <div style="clear:both;"></div>
@@ -61,6 +68,7 @@ import property from '@/components/detail/property.vue';
 import params from '@/components/detail/params.vue';
 import tradeType from '@/components/detail/tradeType.vue';
 import tradeBtn from '@/components/detail/tradeBtn.vue';
+import infoDetail from '@/components/detail/infoDetail.vue';
 import { mapActions, mapState } from 'vuex';
 export default {
   name: 'productDetails',
@@ -69,11 +77,18 @@ export default {
     headers,
     footers,
     detailTitle,
+    // eslint-disable-next-line vue/no-unused-components
     productDetail,
+    // eslint-disable-next-line vue/no-unused-components
     property,
+    // eslint-disable-next-line vue/no-unused-components
     params,
+    // eslint-disable-next-line vue/no-unused-components
     tradeType,
+    // eslint-disable-next-line vue/no-unused-components
     tradeBtn,
+    // eslint-disable-next-line vue/no-unused-components
+    infoDetail,
   },
   data() {
     return {
@@ -82,7 +97,9 @@ export default {
       },
       infoId: this.$route.query.id || '',
       code: this.$route.query.code || '',
+      type: this.$route.query.type || '',
       info: {},
+      paramsList: {},
       tradeType: '',
       i: 2,
       listTitle: 1,
@@ -94,14 +111,24 @@ export default {
     await this.searchDetail();
   },
   methods: {
-    ...mapActions(['getListDetail']),
+    ...mapActions(['getListDetail', 'getProductDetail', 'buyProduct']),
     async searchDetail() {
-      let { returnDataList, returnData } = await this.getListDetail({ id: this.infoId });
-      this.$set(this, `info`, returnData);
+      if (this.type !== `product`) {
+        let { returnDataList, returnData } = await this.getListDetail({ id: this.infoId });
+        this.$set(this, `info`, returnData);
+      } else {
+        let { returnDataList, returnData } = await this.getProductDetail({ id: this.infoId });
+        this.$set(this, `info`, returnData);
+        this.$set(this, `paramsList`, returnDataList);
+      }
     },
     changeTradeType(type) {
       this.tradeType = type;
       console.log(this.tradeType);
+    },
+    async toBuy({ id, description }) {
+      console.log('in function:');
+      await this.buyProduct({ id: id, description: description });
     },
   },
 };
@@ -164,33 +191,12 @@ export default {
 	color:#215299;
 }
 .list {
+    min-height: 1000px;
     width: 950px;
     background-color: #fff;
     margin-top: 10px;
     float: left;
     margin-bottom: 10px;
     height: 98.5%;
-}
-
-.write{
-	width:439px;
-	height: auto;
-	float: left;
-	border: 1px solid #ccc;
-	font-size: 18px;
-}
-.writeBg{
-	background: #f3f3f3 !important;
-}
-.writeInpt{
-	width: 218px;
-	height:39px;
-	line-height: 40px;
-	float: left;
-	border: none;
-	border-right: 1px solid #ccc;
-	border-bottom: 1px solid #ccc;
-	text-align: center;
-	font-size: 18px;
 }
 </style>

@@ -1,9 +1,8 @@
 import axios from 'axios';
-// import store from '@/store/index';
+import store from '@/store/index';
 import { Loading } from 'element-ui';
 import { Message } from 'element-ui';
-// store.dispatch('login');
-// let userInfo = store.state.publics.userInfo;
+store.dispatch('login');
 // let userRoleList = store.state.publics.userRoleList;
 process.env.NODE_ENV === 'production' ? (axios.defaults.baseURL = 'http://192.168.1.217') : '';
 axios.defaults.headers.post['Content-Type'] = 'multipart/form-data';
@@ -13,7 +12,11 @@ const domain = '/kjcs/home';
 axios.interceptors.request.use(
   config => {
     let url = config.url;
-    console.log(config)
+    let token = '';
+    if (config.method === `post` && sessionStorage.getItem('userInfo')) token = JSON.parse(sessionStorage.getItem('userInfo')).token;
+    if (!url.includes(`login`)) {
+      config.data ? (config.data.token = token) : '';
+    }
     //过滤是否是管理员,管理员则不写login_id
     // if (!(userRoleList.filter(item => item.role_code === 'ROLE_ADMIN').length > 0)) url = isLoginFilter(url);
     if (filterUrl(url)) {

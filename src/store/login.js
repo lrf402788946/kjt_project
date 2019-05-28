@@ -21,23 +21,19 @@ const result_is_log = true;
  * @param data 数据(以此变量判断,若有值就是走post方法;若没有值或不传,则默认为undefined,走get方法)
  */
 const toRequest = async (uri, data = undefined, axios) => {
-  try {
-    if (data !== undefined) {
-      result = await axios.post(uri, data);
-    } else {
-      result = await axios.get(uri);
-    }
-    let { result, msg, returnData, returnDataList } = checkRes(result);
-    if (!result) {
-      Message.error(msg);
-      return { result: false };
-    } else {
-      data !== undefined ? Message.success(msg) : '';
-      if (!(Object.keys(returnData).length > 0) && !(returnDataList.length > 0)) console.warn(`${uri}--无数据`);
-      return { result: result, returnData: returnData, returnDataList: returnDataList };
-    }
-  } catch (error) {
-    console.error(`${uri}:${error}`);
+  if (data !== undefined) {
+    result = await axios.post(uri, data);
+  } else {
+    result = await axios.get(uri);
+  }
+  let { result, msg, returnData, returnDataList } = checkRes(result);
+  if (!result) {
+    Message.error(msg);
+    return { result: false };
+  } else {
+    data !== undefined ? Message.success(msg) : '';
+    if (!(Object.keys(returnData).length > 0) && !(returnDataList.length > 0)) console.warn(`${uri}--无数据`);
+    return { result: result, returnData: returnData, returnDataList: returnDataList };
   }
 };
 
@@ -80,7 +76,7 @@ export const mutations = {
     if (sessionStorage.getItem('userInfo')) {
       state.userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
       // state.userRoleList = JSON.parse(sessionStorage.getItem('userRoleList'));
-      return true;
+      return { is_login: true };
     } else {
       return false;
     }
@@ -100,11 +96,12 @@ export const actions = {
    * @param login_id 用户名
    * @param password 密码
    */
-  async login({ commit }, { login_id = '', password = '' }) {
-    let is_login = commit(types.USER_LOGIN);
-    if (is_login) {
+  async login({ commit }, payload) {
+    if (sessionStorage.getItem('userInfo')) {
+      commit(types.USER_LOGIN);
       return { result: true };
-    } else if (login_id !== '') {
+    } else if (payload !== undefined) {
+      let { login_id, password } = payload;
       let { result, returnData, returnDataList } = await toRequest(api.login, { data: { login_id: login_id, password: password } }, this.$axios);
       if (result) {
         sessionStorage.setItem('userInfo', JSON.stringify(returnData));

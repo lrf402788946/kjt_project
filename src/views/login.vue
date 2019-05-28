@@ -42,8 +42,8 @@
                 </form>
               </div>
               <!--注册页-->
-              <div  v-else>
-                <el-form label-position="left"  class="zhuce" role="form" method="post" style="height:auto; width:500px;">
+              <div v-else>
+                <el-form label-position="left" class="zhuce" role="form" method="post" style="height:auto; width:500px;">
                   <el-row :gutter="19">
                     <el-radio v-model="registerForm.is_qy" label="0" @change="isShow = false" checked border>个人</el-radio>
                     <el-radio v-model="registerForm.is_qy" label="1" @change="isShow = true" border>企业</el-radio>
@@ -80,81 +80,84 @@
                     <el-col :span="5">办公电话</el-col>
                     <el-col :span="15"><el-input v-model="registerForm.bgdh"></el-input></el-col>
                   </el-row>
-                  
+
                   <div v-if="isShow">
-                  <el-row :gutter="19">
-                    <el-col :span="5">机构类型</el-col>
-                    <el-col :span="15"><el-input v-model="registerForm.jglx"></el-input></el-col>
-                  </el-row>
-                  <el-row :gutter="19">
-                    <el-col :span="5">机构名称</el-col>
-                    <el-col :span="15"><el-input v-model="registerForm.jgmc"></el-input></el-col>
-                  </el-row>
-                  <el-row :gutter="19">
-                    <el-col :span="5">机构代码</el-col>
-                    <el-col :span="15"><el-input v-model="registerForm.jgdm"></el-input></el-col>
-                  </el-row>
-                  <el-row :gutter="19">
-                    <el-col :span="5">机构性质</el-col>
-                    <el-col :span="15"><el-input v-model="registerForm.jgxz"></el-input></el-col>
-                  </el-row>
-                  <el-row :gutter="19">
-                    <el-col :span="5">机构代码证</el-col>
-                    <el-col :span="15">
-                      <el-upload
-                        class="avatar-uploader"
-                        action="/kjcs/home/common/upload/"
-                        accept="image/jpeg,image/gif,image/png"
-                        :show-file-list="false"
-                        :on-success="imgQyHandleAvatarSuccess"
-                        :before-upload="beforeAvatarUpload">
-                        <img v-if="imgsrc_qy" :src="imgsrc_qy" class="avatar">
-                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                      </el-upload>
-                    </el-col>
-                  </el-row>
+                    <el-row :gutter="19">
+                      <el-col :span="5">机构类型</el-col>
+                      <el-col :span="15"><el-input v-model="registerForm.jglx"></el-input></el-col>
+                    </el-row>
+                    <el-row :gutter="19">
+                      <el-col :span="5">机构名称</el-col>
+                      <el-col :span="15"><el-input v-model="registerForm.jgmc"></el-input></el-col>
+                    </el-row>
+                    <el-row :gutter="19">
+                      <el-col :span="5">机构代码</el-col>
+                      <el-col :span="15"><el-input v-model="registerForm.jgdm"></el-input></el-col>
+                    </el-row>
+                    <el-row :gutter="19">
+                      <el-col :span="5">机构性质</el-col>
+                      <el-col :span="15"><el-input v-model="registerForm.jgxz"></el-input></el-col>
+                    </el-row>
+                    <el-row :gutter="19">
+                      <el-col :span="5">机构代码证</el-col>
+                      <el-col :span="15">
+                        <el-upload
+                          class="avatar-uploader"
+                          action="/kjcs/home/common/upload/"
+                          accept="image/jpeg,image/gif,image/png"
+                          :show-file-list="false"
+                          :on-success="imgQyHandleAvatarSuccess"
+                          :before-upload="beforeAvatarUpload"
+                        >
+                          <img v-if="imgsrc_qy" :src="imgsrc_qy" class="avatar" />
+                          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        </el-upload>
+                      </el-col>
+                    </el-row>
                   </div>
                   <div v-else>
-                  <el-row :gutter="19">
-                    <el-col :span="5">个人简介</el-col>
-                    <el-col :span="15"><el-input v-model="registerForm.grjj"></el-input></el-col>
-                  </el-row>
-                  <el-row :gutter="19">
-                    <el-col :span="5">专业领域</el-col>
-                    <el-col :span="15"><el-input v-model="registerForm.zyly"></el-input></el-col>
-                  </el-row>
+                    <el-row :gutter="19">
+                      <el-col :span="5">个人简介</el-col>
+                      <el-col :span="15"><el-input v-model="registerForm.grjj"></el-input></el-col>
+                    </el-row>
+                    <el-row :gutter="19">
+                      <el-col :span="5">专业领域</el-col>
+                      <el-col :span="15"><el-input v-model="registerForm.zyly"></el-input></el-col>
+                    </el-row>
 
-                  <el-row :gutter="19">
-                    <el-col :span="5">身份证正面</el-col>
-                    <el-col :span="15">
-                      <el-upload
-                        class="avatar-uploader"
-                        action="/kjcs/home/common/upload/"
-                        accept="image/jpeg,image/gif,image/png"
-                        :show-file-list="false"
-                        :on-success="handleAvatarSuccess"
-                        :before-upload="beforeAvatarUpload">
-                        <img v-if="imgsrc_a" :src="imgsrc_a" class="avatar">
-                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                      </el-upload>
-                    </el-col>
-                  </el-row>
+                    <el-row :gutter="19">
+                      <el-col :span="5">身份证正面</el-col>
+                      <el-col :span="15">
+                        <el-upload
+                          class="avatar-uploader"
+                          action="/kjcs/home/common/upload/"
+                          accept="image/jpeg,image/gif,image/png"
+                          :show-file-list="false"
+                          :on-success="handleAvatarSuccess"
+                          :before-upload="beforeAvatarUpload"
+                        >
+                          <img v-if="imgsrc_a" :src="imgsrc_a" class="avatar" />
+                          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        </el-upload>
+                      </el-col>
+                    </el-row>
 
-                  <el-row :gutter="19">
-                    <el-col :span="5">身份证背面</el-col>
-                    <el-col :span="15">
-                      <el-upload
-                        class="avatar-uploader"
-                        action="/kjcs/home/common/upload/"
-                        accept="image/jpeg,image/gif,image/png"
-                        :show-file-list="false"
-                        :on-success="cardHandleAvatarSuccess"
-                        :before-upload="beforeAvatarUpload">
-                        <img v-if="imgsrc_b" :src="imgsrc_b" class="avatar">
-                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                      </el-upload>
-                    </el-col>
-                  </el-row>
+                    <el-row :gutter="19">
+                      <el-col :span="5">身份证背面</el-col>
+                      <el-col :span="15">
+                        <el-upload
+                          class="avatar-uploader"
+                          action="/kjcs/home/common/upload/"
+                          accept="image/jpeg,image/gif,image/png"
+                          :show-file-list="false"
+                          :on-success="cardHandleAvatarSuccess"
+                          :before-upload="beforeAvatarUpload"
+                        >
+                          <img v-if="imgsrc_b" :src="imgsrc_b" class="avatar" />
+                          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        </el-upload>
+                      </el-col>
+                    </el-row>
                   </div>
                   <el-row :gutter="19">
                     <el-col :span="19">
@@ -185,7 +188,7 @@ export default {
   data() {
     return {
       form: {},
-      registerForm: {is_qy: '0'},
+      registerForm: { is_qy: '0' },
       isLogin: this.$route.query.type === '0',
       isShow: false,
       imgsrc_a: '',
@@ -204,22 +207,21 @@ export default {
           this.$router.push({ path: '/' });
         }
       }
-    }, 
+    },
     // 注册方法
     ...mapActions(['register']),
-    async toRegister(){
-        
-        let { result } = await this.register({data:this.registerForm});
-        if (result) {
-          console.log("注册成功");
-          //this.$router.push({ path: '/login' });
-          this.registerForm = {is_qy: '0'};
-          this.$set(this,"isLogin",true);
-        }
+    async toRegister() {
+      let { result } = await this.register({ data: this.registerForm });
+      if (result) {
+        console.log('注册成功');
+        //this.$router.push({ path: '/login' });
+        this.registerForm = { is_qy: '0' };
+        this.$set(this, 'isLogin', true);
+      }
     },
     // 上传前处理
     async beforeAvatarUpload(file) {
-      const isIMAGE = file.type === 'image/jpeg'||'image/gif'||'image/png';
+      const isIMAGE = file.type === 'image/jpeg' || 'image/gif' || 'image/png';
       const isLt2M = file.size / 1024 / 1024 < 2;
       if (!isIMAGE) {
         this.$message.error('上传文件只能是图片格式!');
@@ -227,7 +229,7 @@ export default {
       if (!isLt2M) {
         this.$message.error('上传图片大小不能超过 2MB!');
       }
-    
+
       return isIMAGE && isLt2M;
     },
     // 操作成功后处理
@@ -242,7 +244,7 @@ export default {
       this.imgsrc_b = URL.createObjectURL(file.raw);
     },
 
-    async imgQyHandleAvatarSuccess(res,file){
+    async imgQyHandleAvatarSuccess(res, file) {
       this.registerForm.img_qy = res.msg;
       this.imgsrc_qy = URL.createObjectURL(file.raw);
     },
@@ -251,5 +253,5 @@ export default {
 </script>
 
 <style lang="css" scoped>
-  @import '../assets/style/login.css';
+@import '../assets/style/login.css';
 </style>

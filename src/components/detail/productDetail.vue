@@ -5,7 +5,7 @@
         <div id="preview">
           <div class="jqzoom" id="spec-n1" @mouseover="hideZoom = false">
             <!-- <%if(product.image1!'' != ""){%> 图片这部分在视图中使用,否则会变成子组件与子组件之间数据交互,徒增难度 -->
-            <vue-photo-zoom-pro :hide-zoom="hideZoom" style="width: 350px; height: 100%;" :scale="2" :url="zoomPhoto" :out-show="true" ref="zoomPhoto">
+            <vue-photo-zoom-pro :hide-zoom="hideZoom" style="width: 350px; height: 100%;" :scale="3" :url="zoomPhoto" :out-show="true" ref="zoomPhoto">
             </vue-photo-zoom-pro>
           </div>
           <picScroll :picList="urls" @changePic="changePic"></picScroll>
@@ -13,26 +13,53 @@
       </div>
       <div class="midinfo" style="height: auto; margin-bottom: 30px;">
         <div class="proname">
-          <p>${product.name!''}</p>
-          <div class="lb">
-            <span><b>类别</b>：XXXX</span><span>上架时间：2019-01-01</span>
-            <div class="clear"></div>
+          <p>{{ info.name }}</p>
+          <!--服务-->
+          <div v-if="info.totaltype === 2 || info.totaltype === '2'">
+            <div class="lb">
+              <span><b>应用领域</b>：{{ info.yyly }}</span>
+              <div class="clear"></div>
+            </div>
+            <div class="lb">
+              <span><b>服务范围</b>：{{ info.fwfw }}</span>
+              <div class="clear"></div>
+            </div>
+          </div>
+          <!--技术-->
+          <div v-if="info.totaltype === 1 || info.totaltype === '1'">
+            <div class="lb">
+              <span><b>研发阶段</b>：{{ info.yfjd === 1 ? '阶段成果' : '最终成果' }}</span>
+              <div class="clear"></div>
+            </div>
+            <div class="lb">
+              <span><b>应用方向</b>：{{ info.yyfx || '无' }}</span>
+              <div class="clear"></div>
+            </div>
+            <div class="lb">
+              <span><b>应用领域</b>：{{ info.yyly || '无' }}</span>
+              <div class="clear"></div>
+            </div>
+            <div class="lb">
+              <span><b>市场前景</b>：{{ info.scqj || '无' }}</span>
+              <div class="clear"></div>
+            </div>
           </div>
           <div class="price">
-            <p>收费标准：<span>￥500元/个</span></p>
+            <p>
+              收费标准：<span>￥{{ info.price }}元/{{ info.priceunit }}</span>
+            </p>
           </div>
           <div class="morepro">
-            <p class="lb">
+            <!-- <p class="lb">
               <span>所属企业：${store.name!''}</span>
               <span
                 >认证状态：
-                <!-- <%if(store.state=="1"){%> -->
                 <font style="color:#00c71c;">已认证</font>
                 未认证
               </span>
-            </p>
+            </p> -->
             <div class="clear"></div>
-            <p>${product.introduction!''}</p>
+            <p>{{ info.introduction }}</p>
           </div>
         </div>
       </div>
@@ -45,6 +72,9 @@
 import picScroll from '@/components/detail/picScroll.vue';
 export default {
   name: 'productDetail',
+  props: {
+    info: { type: Object, default: () => {} },
+  },
   components: {
     picScroll,
   },
@@ -97,6 +127,25 @@ export default {
       },
     },
   },
+  watch: {
+    info: {
+      handler(val) {
+        console.log(`watch`);
+        let urls = [];
+        urls.push({ url: this.info.image1 });
+        urls.push({ url: this.info.image2 });
+        urls.push({ url: this.info.image3 });
+        urls.push({ url: this.info.image4 });
+        urls.push({ url: this.info.image5 });
+        this.$set(this, `urls`, urls);
+      },
+    },
+  },
+  created() {
+    this.$nextTick(() => {
+      this.$refs.zoomPhoto.$refs.img.style = 'width:350px;height:350px;';
+    });
+  },
   methods: {
     changePic(index) {
       this.zoomPhoto = index;
@@ -106,6 +155,10 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.img-container > img{
+  width: 350px;
+  height: 350px;
+}
 .pros{
 	height:485px;
 }

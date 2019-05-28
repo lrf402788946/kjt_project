@@ -1,38 +1,20 @@
 <template lang="html">
-  <div id="productPage">
+  <div id="zxfwListPage">
     <div class="wrapper">
       <headers></headers>
       <div class="main">
         <menus></menus>
         <div class="list">
-          <!-- <div class="sou">
-            <form class="sout" action="${contextPath}/Supermarket/search?type=ALL" method="post">
-              <select name="type">
-                <option value="ZCP">全部产品</option>
-                <option value="YJKF">研发服务</option>
-                <option value="JSCG">技术成果</option>
-                <option value="CXCP">创新产品</option>
-                <option value="ZXFW">咨询服务</option>
-              </select>
-            </form>
-            <form class="soub" action="${contextPath}/Supermarket/search?type=ZGX" method="post">
-              <input type="text" name="name" style="width:355px;" placeholder="请输入名称" />
-              <button><img :src="img.search" /><span>搜索</span></button>
-            </form>
-          </div> -->
           <div style="background:#fff;padding-bottom: 5%;">
             <div class="listtitle" style="border:none;">
-              <h2>创新产品</h2>
+              <h2>咨询服务</h2>
             </div>
             <div>
               <div class="cps" v-if="list.length > 0">
-                <div
-                  class="cp"
-                  v-for="(item, index) in list"
-                  :key="index"
-                  @click="$router.push({ path: '/detailPage', query: { id: item.id, code: code, type: `product` } })"
-                >
-                  <img :src="item.image1" />
+                <div class="cp" v-for="(item, index) in list" :key="index">
+                  <a href="${contextPath}/Supermarket/toSupplydemandDetailsPage?id=${product.id!''}">
+                    <img :src="item.image1" />
+                  </a>
                   <div class="wordInfo">
                     <span
                       style="height: 25px; line-height: 35px; width:200px; padding:0 10px 0 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
@@ -80,9 +62,9 @@ import menus from '@/components/menus.vue';
 import footers from '@/components/footers.vue';
 import { mapActions, mapState } from 'vuex';
 export default {
-  name: 'productPage',
+  name: 'zxfwListPage',
   metaInfo: {
-    title: '科技超时-创新产品',
+    title: '科技超时-咨询服务',
   },
   components: {
     menus,

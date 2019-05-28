@@ -19,6 +19,22 @@ const api = {
    * query: id
    */
   listInfo: '/enterprise/enterprise_info',
+  /**
+   *  skip,
+   *  limit,
+   *  code=研发服务 -- YFFW   技术成果 --JSCG 创新产品 -- CXCP  咨询服务 -- ZXFW
+   */
+  productList: '/product/product_publish_list',
+  /**
+   * id
+   */
+  productInfo: '/product/product_info',
+  /**
+   * token,
+   * product_id
+   * description
+   */
+  transactionSave: '/product/transaction_save',
 };
 
 /**
@@ -43,7 +59,6 @@ const toRequest = async (uri, data = undefined, axios) => {
       Message.error(msg);
       return { result: false };
     } else {
-      console.log(data !== undefined && data !== null);
       if (data !== undefined && data !== null) {
         Message.success(msg);
       }
@@ -101,11 +116,36 @@ export const actions = {
     return { returnDataList, totalRow };
   },
   /**
+   * 菜单选项(后4个)=>请求列表
+   * @param code 请求列表类型
+   */
+  async getProductList({ commit }, { skip, limit, code }) {
+    let { returnDataList, totalRow } = await toRequest(`${api.productList}?skip=${skip}&limit=${limit}&code=${code}`, null, this.$axios);
+    return { returnDataList, totalRow };
+  },
+  /**
    * 查询列表项的详情
    * @param id
    */
   async getListDetail({ commit }, { id }) {
     let { returnData, returnDataList } = await toRequest(`${api.listInfo}?id=${id}`, null, this.$axios);
+    return { returnDataList, returnData };
+  },
+  /**
+   * 查询产品列表项的详情
+   * @param id
+   */
+  async getProductDetail({ commit }, { id }) {
+    let { returnData, returnDataList } = await toRequest(`${api.productInfo}?id=${id}`, null, this.$axios);
+    return { returnDataList, returnData };
+  },
+  /**
+   * 购买产品
+   * @param id 产品id
+   * @param description 交易说明
+   */
+  async buyProduct({ commit }, { id, description }) {
+    let { returnData, returnDataList } = await toRequest(`${api.transactionSave}`, { data: { product_id: id, description: description } }, this.$axios);
     return { returnDataList, returnData };
   },
 };

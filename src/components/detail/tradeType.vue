@@ -4,10 +4,11 @@
       <div class="inputTxt">
         交易方式
       </div>
-      <div class="">
-        <el-radio-group v-model="type" @change="toChangeTradeType()">
-          <el-radio-button label="0">转让</el-radio-button>
-          <el-radio-button label="1">公用</el-radio-button>
+      <div>
+        <!--@change="toChangeTradeType()"-->
+        <el-radio-group v-model="type">
+          <el-radio-button :label="0">转让</el-radio-button>
+          <el-radio-button :label="1">公用</el-radio-button>
         </el-radio-group>
       </div>
     </div>
@@ -17,11 +18,21 @@
 <script>
 export default {
   name: 'tradeType',
+  props: {
+    tradeType: { default: '' },
+  },
   components: {},
   data() {
     return {
       type: '',
     };
+  },
+  watch: {
+    tradeType: {
+      handler(val) {
+        this.type = val;
+      },
+    },
   },
   computed: {},
   methods: {
