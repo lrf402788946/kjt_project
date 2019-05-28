@@ -3,9 +3,9 @@
     <div class="wrapper">
       <headers></headers>
       <div class="main">
-        <menus></menus>
-        <div class="list" style="background:#ffffff">
-          <div style="text-align:center;" v-if="userInfo.is_qy !== 0">
+        <menus> </menus>
+        <div class="list" style="background: #ffffff;min-height:900px;">
+          <div style="text-align:center;" v-if="userInfo.is_qy === 0">
             <el-row style="margin-top:40px;" class="top">
               <el-col :span="6">
                 <img width="200px" height="200px" :src="userInfo.img_patch === null ? img.default : userInfo.img_patch" />
@@ -31,6 +31,12 @@
               <el-col :span="6">身份证:</el-col>
               <el-col :span="9"><img width="200px" height="200px" :src="userInfo.cardfile_a === null ? img.default : userInfo.cardfile_a"/></el-col>
               <el-col :span="9"><img width="200px" height="200px" :src="userInfo.cardfile_b === null ? img.default : userInfo.cardfile_b"/></el-col>
+            </el-row>
+            <el-row style="margin-top:30px;">
+              <el-col :span="6">简介:</el-col>
+              <el-col :span="18">
+                {{ userInfo.grjj }}
+              </el-col>
             </el-row>
           </div>
           <div style="text-align:center;" v-else>
@@ -73,6 +79,18 @@
               <el-col :span="6">机构名称:</el-col>
               <el-col :span="6">{{ userInfo.zyly || 'none' }}</el-col>
             </el-row>
+            <el-row style="margin-top:30px;">
+              <el-col :span="6">机构代码证:</el-col>
+              <el-col :span="6">
+                <img width="200px" height="200px" :src="userInfo.img_qy === null ? img.default : userInfo.img_qy" />
+              </el-col>
+            </el-row>
+            <el-row style="margin-top:30px;">
+              <el-col :span="6">简介:</el-col>
+              <el-col :span="18">
+                {{ userInfo.grjj }}
+              </el-col>
+            </el-row>
           </div>
         </div>
       </div>
@@ -98,7 +116,11 @@ export default {
     return {
       img: {
         default: require('@a/img/logo.gif'),
+        keji: require('@a/img/personal.png'),
+        cha: require('@a/img/cha.png'),
+        diaocha: require('@a/img/diaocha.gif'),
       },
+      is_yy: true,
       form: {
         test: 'test',
       },
