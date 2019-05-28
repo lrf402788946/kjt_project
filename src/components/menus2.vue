@@ -5,14 +5,12 @@
         <li>
           <img :src="img.keji" style="vertical-align: middle;" />个人中心
         </li>
-        <li><a href="${contextPath}/Supermarket/toEnterprisePage?storetype=GXYS">待定etc</a></li>
-        <li><a href="">待定etc</a></li>
-        <li><a href="${contextPath}/Supermarket/toEnterprisePage?storetype=QYJT">待定etc</a></li>
-        <li><a href="${contextPath}/Supermarket/toEnterprisePage?storetype=JGTT">待定etc</a></li>
-        <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=YJKF">待定etc</a></li>
-        <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=YJKF">待定etc</a></li>
-        <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=YJKF">待定etc</a></li>
-        <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=YJKF">待定etc</a></li>
+        <li><router-link to="/userinfo">基本信息</router-link></li>
+        <li><router-link to="">消息管理</router-link></li>
+        <li><router-link to="${contextPath}/Supermarket/toEnterprisePage?storetype=QYJT">我的发布</router-link></li>
+        <li><router-link to="/myTransaction">我的订购</router-link></li>
+        <li><router-link to="${contextPath}/Supermarket/toProductTypePage?producttype=YJKF">我的审核</router-link></li>
+        <li><router-link to="${contextPath}/Supermarket/toProductTypePage?producttype=YJKF">注销账号</router-link></li>
         <!-- <li><a href="${contextPath}/Talent/toTech">待定etc</a></li> -->
       </ul>
       <slot></slot>

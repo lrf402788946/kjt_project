@@ -7,7 +7,7 @@ import * as types from './mutation-types';
 Vue.use(Vuex);
 
 const api = {
-  user: '/user/user_info',
+  transaction_my_list: '/product/transaction_my_list',
 };
 
 /**
@@ -27,14 +27,14 @@ const toRequest = async (uri, data = undefined, axios) => {
     } else {
       result = await axios.get(uri);
     }
-    let { result, msg, returnData, returnDataList } = checkRes(result);
+    let { result, msg, returnData, returnDataList ,totalRow} = checkRes(result);
     if (!result) {
       Message.error(msg);
       return { result: false };
     } else {
       data !== undefined ? Message.success(msg) : '';
       if (!(Object.keys(returnData).length > 0) && !(returnDataList.length > 0)) console.warn(`${uri}--无数据`);
-      return { result: result, returnData: returnData, returnDataList: returnDataList };
+      return { result: result, returnData: returnData, returnDataList: returnDataList ,totalRow};
     }
   } catch (error) {
     console.error(`${uri}:${error}`);
@@ -56,7 +56,10 @@ const checkRes = result => {
       console.log(_.get(result, 'dataList', []));
     }
     if (result.rescode === 0 || result.rescode === '0') {
-      return { result: true, msg: result.msg, returnData: _.get(result, 'data', {}), returnDataList: _.get(result, 'dataList', []) };
+      return { result: true, msg: result.msg, 
+        returnData: _.get(result, 'data', {}), 
+        returnDataList: _.get(result, 'dataList', []),
+        totalRow: _.get(result, 'totalRow', 0) };
     } else {
       return { result: false, msg: result.msg };
     }
@@ -100,14 +103,12 @@ export const actions = {
    * @param login_id 用户名
    * @param password 密码
    */
-  async getUserInfo({ commit }, { token = '' }) {
-    let is_login = commit(types.USER_LOGIN);
-    if (is_login) {
-      return { result: true };
-    } else if (token !== '') {
-      let { result, returnData, returnDataList } = await toRequest(api.user, { data: { token: token } }, this.$axios);
+  async transaction({ commit }, data) {
+    
+    if (data !== undefined) {
+      let { result, totalRow, returnDataList } = await toRequest(api.transaction_my_list, { data: data }, this.$axios);
       if (result) {
-        return {returnData };
+        return {returnDataList,totalRow};
       }
     }
     return { result: false };
