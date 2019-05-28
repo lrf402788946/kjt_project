@@ -52,7 +52,7 @@ export default {
     }),
   },
   async created() {
-    await this.login({});
+    await this.login();
   },
   methods: {
     ...mapActions(['login']),

@@ -99,7 +99,7 @@ export const actions = {
    * 注册方法
    * @param from 用户表单
    */
-  async register({ commit }, { data:data }) {
+  async register({ commit }, { data: data }) {
     console.log(data);
     let { result, returnData, returnDataList } = await toRequest(api.register, { data: data }, this.$axios);
     if (result) {
