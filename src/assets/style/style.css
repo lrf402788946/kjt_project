@@ -1,0 +1,49 @@
+.main{
+	margin-top: 10px auto;
+	width: 1200px;
+}
+.partone{
+	height: 845px;
+	margin: 10px 0;
+}
+.leftOne{
+	float: left;
+	width: 240px;
+	/*height:865px;*/
+}
+.oneright{
+	float: right;
+	height:838px;
+	width: 950px;
+	background: #fff;
+}
+.rightTop{
+	height: 60px;
+	width: 950px;
+	line-height: 60px;
+	border-bottom: 1px solid #215299;
+}
+.rightTopL{
+	width: 130px;
+	height: 60px;
+	background: #215299 ;
+	float: left;
+	color: #fff;
+	font-size: 18px;
+	text-align: center;
+	font-family:  "微软雅黑", Tahoma, Arial, Helvetica, STHeiti;
+}
+.rightTopR{
+	width: 130px;
+	height: 60px;
+	background: #fff;
+	float: left;
+	color: #888;
+	font-size: 18px;
+	text-align: center;
+	font-family:  "微软雅黑", Tahoma, Arial, Helvetica, STHeiti;
+}
+.rightContent{
+	/*height: 737px;*/
+	margin: 40px 0 0 30px;
+}

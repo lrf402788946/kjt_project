@@ -1,6 +1,6 @@
 <template lang="html">
   <div id="footers">
-    <div class="footer">
+    <div id="footers" class="footer">
       <div>
         <p>版权所有：吉林省计算中心</p>
         <p>技术支持：长春市福瑞科技有限公司</p>
