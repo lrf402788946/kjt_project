@@ -8,6 +8,7 @@ import login from './views/login.vue';
 import test from './views/test.vue';
 import kjqyListPage from './views/kjqyListPage.vue';
 import product from './views/userAdmin/product.vue';
+import userinfo from './views/userAdmin/userinfo.vue';
 import yffwListPage from './views/yffwListPage.vue';
 import userIndex from './views/userAdmin/userIndex.vue';
 
@@ -59,6 +60,11 @@ export default new Router({
       path: '/product',
       name: 'product',
       component: product,
+    },
+    {
+      path: '/userinfo',
+      name: 'userinfo',
+      component: userinfo,
     },
     {
       path: '/yffwListPage',
