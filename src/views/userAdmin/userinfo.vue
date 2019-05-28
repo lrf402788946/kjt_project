@@ -15,29 +15,29 @@
                 <div class="rightContent">
                     <el-form>
                         <el-row>
-                            <span>用户名称：{{userinfo.name}}</span>
+                            <span>用户名称：{{userInfo.name}}</span>
                         </el-row>
                         <el-row>
-                            <span>身份证号：{{userinfo.cardnumber}}</span>
+                            <span>身份证号：{{userInfo.cardnumber}}</span>
                         </el-row>
                         <el-row>
-                            <span>电话号码：{{userinfo.phone}}</span>
+                            <span>电话号码：{{userInfo.phone}}</span>
                         </el-row>
                         <el-row>
-                            <span>邮箱地址：{{userinfo.email}}</span>
+                            <span>邮箱地址：{{userInfo.email}}</span>
                         </el-row>
                         <el-row>
-                            <span>联系地址：{{userinfo.addr}}</span>
+                            <span>联系地址：{{userInfo.addr}}</span>
                         </el-row>
                         <el-row v-if="isShow">
-                            <span>身份证照：<img v-if="userinfo.cardfile_a" :src="userinfo.cardfile_a" class="avatar">
-                            <img v-if="userinfo.cardfile_b" :src="userinfo.cardfile_b" class="avatar"></span>
+                            <span>身份证照：<img v-if="userInfo.cardfile_a" :src="userInfo.cardfile_a" class="avatar">
+                            <img v-if="userInfo.cardfile_b" :src="userInfo.cardfile_b" class="avatar"></span>
                         </el-row>
                         <el-row v-else>
-                            <span>组织机构：<img v-if="userinfo.img_qy" :src="userinfo.img_qy" class="avatar"></span>
+                            <span>组织机构：<img v-if="userInfo.img_qy" :src="userInfo.img_qy" class="avatar"></span>
                         </el-row>
                         <el-row v-if="isShow">
-                            <span>个人简介：{{userinfo.grjj}}</span>
+                            <span>个人简介：{{userInfo.grjj}}</span>
                         </el-row>
                     </el-form>
                 </div>
@@ -52,7 +52,7 @@
 import headers from '@/components/headers.vue';
 import menus from '@/components/menus2.vue';
 import footers from '@/components/footers.vue';
-import { mapActions } from 'vuex';
+import { mapActions,mapState } from 'vuex';
 export default {
   components: {
     menus,
@@ -61,20 +61,19 @@ export default {
   },
   data() {
     return {
-      userinfo: {},
       token: '',
+      isShow: true,
     };
   },
+  computed:{
+    ...mapState({
+      userInfo: state => state.login.userInfo,
+    }),
+  },
   created(){
-    this.getUserinfo();
-  },
-  methods: {
-    ...mapActions(['userinfo']),
-    async getUserinfo(){
-      let { returnData } = await this.login({ token: this.token });
-      this.$set(this,"userinfo",returnData);
-    },
-  },
+    console.log(this.userInfo.token);
+  }
+  
 };
 </script>
 
