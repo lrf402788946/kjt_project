@@ -80,7 +80,7 @@ export const mutations = {
     if (sessionStorage.getItem('userInfo')) {
       state.userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
       // state.userRoleList = JSON.parse(sessionStorage.getItem('userRoleList'));
-      return true;
+      return { is_login: true };
     } else {
       return false;
     }
@@ -100,9 +100,9 @@ export const actions = {
    * @param login_id 用户名
    * @param password 密码
    */
-  async login({ commit }, { login_id = '', password = '' }) {
-    let is_login = commit(types.USER_LOGIN);
-    if (is_login) {
+  async login({ commit }, { login_id, password } = {}) {
+    if (sessionStorage.getItem('userInfo')) {
+      commit(types.USER_LOGIN);
       return { result: true };
     } else if (login_id !== '') {
       let { result, returnData, returnDataList } = await toRequest(api.login, { data: { login_id: login_id, password: password } }, this.$axios);

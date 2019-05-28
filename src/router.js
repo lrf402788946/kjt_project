@@ -8,6 +8,7 @@ import login from './views/login.vue';
 import test from './views/test.vue';
 import kjqyListPage from './views/kjqyListPage.vue';
 import product from './views/userAdmin/product.vue';
+import yffwListPage from './views/yffwListPage.vue';
 
 Vue.use(Router);
 
@@ -57,6 +58,21 @@ export default new Router({
       path: '/product',
       name: 'product',
       component: product,
+    },
+    {
+      path: '/yffwListPage',
+      name: 'yffwListPage',
+      component: yffwListPage,
+    },
+    {
+      path: '/zxfwListPage',
+      name: 'zxfwListPage',
+      component: () => import('@/views/zxfwListPage.vue'),
+    },
+    {
+      path: '/jscgListPage',
+      name: 'jscgListPage',
+      component: () => import('@/views/jscgListPage.vue'),
     },
   ],
 });

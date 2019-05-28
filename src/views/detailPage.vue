@@ -36,14 +36,20 @@
             </div>
           </div>
         </menus>
-        <div class="list">
+        <div class="list" v-if="type === `product`">
+          <!--产品详情-->
+          <detailTitle :code="code"></detailTitle>
+          <productDetail :info="info"></productDetail>
+          <property :title="`产权证书`" :img="info.zscq && info.file_path === null ? img.default : info.zscq"></property>
+          <params v-if="info.totaltype && (info.totaltype !== 2 || info.totaltype !== '2')" :list="paramsList"></params>
+          <tradeType :tradeType="info.jyfs"></tradeType>
+          <tradeBtn :info="info" @toBuy="toBuy"></tradeBtn>
+        </div>
+        <div class="list" v-else>
+          <!--信息详情-->
           <detailTitle :code="code"></detailTitle>
           <infoDetail :code="code" :info="info"></infoDetail>
-          <!-- <productDetail></productDetail>-->
           <property :title="`相关证件`" :img="info.file_path === null ? img.default : info.file_path"></property>
-          <!--<params></params>
-          <tradeType @toChange="changeTradeType"></tradeType>-->
-          <tradeBtn :type="5"></tradeBtn> 
         </div>
       </div>
       <div style="clear:both;"></div>
@@ -91,7 +97,9 @@ export default {
       },
       infoId: this.$route.query.id || '',
       code: this.$route.query.code || '',
+      type: this.$route.query.type || '',
       info: {},
+      paramsList: {},
       tradeType: '',
       i: 2,
       listTitle: 1,
@@ -103,14 +111,24 @@ export default {
     await this.searchDetail();
   },
   methods: {
-    ...mapActions(['getListDetail']),
+    ...mapActions(['getListDetail', 'getProductDetail', 'buyProduct']),
     async searchDetail() {
-      let { returnDataList, returnData } = await this.getListDetail({ id: this.infoId });
-      this.$set(this, `info`, returnData);
+      if (this.type !== `product`) {
+        let { returnDataList, returnData } = await this.getListDetail({ id: this.infoId });
+        this.$set(this, `info`, returnData);
+      } else {
+        let { returnDataList, returnData } = await this.getProductDetail({ id: this.infoId });
+        this.$set(this, `info`, returnData);
+        this.$set(this, `paramsList`, returnDataList);
+      }
     },
     changeTradeType(type) {
       this.tradeType = type;
       console.log(this.tradeType);
+    },
+    async toBuy({ id, description }) {
+      console.log('in function:');
+      await this.buyProduct({ id: id, description: description });
     },
   },
 };
