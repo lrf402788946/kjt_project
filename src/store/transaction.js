@@ -37,7 +37,7 @@ const toRequest = async (uri, data = undefined, axios) => {
     } else {
       data !== undefined ? Message.success(msg) : '';
       if (!(Object.keys(returnData).length > 0) && !(returnDataList.length > 0)) console.warn(`${uri}--无数据`);
-      return { result: result, returnData: returnData, returnDataList: returnDataList, totalRow };
+      return { result: result, returnData: returnData, returnDataList: returnDataList, totalRow: totalRow };
     }
   } catch (error) {
     console.error(`${uri}:${error}`);
@@ -58,7 +58,11 @@ const checkRes = result => {
     console.log(_.get(result, 'dataList', []));
   }
   if (result.rescode === 0 || result.rescode === '0') {
-    return { result: true, msg: result.msg, returnData: _.get(result, 'data', {}), returnDataList: _.get(result, 'dataList', []) };
+    return { result: true, 
+      msg: result.msg, 
+      returnData: _.get(result, 'data', {}),
+      returnDataList: _.get(result, 'dataList', []),
+      totalRow: result.totalRow };
   } else {
     return { result: false, msg: result.msg };
   }
