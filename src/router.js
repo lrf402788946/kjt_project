@@ -10,6 +10,7 @@ import kjqyListPage from './views/kjqyListPage.vue';
 import product from './views/userAdmin/product.vue';
 // import userinfo from './views/userAdmin/userinfo.vue';
 import yffwListPage from './views/yffwListPage.vue';
+import myTransaction from './views/userAdmin/myTransaction.vue';
 import userIndex from './views/userAdmin/userIndex.vue';
 import publishInfoIndex from './views/userAdmin/publishInfoIndex.vue';
 
@@ -81,6 +82,11 @@ export default new Router({
       path: '/jscgListPage',
       name: 'jscgListPage',
       component: () => import('@/views/jscgListPage.vue'),
+    },
+    {
+      path: '/myTransaction',
+      name: 'myTransaction',
+      component: myTransaction,
     },
     {
       path: '/userIndex',

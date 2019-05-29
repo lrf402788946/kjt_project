@@ -10,6 +10,7 @@ const api = {
   user: '/user/user_info',
   selfProductList: '/product/product_list', //gxtype=>0需;1供;state=>0待审核;2通过审核
   selfTransactionList: '/product/transaction_list', //gxtype,
+  transaction_my_list: '/product/transaction_my_list',
 };
 
 /**
@@ -29,14 +30,14 @@ const toRequest = async (uri, data = undefined, axios) => {
     } else {
       result = await axios.get(uri);
     }
-    let { result, msg, returnData, returnDataList } = checkRes(result);
+    let { result, msg, returnData, returnDataList, totalRow } = checkRes(result);
     if (!result) {
       Message.error(msg);
       return { result: false };
     } else {
       data !== undefined ? Message.success(msg) : '';
       if (!(Object.keys(returnData).length > 0) && !(returnDataList.length > 0)) console.warn(`${uri}--无数据`);
-      return { result: result, returnData: returnData, returnDataList: returnDataList };
+      return { result: result, returnData: returnData, returnDataList: returnDataList, totalRow };
     }
   } catch (error) {
     console.error(`${uri}:${error}`);
@@ -90,5 +91,14 @@ export const actions = {
   async selfTradeList({ commit }, data) {
     let { result, returnData, returnDataList } = await toRequest(api.selfTransactionList, { data: data }, this.$axios);
     return { returnDataList };
+  },
+  async transaction({ commit }, data) {
+    if (data !== undefined) {
+      let { result, totalRow, returnDataList } = await toRequest(api.transaction_my_list, { data: data }, this.$axios);
+      if (result) {
+        return { returnDataList, totalRow };
+      }
+    }
+    return { result: false };
   },
 };
