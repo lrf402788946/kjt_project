@@ -59,11 +59,7 @@ const checkRes = result => {
     console.log(_.get(result, 'dataList', []));
   }
   if (result.rescode === 0 || result.rescode === '0') {
-    return { result: true, 
-      msg: result.msg, 
-      returnData: _.get(result, 'data', {}),
-      returnDataList: _.get(result, 'dataList', []),
-      totalRow: result.totalRow };
+    return { result: true, msg: result.msg, returnData: _.get(result, 'data', {}), returnDataList: _.get(result, 'dataList', []), totalRow: result.totalRow };
   } else {
     return { result: false, msg: result.msg };
   }
@@ -111,7 +107,7 @@ export const actions = {
    * @param id
    */
   async selProductDetail({ commit }, data) {
-    let { returnData, returnDataList } = await toRequest(api.productDetailIndex, {data:data}, this.$axios);
+    let { returnData, returnDataList } = await toRequest(api.productDetailIndex, { data: data }, this.$axios);
     return { returnDataList, returnData };
   },
 };
