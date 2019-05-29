@@ -3,7 +3,7 @@
     <div class="oneleft">
       <ul>
         <li>
-          <a href="#"><img :src="img.keji" style="vertical-align: middle;" /> 商务分类</a>
+          <a href="#"><img :src="img.keji" style="vertical-align: middle;" /> 信息分类</a>
         </li>
         <li><router-link to="/schoolListPage?code=GXYS">高校院所</router-link></li>
         <li><router-link to="/kyysListPage?code=KYYS">科研院所</router-link></li>

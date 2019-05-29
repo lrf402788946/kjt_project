@@ -9,7 +9,10 @@ ul{
 	list-style: none;
 }
 .oneleft{
+	float: left;
 	width: 240px;
+	height: 600px;
+	margin-top:10px;
 	background-color: #fff;
 	margin-right: 10px;
 	font-size: 22px;
@@ -75,7 +78,7 @@ height: 60px;
 }
 .frm{
 	width: 240px;
-	padding-left: 70px;
+	padding-left: 10px;
 	height: 48px;
 }
 .clear {

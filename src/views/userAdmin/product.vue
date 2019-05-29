@@ -137,7 +137,7 @@
 </template>
 <script>
 import headers from '@/components/headers.vue';
-import menus from '@/components/menus2.vue';
+import menus from '@/components/userMenus.vue';
 export default {
   components: {
     menus,
