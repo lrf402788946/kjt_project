@@ -10,7 +10,8 @@ const api = {
   user: '/user/user_info',
   selfProductList: '/product/product_list', //gxtype=>0需;1供;state=>0待审核;2通过审核
   selfTransactionList: '/product/transaction_list', //gxtype,
-  transaction_my_list: '/product/transaction_my_list',
+  transactionMyList: '/product/transaction_my_list', // 我的订购列表 传入token
+  productDetailIndex: '/product/product_info',
 };
 
 /**
@@ -98,11 +99,19 @@ export const actions = {
   },
   async transaction({ commit }, data) {
     if (data !== undefined) {
-      let { result, totalRow, returnDataList } = await toRequest(api.transaction_my_list, { data: data }, this.$axios);
+      let { result, totalRow, returnDataList } = await toRequest(api.transactionMyList, { data: data }, this.$axios);
       if (result) {
         return { returnDataList, totalRow };
       }
     }
     return { result: false };
+  },
+  /**
+   * 查询产品列表项的详情
+   * @param id
+   */
+  async selProductDetail({ commit }, data) {
+    let { returnData, returnDataList } = await toRequest(api.productDetailIndex, {data:data}, this.$axios);
+    return { returnDataList, returnData };
   },
 };

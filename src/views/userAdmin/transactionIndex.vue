@@ -29,7 +29,7 @@
                       </div>
                     </div>
                     <div class="fbListCenter">
-                      <div class="fbListCenterL">
+                      <div class="fbListCenterL" @click="$router.push({ path: '/productDetailIndex', query: { id: item.id } })">
                         <img v-if="item.image1" :src="item.image1" />
                         <img v-else :src="img.noimg" />
                       </div>
