@@ -2,15 +2,12 @@
   <div id="menus">
     <div class="oneleft">
       <ul>
-        <li><img :src="img.keji" style="vertical-align: middle;" />个人中心</li>
-        <li><a href="${contextPath}/Supermarket/toEnterprisePage?storetype=GXYS">待定etc</a></li>
-        <li><a href="">待定etc</a></li>
-        <li><a href="${contextPath}/Supermarket/toEnterprisePage?storetype=QYJT">待定etc</a></li>
-        <li><a href="${contextPath}/Supermarket/toEnterprisePage?storetype=JGTT">待定etc</a></li>
-        <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=YJKF">待定etc</a></li>
-        <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=YJKF">待定etc</a></li>
-        <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=YJKF">待定etc</a></li>
-        <li><a href="${contextPath}/Supermarket/toProductTypePage?producttype=YJKF">待定etc</a></li>
+        <li style="color: white;"><img :src="img.keji" style="vertical-align: middle;" />个人中心</li>
+        <li><router-link to="/userIndex">基本信息</router-link></li>
+        <li><router-link to="/userIndex">消息管理</router-link></li>
+        <li><router-link to="/publishInfoIndex">我的发布</router-link></li>
+        <li><router-link to="/userIndex">我的订购</router-link></li>
+        <li style="color: #0056b3;" @click="toLogout()">注销账号</li>
       </ul>
       <div style="background:white;">
         <ul>
@@ -26,11 +23,11 @@
         </ul>
       </div>
     </div>
-    <slot></slot>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
 export default {
   name: 'menus',
   components: {},
@@ -45,7 +42,13 @@ export default {
     };
   },
   computed: {},
-  methods: {},
+  methods: {
+    ...mapActions(['logout']),
+    async toLogout() {
+      await this.logout();
+      this.$router.push({ path: '/' });
+    },
+  },
 };
 </script>
 

@@ -11,6 +11,7 @@ import product from './views/userAdmin/product.vue';
 // import userinfo from './views/userAdmin/userinfo.vue';
 import yffwListPage from './views/yffwListPage.vue';
 import userIndex from './views/userAdmin/userIndex.vue';
+import publishInfoIndex from './views/userAdmin/publishInfoIndex.vue';
 
 Vue.use(Router);
 
@@ -85,6 +86,11 @@ export default new Router({
       path: '/userIndex',
       name: 'userIndex',
       component: userIndex,
+    },
+    {
+      path: '/publishInfoIndex',
+      name: 'publishInfoIndex',
+      component: publishInfoIndex,
     },
   ],
 });

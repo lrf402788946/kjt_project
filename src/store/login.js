@@ -81,6 +81,9 @@ export const mutations = {
       return false;
     }
   },
+  [types.USER_LOGOUT](state) {
+    state.userInfo = {};
+  },
 };
 
 //用来处理一些 异步 请求 的方法集合,可以调用mutations中的方法
@@ -109,5 +112,12 @@ export const actions = {
       }
     }
     return { result: false };
+  },
+  /**
+   * 注销
+   */
+  async logout({ commit }) {
+    sessionStorage.removeItem('userInfo');
+    commit(types.USER_LOGOUT);
   },
 };
