@@ -87,13 +87,13 @@
             </div>
         </div>
     </div>
-    <div></div>
+    <div style="clear:both;"></div>
     <footers></footers>
   </div>
 </template>
 <script>
 import headers from '@/components/headers.vue';
-import menus from '@/components/menus2.vue';
+import menus from '@/components/userMenus.vue';
 import footers from '@/components/footers.vue';
 import { mapActions,mapState } from 'vuex';
 export default {
@@ -126,15 +126,14 @@ export default {
   },
   methods: {
     ...mapActions(['transaction']),
-    async transactionList() {
-      console.log(111);
+    async transactionList(item) {
+      
       let skip = (this.currentPage - 1) * this.limit;
       this.pageForm.skip = skip+'';
       this.pageForm.limit = this.limit+'';
       let { returnDataList, totalRow } = await this.transaction(this.pageForm);
       this.$set(this, 'dataList', returnDataList);
       this.$set(this, 'totalRow', totalRow);
-      console.log(this.totalRow);
     },
   },
 };
