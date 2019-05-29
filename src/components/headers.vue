@@ -8,6 +8,11 @@
           <div style="float:left; color:#fff; margin-left:10px;">|</div>
           <router-link style="float:left;color:white;" to="/userIndex">个人中心</router-link>
         </div>
+        <div class="sign" v-else>
+          <router-link style="float:left;color:white;" to="/login?type=1">注册</router-link>
+          <div style="float:left; color:#fff; margin-left:10px;">|</div>
+          <router-link style="float:left;color:white;" to="/login?type=0">登录</router-link>
+        </div>
       </div>
     </div>
     <div class="contents">

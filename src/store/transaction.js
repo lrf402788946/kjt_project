@@ -7,6 +7,9 @@ import * as types from './mutation-types';
 Vue.use(Vuex);
 
 const api = {
+  user: '/user/user_info',
+  selfProductList: '/product/product_list', //gxtype=>0需;1供;state=>0待审核;2通过审核
+  selfTransactionList: '/product/transaction_list', //gxtype,
   transaction_my_list: '/product/transaction_my_list',
 };
 
@@ -27,14 +30,14 @@ const toRequest = async (uri, data = undefined, axios) => {
     } else {
       result = await axios.get(uri);
     }
-    let { result, msg, returnData, returnDataList ,totalRow} = checkRes(result);
+    let { result, msg, returnData, returnDataList, totalRow } = checkRes(result);
     if (!result) {
       Message.error(msg);
       return { result: false };
     } else {
       data !== undefined ? Message.success(msg) : '';
       if (!(Object.keys(returnData).length > 0) && !(returnDataList.length > 0)) console.warn(`${uri}--无数据`);
-      return { result: result, returnData: returnData, returnDataList: returnDataList ,totalRow};
+      return { result: result, returnData: returnData, returnDataList: returnDataList, totalRow };
     }
   } catch (error) {
     console.error(`${uri}:${error}`);
@@ -46,49 +49,29 @@ const toRequest = async (uri, data = undefined, axios) => {
  * @param result 请求结果(从axios拦截器返回的结果,无需其他处理)
  */
 const checkRes = result => {
-  try {
-    if (result_is_log) {
-      console.log(`result:`);
-      console.log(result);
-      console.log(`returnData:`);
-      console.log(_.get(result, 'data', {}));
-      console.log(`dataList:`);
-      console.log(_.get(result, 'dataList', []));
-    }
-    if (result.rescode === 0 || result.rescode === '0') {
-      return { result: true, msg: result.msg, 
-        returnData: _.get(result, 'data', {}), 
-        returnDataList: _.get(result, 'dataList', []),
-        totalRow: _.get(result, 'totalRow', 0) };
-    } else {
-      return { result: false, msg: result.msg };
-    }
-  } catch (error) {
-    Message.error(error);
-    console.log(error);
+  if (result_is_log) {
+    console.log(`result:`);
+    console.log(result);
+    console.log(`returnData:`);
+    console.log(_.get(result, 'data', {}));
+    console.log(`dataList:`);
+    console.log(_.get(result, 'dataList', []));
+  }
+  if (result.rescode === 0 || result.rescode === '0') {
+    return { result: true, msg: result.msg, returnData: _.get(result, 'data', {}), returnDataList: _.get(result, 'dataList', []) };
+  } else {
+    return { result: false, msg: result.msg };
   }
 };
 
 //管理变量的位置
 //"只能"通过mutations中的方法来改变stae中的值,这是使用原则
-export const state = () => ({
-  userInfo: {},
-});
+export const state = () => ({});
 
 //更改管理的变量的值的 方法 集合
 //这里的方法主要是为了改变state中变量的值
 //外部也可以调用,例如使用辅助函数(map)或直接调用等方式,不过不推荐那么使用(换句话说就是别那么用)
-export const mutations = {
-  [types.USER_LOGIN](state) {
-    if (sessionStorage.getItem('userInfo')) {
-      state.userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
-      // state.userRoleList = JSON.parse(sessionStorage.getItem('userRoleList'));
-      return true;
-    } else {
-      return false;
-    }
-  },
-};
+export const mutations = {};
 
 //用来处理一些 异步 请求 的方法集合,可以调用mutations中的方法
 //方法的列表参数只能有2个,可以用解构函数来写
@@ -99,16 +82,21 @@ export const mutations = {
 //{a,b,c,d...}=>解构函数方式的参数列表,传过来的key要一致就可以使用,如果没有传,默认值是undefined
 export const actions = {
   /**
-   * 登录方法
-   * @param login_id 用户名
-   * @param password 密码
+   * 查询产品相关
    */
+  async selfProductList({ commit }, data) {
+    let { result, returnData, returnDataList } = await toRequest(api.selfProductList, { data: data }, this.$axios);
+    return { returnDataList };
+  },
+  async selfTradeList({ commit }, data) {
+    let { result, returnData, returnDataList } = await toRequest(api.selfTransactionList, { data: data }, this.$axios);
+    return { returnDataList };
+  },
   async transaction({ commit }, data) {
-    
     if (data !== undefined) {
       let { result, totalRow, returnDataList } = await toRequest(api.transaction_my_list, { data: data }, this.$axios);
       if (result) {
-        return {returnDataList,totalRow};
+        return { returnDataList, totalRow };
       }
     }
     return { result: false };
