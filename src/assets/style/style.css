@@ -9,13 +9,13 @@
 .leftOne{
 	float: left;
 	width: 240px;
-	/*height:865px;*/
 }
 .oneright{
 	float: right;
-	height:838px;
+	height:830px;
 	width: 950px;
 	background: #fff;
+	margin-top: 10px;
 }
 .rightTop{
 	height: 60px;
@@ -164,5 +164,49 @@
 	
 	    background: #2577e3;
     color: #fff;
+
+}
+.tit {
+	width: 890px;
+	height: 30px;
+	border-bottom: 1px solid #ccc;
+}
+.tit1 {
+	float: left;
+	width: 100px;
+	color:#215299;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	font-size: 16px;
+	margin-right: 30px;
+	border-bottom: 2px solid #215299;
+}
+.tit2 {
+	float: left;
+	width: 100px;
+	height: 30px;
+	margin-right: 30px;
+	line-height: 30px;
+	text-align: center;
+	font-size: 16px;
+	color:#ccc;
+
+}
+.tit3 {
+	float: right;
+	color:#215299;
+	height: 30px;
+	line-height: 30px;
+	
+	font-size: 16px;
+
+}
+.tit3 a {
+	
+	color:#215299;
+	height: 30px;
+	line-height: 30px;
+	
 
 }

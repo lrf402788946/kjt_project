@@ -29,7 +29,7 @@
                       </div>
                     </div>
                     <div class="fbListCenter">
-                      <div class="fbListCenterL">
+                      <div class="fbListCenterL" @click="$router.push({ path: '/productDetailIndex', query: { id: item.id } })">
                         <img v-if="item.image1" :src="item.image1" />
                         <img v-else :src="img.noimg" />
                       </div>
@@ -65,26 +65,22 @@
                   </div>
                   <p v-if="!(dataList.length > 0)" style="text-align: center; height: 600px; margin: 33px 0 0 0;">无相关数据</p>
                 </div>
-                <b-pagination
-                  v-if="dataList.length > 0"
-                  style="padding-left: 300px;padding-top: 3%"
-                  v-model="currentPage"
-                  :total-rows="totalRow"
-                  :limit="limit"
-                  @change="transactionList"
-                  first-text="首"
-                  prev-text="<"
-                  next-text=">"
-                  last-text="末"
-                >
-                </b-pagination>
+                
+                <el-pagination
+                  background
+                  @current-change="transactionList"
+                  :current-page.sync="currentPage"
+                  :page-size="limit"
+                  layout="total,prev,pager,next"
+                  :total="totalRow" >
+                </el-pagination>
               </div>
             </div>
           </div>
         </div>
+        <div style="clear:both;"></div>
       </div>
     </div>
-    <div></div>
     <footers></footers>
   </div>
 </template>
@@ -102,10 +98,10 @@ export default {
   data() {
     return {
       dataList: {},
-      currentPage: '1',
+      currentPage: 1,
       totalRow: 20,
-      skip: '0',
-      limit: '3',
+      skip: 0,
+      limit: 3,
       noimg: require('@a/img/personal.png'),
       img: {
         noimg: require('@a/img/personal.png'),
@@ -123,15 +119,14 @@ export default {
   },
   methods: {
     ...mapActions(['transaction']),
-    async transactionList() {
-      console.log(111);
+    async transactionList(val) {
+      this.currentPage = val ? val : 1;
       let skip = (this.currentPage - 1) * this.limit;
       this.pageForm.skip = skip + '';
       this.pageForm.limit = this.limit + '';
       let { returnDataList, totalRow } = await this.transaction(this.pageForm);
       this.$set(this, 'dataList', returnDataList);
       this.$set(this, 'totalRow', totalRow);
-      console.log(this.totalRow);
     },
   },
 };

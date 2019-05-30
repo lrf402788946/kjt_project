@@ -14,7 +14,8 @@ const api = {
   productSave: '/product/product_save',
   productEdit: '/product/product_edit',
   productDelete: '/product/product_delete',
-  transaction_my_list: '/product/transaction_my_list',
+  transactionMyList: '/product/transaction_my_list', // 我的订购列表 传入token
+  productDetailIndex: '/product/product_info',
 };
 
 /**
@@ -42,7 +43,7 @@ const toRequest = async (uri, data = undefined, axios) => {
       console.log(data !== null);
       data !== undefined && data !== null ? Message.success(msg) : '';
       if (!(Object.keys(returnData).length > 0) && !(returnDataList.length > 0)) console.warn(`${uri}--无数据`);
-      return { result: result, returnData: returnData, returnDataList: returnDataList, totalRow };
+      return { result: result, returnData: returnData, returnDataList: returnDataList, totalRow: totalRow };
     }
   } catch (error) {
     console.error(`${uri}:${error}`);
@@ -63,7 +64,7 @@ const checkRes = result => {
     console.log(_.get(result, 'dataList', []));
   }
   if (result.rescode === 0 || result.rescode === '0') {
-    return { result: true, msg: result.msg, returnData: _.get(result, 'data', {}), returnDataList: _.get(result, 'dataList', []) };
+    return { result: true, msg: result.msg, returnData: _.get(result, 'data', {}), returnDataList: _.get(result, 'dataList', []), totalRow: result.totalRow };
   } else {
     return { result: false, msg: result.msg };
   }
@@ -107,11 +108,19 @@ export const actions = {
 
   async transaction({ commit }, data) {
     if (data !== undefined) {
-      let { result, totalRow, returnDataList } = await toRequest(api.transaction_my_list, { data: data }, this.$axios);
+      let { result, totalRow, returnDataList } = await toRequest(api.transactionMyList, { data: data }, this.$axios);
       if (result) {
         return { returnDataList, totalRow };
       }
     }
     return { result: false };
+  },
+  /**
+   * 查询产品列表项的详情
+   * @param id
+   */
+  async selProductDetail({ commit }, data) {
+    let { returnData, returnDataList } = await toRequest(api.productDetailIndex, { data: data }, this.$axios);
+    return { returnDataList, returnData };
   },
 };

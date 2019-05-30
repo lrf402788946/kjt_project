@@ -8,11 +8,12 @@ import login from './views/login.vue';
 import test from './views/test.vue';
 import kjqyListPage from './views/kjqyListPage.vue';
 import yffwListPage from './views/yffwListPage.vue';
-import myTransaction from './views/userAdmin/myTransaction.vue';
+import transactionIndex from './views/userAdmin/transactionIndex.vue';
 import userIndex from './views/userAdmin/userIndex.vue';
 import publishInfoIndex from './views/userAdmin/publishInfoIndex.vue';
 import addInformation from './views/userAdmin/addInformation.vue';
 import addProduct from './views/userAdmin/addProduct.vue';
+import productDetailIndex from './views/userAdmin/productDetailIndex.vue';
 
 Vue.use(Router);
 
@@ -74,9 +75,9 @@ export default new Router({
       component: () => import('@/views/jscgListPage.vue'),
     },
     {
-      path: '/myTransaction',
-      name: 'myTransaction',
-      component: myTransaction,
+      path: '/transactionIndex',
+      name: 'transactionIndex',
+      component: transactionIndex,
     },
     {
       path: '/userIndex',
@@ -97,6 +98,11 @@ export default new Router({
       path: '/addProduct',
       name: 'addProduct',
       component: addProduct,
+    },
+    {
+      path: '/productDetailIndex',
+      name: 'productDetailIndex',
+      component: productDetailIndex,
     },
   ],
 });
