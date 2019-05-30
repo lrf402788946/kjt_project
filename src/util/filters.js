@@ -9,6 +9,7 @@ import _ from 'lodash';
 const filters = {
   getName(object) {
     const { data, searchItem, value, label } = object;
+    console.log(object);
     //1判断要过滤的数据集是否有值
     if (data.length > 0) {
       //2-1判断作为过滤条件的值是否正常

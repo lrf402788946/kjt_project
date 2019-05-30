@@ -7,12 +7,12 @@ import productListPage from './views/productListPage.vue';
 import login from './views/login.vue';
 import test from './views/test.vue';
 import kjqyListPage from './views/kjqyListPage.vue';
-import product from './views/userAdmin/product.vue';
-// import userinfo from './views/userAdmin/userinfo.vue';
 import yffwListPage from './views/yffwListPage.vue';
 import myTransaction from './views/userAdmin/myTransaction.vue';
 import userIndex from './views/userAdmin/userIndex.vue';
 import publishInfoIndex from './views/userAdmin/publishInfoIndex.vue';
+import addInformation from './views/userAdmin/addInformation.vue';
+import addProduct from './views/userAdmin/addProduct.vue';
 
 Vue.use(Router);
 
@@ -59,16 +59,6 @@ export default new Router({
       component: login,
     },
     {
-      path: '/product',
-      name: 'product',
-      component: product,
-    },
-    // {
-    //   path: '/userinfo',
-    //   name: 'userinfo',
-    //   component: userinfo,
-    // },
-    {
       path: '/yffwListPage',
       name: 'yffwListPage',
       component: yffwListPage,
@@ -97,6 +87,16 @@ export default new Router({
       path: '/publishInfoIndex',
       name: 'publishInfoIndex',
       component: publishInfoIndex,
+    },
+    {
+      path: '/addInformation',
+      name: 'addInformation',
+      component: addInformation,
+    },
+    {
+      path: '/addProduct',
+      name: 'addProduct',
+      component: addProduct,
     },
   ],
 });

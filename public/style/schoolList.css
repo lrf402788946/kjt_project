@@ -476,25 +476,7 @@ select::-ms-expand{
 	text-overflow: clip;
 	white-space: nowrap;
 }
-button{
-	background-color: #fff;
-	border:none;
-	height: 40px;
-	/*width: 80px;*/
-	padding:0px;
-	margin-top: 10px;
-	float: right;
-	/*vertical-align: middle;*/
-	font-size: 16px;
-	color: #215199;
-	font-weight: bold;
-}
-button span{
-	display: block;
-	float: right;
-	margin-right:16px;
-	margin-top:10px;
-}
+
 
 
 .fistpage{
