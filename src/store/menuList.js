@@ -59,10 +59,9 @@ const toRequest = async (uri, data = undefined, axios) => {
       Message.error(msg);
       return { result: false };
     } else {
-      if (data !== undefined && data !== null) {
+      if (!uri.includes('save') && !uri.includes('edit') && uri.includes('delete')) {
         Message.success(msg);
       }
-      //
       if (!(Object.keys(returnData).length > 0) && !(returnDataList.length > 0)) console.warn(`${uri}--无数据`);
       return { result: result, returnData: returnData, returnDataList: returnDataList, totalRow };
     }
@@ -112,15 +111,20 @@ export const actions = {
    * @param code 请求列表类型
    */
   async getMenuList({ commit }, { skip, limit, code }) {
-    let { returnDataList, totalRow } = await toRequest(`${api.menuList}?skip=${skip}&limit=${limit}&code=${code}`, null, this.$axios);
+    let data = { skip: `${skip}`, limit: `${limit}`, code: code };
+    let { returnDataList, totalRow } = await toRequest(`${api.menuList}`, { data: data }, this.$axios);
     return { returnDataList, totalRow };
   },
   /**
    * 菜单选项(后4个)=>请求列表
    * @param code 请求列表类型
    */
-  async getProductList({ commit }, { skip, limit, code }) {
-    let { returnDataList, totalRow } = await toRequest(`${api.productList}?skip=${skip}&limit=${limit}&code=${code}`, null, this.$axios);
+  async getProductList({ commit }, { skip, limit, code, totaltype }) {
+    let data = { skip: `${skip}`, limit: `${limit}` };
+    code ? (data['product_type'] = code) : '';
+    totaltype ? (data['totaltype'] = totaltype) : '';
+    console.log(data);
+    let { returnDataList, totalRow } = await toRequest(`${api.productList}`, { data: data }, this.$axios);
     return { returnDataList, totalRow };
   },
   /**
@@ -128,7 +132,7 @@ export const actions = {
    * @param id
    */
   async getListDetail({ commit }, { id }) {
-    let { returnData, returnDataList } = await toRequest(`${api.listInfo}?id=${id}`, null, this.$axios);
+    let { returnData, returnDataList } = await toRequest(`${api.listInfo}`, { data: { id: id } }, this.$axios);
     return { returnDataList, returnData };
   },
   /**
@@ -136,7 +140,8 @@ export const actions = {
    * @param id
    */
   async getProductDetail({ commit }, { id }) {
-    let { returnData, returnDataList } = await toRequest(`${api.productInfo}?id=${id}`, null, this.$axios);
+    console.log('in function:');
+    let { returnData, returnDataList } = await toRequest(`${api.productInfo}`, { data: { id: id } }, this.$axios);
     return { returnDataList, returnData };
   },
   /**

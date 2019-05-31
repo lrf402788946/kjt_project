@@ -21,7 +21,7 @@
             </form>
           </div> -->
           <div style="background:#fff;padding-bottom: 5%;">
-            <div class="listtitle" style="border:none;">
+            <div class="listtitle">
               <h2>创新产品</h2>
             </div>
             <div>

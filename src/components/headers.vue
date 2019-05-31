@@ -7,6 +7,8 @@
           <router-link style="float:left;color:white;" to="/userIndex">欢迎 {{ userInfo.name }}</router-link>
           <div style="float:left; color:#fff; margin-left:10px;">|</div>
           <router-link style="float:left;color:white;" to="/userIndex">个人中心</router-link>
+          <div style="float:left; color:#fff; margin-left:10px;">|</div>
+          <a style="color:#ffffff" @click="toLogout()">注销</a>
         </div>
         <div class="sign" v-else>
           <router-link style="float:left;color:white;" to="/login?type=1">注册</router-link>
@@ -55,7 +57,7 @@ export default {
     await this.login();
   },
   methods: {
-    ...mapActions(['login']),
+    ...mapActions(['login', 'logout']),
     tim() {
       var date = new Date();
       var seperator1 = '-';
@@ -72,6 +74,10 @@ export default {
       var myddy = mydate.getDay();
       var weekday = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
       return `${year}${seperator1}${month}${seperator1}${strDate}          ${weekday[myddy]}`;
+    },
+    async toLogout() {
+      await this.logout();
+      this.$router.push({ path: '/' });
     },
   },
 };

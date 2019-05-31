@@ -155,6 +155,12 @@ export default {
 </script>
 
 <style lang="css" scoped>
+p{
+  overflow:hidden;
+  word-break:keep-all;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
 .img-container > img{
   width: 350px;
   height: 350px;

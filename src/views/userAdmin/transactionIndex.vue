@@ -65,14 +65,15 @@
                   </div>
                   <p v-if="!(dataList.length > 0)" style="text-align: center; height: 600px; margin: 33px 0 0 0;">无相关数据</p>
                 </div>
-                
+
                 <el-pagination
                   background
                   @current-change="transactionList"
                   :current-page.sync="currentPage"
                   :page-size="limit"
                   layout="total,prev,pager,next"
-                  :total="totalRow" >
+                  :total="totalRow"
+                >
                 </el-pagination>
               </div>
             </div>

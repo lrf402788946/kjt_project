@@ -14,7 +14,8 @@ import publishInfoIndex from './views/userAdmin/publishInfoIndex.vue';
 import addInformation from './views/userAdmin/addInformation.vue';
 import addProduct from './views/userAdmin/addProduct.vue';
 import productDetailIndex from './views/userAdmin/productDetailIndex.vue';
-
+import fwMoreList from './views/fwMoreList.vue';
+import tradeMoreList from './views/tradeMoreList.vue';
 Vue.use(Router);
 
 export default new Router({
@@ -103,6 +104,16 @@ export default new Router({
       path: '/productDetailIndex',
       name: 'productDetailIndex',
       component: productDetailIndex,
+    },
+    {
+      path: '/fwMoreList',
+      name: 'fwMoreList',
+      component: fwMoreList,
+    },
+    {
+      path: '/tradeMoreList',
+      name: 'tradeMoreList',
+      component: tradeMoreList,
     },
   ],
 });

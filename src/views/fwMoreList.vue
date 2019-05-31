@@ -1,16 +1,31 @@
 <template lang="html">
-  <div id="yffwListPage">
+  <div id="fwMoreList">
     <div class="wrapper">
       <headers></headers>
       <div class="main">
         <menus></menus>
         <div class="list">
+          <!-- <div class="sou">
+            <form class="sout" action="${contextPath}/Supermarket/search?type=ALL" method="post">
+              <select name="type">
+                <option value="ZCP">全部产品</option>
+                <option value="YJKF">研发服务</option>
+                <option value="JSCG">技术成果</option>
+                <option value="CXCP">创新产品</option>
+                <option value="ZXFW">咨询服务</option>
+              </select>
+            </form>
+            <form class="soub" action="${contextPath}/Supermarket/search?type=ZGX" method="post">
+              <input type="text" name="name" style="width:355px;" placeholder="请输入名称" />
+              <button><img :src="img.search" /><span>搜索</span></button>
+            </form>
+          </div> -->
           <div style="background:#fff;padding-bottom: 5%;">
             <div class="listtitle">
-              <h2>研发服务</h2>
+              <h2>更多服务</h2>
             </div>
             <div>
-              <div class="cps">
+              <div class="cps" v-if="list.length > 0">
                 <div
                   class="cp"
                   v-for="(item, index) in list"
@@ -65,9 +80,9 @@ import menus from '@/components/menus.vue';
 import footers from '@/components/footers.vue';
 import { mapActions, mapState } from 'vuex';
 export default {
-  name: 'yffwListPage',
+  name: 'fwMoreList',
   metaInfo: {
-    title: '科技超时-研发服务',
+    title: '科技超时-更多服务',
   },
   components: {
     menus,
@@ -105,7 +120,7 @@ export default {
         this.currentPage = item ? item : 1;
       }
       let skip = (this.currentPage - 1) * this.limit;
-      let { returnDataList, totalRow } = await this.getProductList({ skip: skip, limit: this.limit, code: this.code });
+      let { returnDataList, totalRow } = await this.getProductList({ skip: skip, limit: this.limit, totaltype: `2` });
       this.$set(this, `list`, returnDataList);
       this.$set(this, `totalRow`, totalRow);
     },

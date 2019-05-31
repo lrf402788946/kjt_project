@@ -6,15 +6,18 @@
         <menus></menus>
         <div class="list">
           <div style="background:#fff;padding-bottom: 5%;">
-            <div class="listtitle" style="border:none;">
+            <div class="listtitle">
               <h2>技术成果</h2>
             </div>
             <div>
               <div class="cps">
-                <div class="cp" v-for="(item, index) in list" :key="index">
-                  <a href="${contextPath}/Supermarket/toSupplydemandDetailsPage?id=${product.id!''}">
-                    <img :src="item.image1" />
-                  </a>
+                <div
+                  class="cp"
+                  v-for="(item, index) in list"
+                  :key="index"
+                  @click="$router.push({ path: '/detailPage', query: { id: item.id, code: code, type: `product` } })"
+                >
+                  <img :src="item.image1" />
                   <div class="wordInfo">
                     <span
                       style="height: 25px; line-height: 35px; width:200px; padding:0 10px 0 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"

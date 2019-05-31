@@ -43,7 +43,7 @@
                   </li>
                 </ul>
                 <div style="float:left; height:60px; line-height:60px;">
-                  <a id="zBtn" style="float:left; height:60px; line-height:60px;" href="${contextPath}/Supermarket/search?type=ZJS&totaltype=0">
+                  <a id="zBtn" style="float:left; height:60px; line-height:60px;" @click="toMoreList('tabs')">
                     <span class="spand"></span>
                     <span class="spand"></span>
                     <span class="spand"></span>
@@ -53,50 +53,52 @@
                   <div class="contentlist" v-if="tabs === 0">
                     <div class="js">
                       <ul>
-                        <li v-for="product in productlist01" :key="product.id">
-                          <a href="${contextPath}/Supermarket/toProductDetailsPage?id=${product.id}">
-                            <p style="margin-top:20px;">{{ product.name }}</p>
-                            <p>
-                              技术类型：{{ product.producttypeName }}
-                              <span>日期：{{ product.createDate }}</span>
-                            </p>
-                            <p>价格：￥{{ product.price }}元/{{ product.priceunit }}</p>
-                          </a>
+                        <li
+                          v-for="(product, index) in productList"
+                          :key="index"
+                          @click="$router.push({ path: '/detailPage', query: { id: product.id, code: `JSCG`, type: `product` } })"
+                        >
+                          <p style="margin-top:20px;">{{ product.name }}</p>
+                          <p>
+                            应用方向:{{ product.yyfx }}
+                            <span>应用领域:{{ product.yyly }}</span>
+                          </p>
+                          <p>价格：￥{{ product.price }}元/{{ product.priceunit }}</p>
                         </li>
                       </ul>
                     </div>
                   </div>
                   <div class="contentlist" v-if="tabs === 1">
-                    <div class="pro" v-for="product in productlist01" :key="product.id">
-                      <a href="${contextPath}/Supermarket/toProductDetailsPage?id=${product.id}">
-                        <img v-if="product.image1 != ''" src="${contextPath}/imageFile/getImage?imagePath=${product.image1!''}" />
-
-                        <img v-else :src="img.d1" />
-
-                        <div class="proinfo">
-                          <p>{{ product.name }}</p>
-                          <div
-                            style="float: left; color: red; max-width: 120px; overflow: hidden; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; padding-left: 6px;"
-                          >
-                            ￥{{ product.price }}元/{{ product.priceunit }}
-                          </div>
-                          <div style="float:right; padding-right:6px;">{{ product.producttypeName }}</div>
-
-                          <!-- <p class="p4">${product.createDate!''}</p> -->
+                    <div
+                      class="pro"
+                      v-for="(product, index) in productList"
+                      :key="index"
+                      @click="$router.push({ path: '/detailPage', query: { id: product.id, code: `CXCP`, type: `product` } })"
+                    >
+                      <img :src="product.image1 === null ? img.defalut : product.image1" />
+                      <div class="proinfo">
+                        <p>{{ product.name }}</p>
+                        <div
+                          style="float: left; color: red; max-width: 120px; overflow: hidden; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; padding-left: 6px;"
+                        >
+                          ￥{{ product.price }}元/{{ product.priceunit }}
                         </div>
-                      </a>
+                        <div style="float:right; padding-right:6px;">{{ product.create_time }}</div>
+                      </div>
                     </div>
                   </div>
 
                   <div class="contentlist" v-if="tabs === 2">
                     <ul class="fw">
-                      <li v-for="product in productlist01" :key="product.id">
-                        <a href="${contextPath}/Supermarket/toProductDetailsPage?id=${product.id}">
-                          <span>{{ product.name }}</span>
-                          <span>服务类型：{{ product.producttypeName }}</span>
-                          <span>￥{{ product.price }}元/{{ product.priceunit }}</span>
-                          <span>{{ product.createDate }}</span>
-                        </a>
+                      <li
+                        v-for="(product, index) in productList"
+                        :key="index"
+                        @click="$router.push({ path: '/detailPage', query: { id: product.id, code: `ZXFW`, type: `product` } })"
+                      >
+                        <span>{{ product.name }}</span>
+                        <span>服务范围:{{ product.fwfw }}</span>
+                        <span>￥{{ product.price }}元/{{ product.priceunit }}</span>
+                        <span>{{ product.createDate }}</span>
                       </li>
                     </ul>
                   </div>
@@ -109,43 +111,39 @@
         <div class="parttwo">
           <h2>
             最新发布
-            <a href="${contextPath}/Supermarket/search?type=ZGX">
-              <div></div>
-              <div></div>
-              <div></div>
-            </a>
-            <a href="${contextPath}/productUser/toindex?typeCode=1&kjcsType=0" target="_blank">
+            <a @click="toPublish()">
               <span>我要发布</span>
             </a>
           </h2>
           <div class="fb">
-            <div class="falist" v-for="(item, index) in 6" :key="index">
+            <div
+              class="falist"
+              v-for="(item, index) in newProductList"
+              :key="index"
+              @click="
+                $router.push({
+                  path: '/detailPage',
+                  query: { id: item.id, code: item.totaltype === 0 ? `CXCP` : item.totaltype === 1 ? 'JSCG' : 'ZXFW', type: `product` },
+                })
+              "
+            >
               <div class="falift">
-                <a href="${contextPath}/Supermarket/toSupplydemandDetailsPage?id=${supply.id!''}">
-                  <!-- <%if(supply.image1!'' != ''){%> -->
-                  <img :src="img.default" />
-                </a>
+                <img :src="item.image1 === null ? img.default : item.image1" />
               </div>
               <div class="faright">
                 <div class="frtop">
-                  <div style="float:left;">${supply.name!''}</div>
-                  <div style="float:right; margin-right:10px;">供</div>
+                  <div style="float:left;">{{ item.name }}</div>
+                  <div style="float:right; margin-right:10px;">{{ item.gxtype === 0 ? '需' : '供' }}</div>
                 </div>
                 <div class="frtoptwo">
-                  <div class="two1">
-                    所属企业：硅藻土企业
-                  </div>
+                  <div class="two1">产品类型: {{ item.totaltype === 0 ? '产品' : item.totaltype === 1 ? '技术' : '服务' }}</div>
                   <div class="two2">
                     认证状态：已认证
                   </div>
                 </div>
                 <div class="frtoptwo">
-                  <div class="two1">
-                    类别：${supply.supplytype!''}
-                  </div>
-                  <div class="two2">
-                    上架时间：${supply.createDate!''}
-                  </div>
+                  <div class="two1">类别:{{ item.type_name }}</div>
+                  <div class="two2">上架时间：{{ item.create_time }}</div>
                 </div>
               </div>
             </div>
@@ -154,7 +152,7 @@
         <div class="partthree">
           <h2>
             交易展示
-            <a href="${contextPath}/Supermarket/transactionlist">
+            <a @click="toMoreList('trade')">
               <div style="width:3px; height:3px;"></div>
               <div style="width:3px; height:3px;"></div>
               <div style="width:3px; height:3px;"></div>
@@ -165,33 +163,21 @@
               <span style=" height:28px; line-height:28px; ">营销单位</span><span style=" height:28px; line-height:28px; ">采购单位</span
               ><span style=" height:28px; line-height:28px; ">产品交易</span><span style=" height:28px; line-height:28px; ">交易状态</span>
             </li>
-            <li v-for="(item, index) in 10" :key="index">
+            <li v-for="(item, index) in tradeList" :key="index">
               <span class="span1 w220" style="width:200px; height:28px; line-height:28px; margin-left:53px; margin-right:53px;">
-                <!-- <%if(transaction.userAllianceName1!'' != ""){%>  -->
-                <!-- <%}else if(transaction.userEnterpriseName1!'' != ""){%> -->
-                <!-- <%}else{%>  -->
-                test
+                {{ item.market_name }}
               </span>
 
               <span class="span1 w250" style="width:200px; height:28px; line-height:28px;  margin-left:33px; margin-right:53px;">
-                <!-- <%if(transaction.userAllianceName!'' != ""){%>  -->
-                <!-- <%}else if(transaction.userEnterpriseName!'' != ""){%> -->
-                <!-- <%}else{%>  -->
-                test
+                {{ item.gm_name }}
               </span>
 
               <span class="span1 w200" style="width:170px; height:28px; line-height:28px;  margin-left:53px; margin-right:53px;">
-                <!-- <%if(transaction.productId!'' != ""){%> 
-                <%}else if(transaction.supplydemandId!'' != ""){%> -->
-                test
+                {{ item.product_name }}
               </span>
 
               <span class="span2" style=" height:28px; line-height:28px; ">
-                <!-- <%if(transaction.transactionStatus!'' == 0){%>  未开始 -->
-                <!-- <%}else if(transaction.transactionStatus!'' == 1){%> 交易中  -->
-                <!-- <%}else if(transaction.transactionStatus!'' == 2){%>  交易成功 -->
-                <!-- <%}else{%>  -->
-                交易失败
+                {{ item.status === 0 ? '交易已发起' : item.status === 2 ? '交易成功' : '交易失败' }}
               </span>
             </li>
           </ul>
@@ -206,6 +192,7 @@
 import headers from '@/components/headers.vue';
 import menus from '@/components/menus.vue';
 import footers from '@/components/footers.vue';
+import { mapActions, mapState } from 'vuex';
 import _ from 'lodash';
 export default {
   name: 'index',
@@ -219,33 +206,71 @@ export default {
       img: {
         search: require('@/assets/img/search.jpg'),
         d1: require('@/assets/img/d1.gif'),
-        defalut_gif: require('@/assets/img/logo.gif'),
+        defalut: require('@/assets/img/nophoto.png'),
       },
+      productList: [],
+      newProductList: [],
+      productTypeSelectList: [],
+      tradeList: [],
       tabs: 0,
-      productlist01: [
-        { name: 'name1', producttypeName: 'proName1', price: 100, priceunit: '个', createDate: '2019-01-01' },
-        { name: 'name2', producttypeName: 'proName2', price: 200, priceunit: '个', createDate: '2019-01-02' },
-        { name: 'name3', producttypeName: 'proName3', price: 300, priceunit: '个', createDate: '2019-01-03' },
-        { name: 'name4', producttypeName: 'proName4', price: 400, priceunit: '个', createDate: '2019-01-04' },
-        { name: 'name5', producttypeName: 'proName5', price: 500, priceunit: '个', createDate: '2019-01-05' },
-        { name: 'name6', producttypeName: 'proName6', price: 600, priceunit: '个', createDate: '2019-01-06' },
-        { name: 'name7', producttypeName: 'proName7', price: 700, priceunit: '个', createDate: '2019-01-07' },
-        { name: 'name8', producttypeName: 'proName8', price: 800, priceunit: '个', createDate: '2019-01-08' },
-      ],
+      limit: 8,
     };
   },
+  computed: {
+    ...mapState({
+      userInfo: state => state.login.userInfo,
+    }),
+  },
+  async created() {
+    await this.changeTabs(0);
+    await this.getTradeList();
+    await this.getNewProductList();
+  },
   methods: {
-    changeTabs(index) {
+    ...mapActions(['getProductList', 'getTransactionList']),
+    async changeTabs(index) {
       this.tabs = index;
+      let { returnDataList } = await this.getProductList({ skip: 0, limit: 8, totaltype: `${index}` });
+      returnDataList = this.$listImg(returnDataList, this.$domain);
+      this.$set(this, `productList`, returnDataList);
       document.querySelectorAll('.title > li').forEach((item, itemIndex) => {
         index === itemIndex ? (item.classList = ['active']) : (item.classList = []);
       });
+    },
+    async getTradeList() {
+      let { returnDataList } = await this.getTransactionList({ skip: 0, limit: 4 });
+      this.$set(this, `tradeList`, returnDataList);
+    },
+    async getNewProductList() {
+      let { returnDataList } = await this.getProductList({ skip: 0, limit: 6 });
+      returnDataList = this.$listImg(returnDataList, this.$domain);
+      this.$set(this, `newProductList`, returnDataList);
+    },
+    toMoreList(type) {
+      if (type === 'tabs') {
+        let code = this.tabs === 0 ? 'JSCG' : this.tabs === 1 ? 'CXCP' : 'ZXFW';
+        let page = this.tabs === 0 ? 'jscgListPage' : this.tabs === 1 ? 'productListPage' : 'fwMoreList';
+        this.$router.push({ path: `/${page}`, query: { code: `${code}` } });
+      } else if (type === 'trade') {
+        this.$router.push({ path: '/tradeMoreList' });
+      }
+    },
+    toPublish() {
+      if (Object.keys(this.userInfo).length > 0) {
+        this.$router.push({ path: '/publishInfoIndex' });
+      } else {
+        this.$router.push({ path: '/login', query: { type: `0` } });
+      }
     },
   },
 };
 </script>
 
 <style lang="css" scoped>
+.partone {
+    height: auto;
+    margin: 10px 0;
+}
 button{
 	background-color: #fff;
 	border:none;

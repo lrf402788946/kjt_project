@@ -232,7 +232,7 @@ select::-ms-expand{
 .list{
 	/* height: 800px; */
 	float: right;
-    width: 950px;
+  width: 950px;
 	margin-top: 10px;
 }
 .listtitle{
@@ -324,6 +324,7 @@ select::-ms-expand{
 }
 
 .cps{
+  display: inline-block;
 	margin:20px;
 }
 .qy{
