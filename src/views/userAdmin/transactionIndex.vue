@@ -67,10 +67,12 @@
                 </div>
                 
                 <el-pagination
+                  style="width:350px;"
                   background
                   @current-change="transactionList"
                   :current-page.sync="currentPage"
                   :page-size="limit"
+                  :pager-count="5"
                   layout="total,prev,pager,next"
                   :total="totalRow" >
                 </el-pagination>
