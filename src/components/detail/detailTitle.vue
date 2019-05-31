@@ -33,6 +33,9 @@
         <div class="rightTopR" @click="change(1)">我的供给</div>
       </div>
     </div>
+    <div v-if="code === `addInfo`" class="listtitle">
+      <span>添加信息</span>
+    </div>
     <div v-if="code === ``" class="listtitle">
       <span>详&nbsp;&nbsp;情</span>
     </div>
@@ -67,7 +70,7 @@ export default {
 
 <style lang="css" scoped>
 .oneright{
-	float: right;
+  height: 0;
 	background: #fff;
 }
 .rightTop{

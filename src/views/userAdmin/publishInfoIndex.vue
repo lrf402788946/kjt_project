@@ -11,12 +11,106 @@
               <li class="tit1" @click="changeInfo(0)">审核中信息</li>
               <li class="tit2" @click="changeInfo(1)">已经审核信息</li>
               <li class="tit2" @click="changeInfo(2)">交易成功信息</li>
-              <li class="tit3"><a href="${contextPath}/product/toeditNew?pageNumber=${pageNumber!1}&gxtype=0">信息发布</a></li>
+              <li class="tit3"><router-link to="/addProduct">信息发布</router-link></li>
+              <div style="float:left;">
+                <el-table :data="list" stripe style="width: 100%">
+                  <el-table-column width="200">
+                    <template slot-scope="scope">
+                      <img :src="scope.row.image1" style="width:200px;height:200px;" />
+                    </template>
+                  </el-table-column>
+                  <el-table-column width="600">
+                    <template slot-scope="scope">
+                      <el-row>
+                        <el-col :span="24">
+                          {{ scope.row.name }}
+                        </el-col>
+                        <el-col :span="6">
+                          信息号:
+                        </el-col>
+                        <el-col :span="18">
+                          {{ scope.row.id }}
+                        </el-col>
+                        <el-col :span="6">
+                          产品分类:
+                        </el-col>
+                        <el-col :span="18">
+                          {{ scope.row.totaltype === 0 ? '产品' : scope.row.totaltype === 1 ? '技术' : '服务' }}
+                        </el-col>
+                        <el-col :span="6">
+                          产品类型:
+                        </el-col>
+                        <el-col :span="18">
+                          {{ { data: productTypeSelectList, searchItem: `code`, value: scope.row.product_type, label: `name` } | getName }}
+                        </el-col>
+                        <el-col :span="6">
+                          价格:
+                        </el-col>
+                        <el-col :span="18"> {{ scope.row.price ? scope.row.price : `0` }}元/{{ scope.row.priceunit }} </el-col>
+                        <el-col :span="6">
+                          交易方式:
+                        </el-col>
+                        <el-col :span="18">
+                          {{ scope.row.jyfs }}
+                        </el-col>
+                        <el-col :span="6">
+                          联系人:
+                        </el-col>
+                        <el-col :span="18">
+                          {{ scope.row.contact_user ? scope.row.contact_user : `&nbsp;` }}
+                        </el-col>
+                        <el-col :span="6">
+                          联系电话:
+                        </el-col>
+                        <el-col :span="18">
+                          {{ scope.row.contact_tel ? scope.row.contact_tel : `&nbsp;` }}
+                        </el-col>
+                        <el-col :span="6">
+                          发布时间:
+                        </el-col>
+                        <el-col :span="18">
+                          {{ scope.row.create_time }}
+                        </el-col>
+                      </el-row>
+                    </template>
+                  </el-table-column>
+                  <el-table-column>
+                    <template slot-scope="scope">
+                      <el-row>
+                        <el-col :span="24">
+                          <el-button
+                            v-if="searchForm.state === '0'"
+                            type="primary"
+                            icon="el-icon-edit"
+                            @click="$router.push(`/addProduct?id=${scope.row.id}&state=${scope.row.state}`)"
+                            circle
+                          ></el-button>
+                        </el-col>
+                      </el-row>
+                      <el-row>
+                        <el-col :span="24">
+                          <el-button v-if="searchForm.state === '0'" type="danger" icon="el-icon-delete" circle @click="toDelete(scope.row.id)"></el-button>
+                        </el-col>
+                      </el-row>
+                      <el-row>
+                        <el-col :span="24">
+                          <el-button
+                            v-if="searchForm.state !== '0'"
+                            type="primary"
+                            icon="el-icon-document"
+                            circle
+                            @click="$router.push(`/addProduct?id=${scope.row.id}`)"
+                          ></el-button>
+                        </el-col>
+                      </el-row>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
             </ul>
-            <p v-if="!(list.length > 0)" style="text-align: center; height: 600px; margin: 33px 0 0 0;">无相关数据</p>
             <b-pagination
               v-if="list.length > 0"
-              style="padding-left: 30%;padding-top: 3%"
+              style="padding-left: 30%;padding-top: 3%;float:left;"
               v-model="currentPage"
               :total-rows="totalRow"
               :limit="searchForm.limit"
@@ -51,19 +145,25 @@ export default {
   },
   data() {
     return {
+      img: {
+        noimg: require('@a/img/nophoto.png'),
+      },
       list: [],
       searchForm: {
-        limit: 10,
-        gxtype: 0,
-        state: 0, //信息审核与否,前两个标签使用的
+        limit: '10',
+        gxtype: '1',
+        state: '2', //信息审核与否,前两个标签使用的
       },
       currentPage: 1,
       totalRow: 0,
       tabs: 0,
+      productTypeSelectList: [],
     };
   },
   computed: {},
   async created() {
+    let { returnDataList } = await this.productTypeList();
+    this.$set(this, `productTypeSelectList`, returnDataList);
     await this.search();
   },
   methods: {
@@ -72,11 +172,12 @@ export default {
     //2)第三个标签页是查看交易信息的=>需要参数gxtype
     //参数变量说明:通过上面(detailTitle组件)选择需求和供给=>gxtype
     //通过'已审核信息'和'审核中信息'两个标签页,改变的是state
-    ...mapActions(['selfProductList', 'selfTradeList']),
-    changeType(pos) {
+    ...mapActions(['selfProductList', 'selfTradeList', 'productOperation', 'productTypeList']),
+    async changeType(pos) {
       this.searchForm.gxtype = pos;
+      await this.search();
     },
-    changeInfo(index) {
+    async changeInfo(index) {
       this.tabs = index;
       if (index !== 2) {
         index === 1 ? (this.searchForm.state = 2) : (this.searchForm.state = index);
@@ -85,24 +186,32 @@ export default {
       titleSpan.forEach((item, itemIndex) => {
         item.classList.value === `tit3` ? '' : itemIndex === index ? (item.classList = ['tit1']) : (item.classList = ['tit2']);
       });
+      await this.search();
     },
     async search(item) {
-      let result;
       this.currentPage = item ? item : 1;
-      this.searchForm.skip = (this.currentPage - 1) * this.searchForm.limit;
+      this.searchForm.skip = `${(this.currentPage - 1) * this.searchForm.limit}`;
       if (this.tabs !== 2) {
-        result = await this.selfProductList(this.searchForm);
+        let { returnDataList } = await this.selfProductList(this.searchForm);
+        this.$set(this, `list`, returnDataList ? (returnDataList = this.$listImg(returnDataList, this.$domain)) : []);
       } else {
         let newData = JSON.parse(JSON.stringify(this.searchForm));
         delete newData.state;
-        result = await this.selfTradeList(newData);
+        let { returnDataList } = await this.selfTradeList(newData);
+        this.$set(this, `list`, returnDataList ? (returnDataList = this.$listImg(returnDataList, this.$domain)) : []);
       }
+    },
+    async toDelete(id) {
+      await this.productOperation({ data: id, type: 'delete' });
     },
   },
 };
 </script>
 
 <style lang="css" scoped>
+.oneright {
+  height: 0
+}
 .rightContent{
   margin-left: 30px;
   margin-top: 60px;

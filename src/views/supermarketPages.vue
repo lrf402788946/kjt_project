@@ -246,6 +246,23 @@ export default {
 </script>
 
 <style lang="css" scoped>
+button{
+	background-color: #fff;
+	border:none;
+	height: 40px;
+	padding:0px;
+	margin-top: 10px;
+	float: right;
+	font-size: 16px;
+	color: #215199;
+	font-weight: bold;
+}
+button span{
+	display: block;
+	float: right;
+	margin-right:16px;
+	margin-top:10px;
+}
 .main {
   width: 1200px;
   margin: 10px auto;

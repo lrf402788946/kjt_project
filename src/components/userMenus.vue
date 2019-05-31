@@ -4,7 +4,7 @@
       <ul>
         <li style="color: white;"><img :src="img.keji" style="vertical-align: middle;" />个人中心</li>
         <li><router-link to="/userIndex">基本信息</router-link></li>
-        <li><router-link to="/userIndex">消息管理</router-link></li>
+        <li><router-link to="/publishInfoReview">审核管理</router-link></li>
         <li><router-link to="/publishInfoIndex">我的发布</router-link></li>
         <li><router-link to="/transactionIndex">我的订购</router-link></li>
         <li style="color: #0056b3;" @click="toLogout()">注销账号</li>
