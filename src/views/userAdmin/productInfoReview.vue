@@ -9,12 +9,14 @@
         <div class="oneright">
           <div class="rightTop">
             <div class="rightTopL">
-              我的订购
+              审核管理
             </div>
           </div>
           <div class="rightContent">
             <ul class="tit" id="tit">
-              <li class="tit1">我的订购</li>
+              <li class="tit1">待审核</li>
+              <li class="tit1">已审核</li>
+              <li class="tit1">已取消</li>
             </ul>
             <div class="logBox" id="logBox">
               <div class="smallB" style="display: block !important;">
@@ -65,17 +67,14 @@
                   </div>
                   <p v-if="!(dataList.length > 0)" style="text-align: center; height: 600px; margin: 33px 0 0 0;">无相关数据</p>
                 </div>
-
+                
                 <el-pagination
-                  style="width:350px;"
                   background
                   @current-change="transactionList"
                   :current-page.sync="currentPage"
                   :page-size="limit"
-                  :pager-count="5"
                   layout="total,prev,pager,next"
-                  :total="totalRow"
-                >
+                  :total="totalRow" >
                 </el-pagination>
               </div>
             </div>
