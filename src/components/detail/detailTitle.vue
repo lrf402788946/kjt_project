@@ -39,6 +39,9 @@
     <div v-if="code === ``" class="listtitle">
       <span>详&nbsp;&nbsp;情</span>
     </div>
+    <div v-if="code === `reviewInfo`" class="listtitle">
+      <span>审核信息</span>
+    </div>
   </div>
 </template>
 

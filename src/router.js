@@ -14,6 +14,8 @@ import publishInfoIndex from './views/userAdmin/publishInfoIndex.vue';
 import addInformation from './views/userAdmin/addInformation.vue';
 import addProduct from './views/userAdmin/addProduct.vue';
 import productDetailIndex from './views/userAdmin/productDetailIndex.vue';
+import productInfoReview from './views/userAdmin/productInfoReview.vue';
+import productReview from './views/userAdmin/productReview.vue';
 
 Vue.use(Router);
 
@@ -103,6 +105,16 @@ export default new Router({
       path: '/productDetailIndex',
       name: 'productDetailIndex',
       component: productDetailIndex,
+    },
+    {
+      path: '/productInfoReview',
+      name: 'productInfoReview',
+      component: productInfoReview,
+    },
+    {
+      path: '/productReview',
+      name: 'productReview',
+      component: productReview,
     },
   ],
 });

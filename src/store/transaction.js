@@ -16,6 +16,8 @@ const api = {
   productDelete: '/product/product_delete',
   transactionMyList: '/product/transaction_my_list', // 我的订购列表 传入token
   productDetailIndex: '/product/product_info',
+  selProductReviewList: '/product/product_review_list', //gxtype=>0需;1供;state=>0待审核;2通过审核
+  productReview: '/product/product_review',
 };
 
 /**
@@ -122,5 +124,20 @@ export const actions = {
   async selProductDetail({ commit }, data) {
     let { returnData, returnDataList } = await toRequest(api.productDetailIndex, { data: data }, this.$axios);
     return { returnDataList, returnData };
+  },
+  /**
+   * 审核产品相关
+   */
+  async selProductReviewList({ commit }, data) {
+    let { result, returnData, returnDataList } = await toRequest(api.selProductReviewList, { data: data }, this.$axios);
+    return { returnDataList };
+  },
+
+  /**
+   * 审核产品相关
+   */
+  async productReview({ commit }, data) {
+    let { result, returnData, returnDataList } = await toRequest(api.productReview, { data: data }, this.$axios);
+    return { result };
   },
 };
