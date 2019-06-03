@@ -103,7 +103,7 @@ export default {
     async search(item) {
       if (typeof item === 'object') {
         //条件查询
-        this.searchInfo = item;
+        this.searchInfo.name = item.condition2;
         this.currentPage = 1;
       } else {
         this.currentPage = item ? item : 1;

@@ -102,7 +102,7 @@ export default {
     return {
       dataList: {},
       currentPage: 1,
-      totalRow: 20,
+      totalRow: 0,
       skip: 0,
       limit: 3,
       noimg: require('@a/img/personal.png'),

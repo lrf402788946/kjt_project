@@ -5,6 +5,7 @@ import { Message } from 'element-ui';
 
 const api = {
   transactionList: '/product/transaction_publish_list', //skip,limit
+  keywordSearch: '/search/keyword', //keyword,skip,limit
 };
 
 /**
@@ -83,5 +84,14 @@ export const actions = {
     let data = { skip: `${skip}`, limit: `${limit}` };
     let { returnData, returnDataList = [], totalRow } = await toRequest(api.transactionList, { data: data }, this.$axios);
     return { returnDataList, totalRow };
+  },
+  /**
+   * 模糊查询
+   * @param keyword 关键词
+   */
+  async searchKeyWord({ commit }, { skip, limit, keyword }) {
+    let data = { skip: `${skip}`, limit: `${limit}`, keyword: `${keyword}` };
+    let { returnData, returnDataList = [], totalRow } = await toRequest(api.keywordSearch, { data: data }, this.$axios);
+    return { returnData, returnDataList, totalRow };
   },
 };

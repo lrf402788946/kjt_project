@@ -44,7 +44,7 @@
               style="padding-left: 30%;padding-top: 3%"
               v-model="currentPage"
               :total-rows="totalRow"
-              :limit="limit"
+              :limit="searchInfo.limit"
               @change="search"
               first-text="首页"
               prev-text="<"
@@ -103,7 +103,7 @@ export default {
     async search(item) {
       if (typeof item === 'object') {
         //条件查询
-        this.searchInfo = item;
+        this.searchInfo.name = item.condition2;
         this.currentPage = 1;
       } else {
         this.currentPage = item ? item : 1;

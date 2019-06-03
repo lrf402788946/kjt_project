@@ -44,7 +44,7 @@
               style="padding-left: 30%;padding-top: 3%"
               v-model="currentPage"
               :total-rows="totalRow"
-              :limit="limit"
+              :limit="searchInfo.limit"
               @change="search"
               first-text="首页"
               prev-text="<"
