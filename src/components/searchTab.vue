@@ -1,8 +1,8 @@
 <template lang="html">
   <div id="searchTab">
     <div class="sou">
-      <form class="sout">
-        <select name="type" v-model="selectSearch" v-if="type === 'GXYS'">
+      <div class="sout" style="text-align:center;">
+        <!-- <select name="type" v-model="selectSearch" v-if="type === 'GXYS'">
           <option v-for="(item, index) in GXYSlList" :key="index" :value="item.value">{{ item.text }}</option>
         </select>
         <select name="type" v-model="selectSearch" v-if="type === 'KYYS'">
@@ -13,12 +13,13 @@
         </select>
         <select name="type" v-model="selectSearch" v-if="type === 'JGTT'">
           <option v-for="(item, index) in JGTTList" :key="index" :value="item.value">{{ item.text }}</option>
-        </select>
-      </form>
-      <form class="soub">
-        <input type="text" name="name" style="width:355px;" placeholder="请输入名称" v-model="textSearch" />
+        </select> -->
+        <font style="display: inline-block;margin-top:20px;color:rgb(133, 126, 126);;">请在右侧输入关键词进行模糊查询</font>
+      </div>
+      <div class="soub">
+        <input type="text" name="name" style="width:355px;" @keyup.enter="toSearch()" placeholder="请输入名称" v-model="textSearch" />
         <button type="button" style="margin-top: 10px;" @click="toSearch()"><img :src="img.search" /><span>搜索</span></button>
-      </form>
+      </div>
     </div>
   </div>
 </template>
@@ -65,7 +66,7 @@ export default {
   computed: {},
   methods: {
     toSearch() {
-      this.$emit('toSearch', { select: this.selectSearch, textSearch: this.textSearch });
+      this.$emit('toSearch', { condition1: this.selectSearch, condition2: this.textSearch });
     },
   },
 };

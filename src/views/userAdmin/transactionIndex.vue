@@ -65,7 +65,7 @@
                   </div>
                   <p v-if="!(dataList.length > 0)" style="text-align: center; height: 600px; margin: 33px 0 0 0;">无相关数据</p>
                 </div>
-                
+
                 <el-pagination
                   style="width:350px;"
                   background
@@ -74,7 +74,8 @@
                   :page-size="limit"
                   :pager-count="5"
                   layout="total,prev,pager,next"
-                  :total="totalRow" >
+                  :total="totalRow"
+                >
                 </el-pagination>
               </div>
             </div>
@@ -101,7 +102,7 @@ export default {
     return {
       dataList: {},
       currentPage: 1,
-      totalRow: 20,
+      totalRow: 0,
       skip: 0,
       limit: 3,
       noimg: require('@a/img/personal.png'),

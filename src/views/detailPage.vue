@@ -41,7 +41,7 @@
           <detailTitle :code="code"></detailTitle>
           <productDetail :info="info"></productDetail>
           <property :title="`产权证书`" :img="info.zscq && info.file_path === null ? img.default : info.zscq"></property>
-          <params v-if="info.totaltype && (info.totaltype !== 2 || info.totaltype !== '2')" :list="paramsList"></params>
+          <params v-if="info.totaltype && (info.totaltype !== 2 && info.totaltype !== '2')" :list="paramsList"></params>
           <tradeType :tradeType="info.jyfs"></tradeType>
           <tradeBtn :info="info" @toBuy="toBuy"></tradeBtn>
         </div>
@@ -77,17 +77,11 @@ export default {
     headers,
     footers,
     detailTitle,
-    // eslint-disable-next-line vue/no-unused-components
     productDetail,
-    // eslint-disable-next-line vue/no-unused-components
     property,
-    // eslint-disable-next-line vue/no-unused-components
     params,
-    // eslint-disable-next-line vue/no-unused-components
     tradeType,
-    // eslint-disable-next-line vue/no-unused-components
     tradeBtn,
-    // eslint-disable-next-line vue/no-unused-components
     infoDetail,
   },
   data() {
@@ -118,13 +112,13 @@ export default {
         this.$set(this, `info`, returnData);
       } else {
         let { returnDataList, returnData } = await this.getProductDetail({ id: this.infoId });
-        this.$set(this, `info`, returnData);
+        let { data } = this.$objectListImg(returnData, this.$domain, true);
+        this.$set(this, `info`, data);
         this.$set(this, `paramsList`, returnDataList);
       }
     },
     changeTradeType(type) {
       this.tradeType = type;
-      console.log(this.tradeType);
     },
     async toBuy({ id, description }) {
       console.log('in function:');

@@ -1,41 +1,22 @@
 <template lang="html">
-  <div id="yffwListPage">
+  <div id="tradeMoreList">
     <div class="wrapper">
       <headers></headers>
       <div class="main">
         <menus></menus>
         <div class="list">
-          <searchTab @toSearch="search" :type="searchInfo.code"></searchTab>
           <div style="background:#fff;padding-bottom: 5%;">
             <div class="listtitle">
-              <h2>研发服务</h2>
+              <h2>交易展示</h2>
             </div>
             <div>
-              <div class="cps">
-                <div
-                  class="cp"
-                  v-for="(item, index) in list"
-                  :key="index"
-                  @click="$router.push({ path: '/detailPage', query: { id: item.id, code: searchInfo.code, type: `product` } })"
-                >
-                  <img :src="item.image1" />
-                  <div class="wordInfo">
-                    <span
-                      style="height: 25px; line-height: 35px; width:200px; padding:0 10px 0 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
-                      >{{ item.name }}</span
-                    >
-                    <div
-                      style="height:20px; color:#63636d; line-height:20px; width:80px; text-align:right; float:right; padding-right:6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
-                    >
-                      {{ item.product_type }}
-                    </div>
-                    <div
-                      style="height:20px; color:red; line-height:20px; width:120px;float:left; padding-left:6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
-                    >
-                      ￥{{ item.price }}元/{{ item.priceunit }}
-                    </div>
-                  </div>
-                </div>
+              <div>
+                <el-table :data="list" stripe style="width: 100%" border>
+                  <el-table-column prop="market_name" label="营销单位" width="340"> </el-table-column>
+                  <el-table-column prop="gm_name" label="采购单位" width="225"> </el-table-column>
+                  <el-table-column prop="product_name" label="产品交易" width="200"> </el-table-column>
+                  <el-table-column prop="create_date" label="交易状态" width="180"> </el-table-column>
+                </el-table>
               </div>
             </div>
             <p v-if="!(list.length > 0)" style="text-align: center; height: 600px; margin: 33px 0 0 0;">无相关数据</p>
@@ -44,7 +25,7 @@
               style="padding-left: 30%;padding-top: 3%"
               v-model="currentPage"
               :total-rows="totalRow"
-              :limit="searchInfo.limit"
+              :limit="limit"
               @change="search"
               first-text="首页"
               prev-text="<"
@@ -64,18 +45,16 @@
 import headers from '@/components/headers.vue';
 import menus from '@/components/menus.vue';
 import footers from '@/components/footers.vue';
-import searchTab from '@/components/searchTab.vue';
 import { mapActions, mapState } from 'vuex';
 export default {
-  name: 'yffwListPage',
+  name: 'tradeMoreList',
   metaInfo: {
-    title: '科技超时-研发服务',
+    title: '科技超时-更多服务',
   },
   components: {
     menus,
     headers,
     footers,
-    searchTab,
   },
   data() {
     return {
@@ -86,12 +65,11 @@ export default {
       list: [],
       currentPage: 1,
       totalRow: 20,
-      searchInfo: {
-        skip: 0,
-        limit: 10,
-        code: this.$route.query.code || '',
-        name: '',
-      },
+      skip: 0,
+      limit: 16,
+      code: this.$route.query.code || '',
+      searchType: '',
+      searchInfo: { select: '', text: '' },
     };
   },
   computed: {},
@@ -99,17 +77,17 @@ export default {
     await this.search();
   },
   methods: {
-    ...mapActions(['getProductList']),
+    ...mapActions(['getTransactionList']),
     async search(item) {
       if (typeof item === 'object') {
         //条件查询
-        this.searchInfo.name = item.condition2;
+        this.searchInfo = item;
         this.currentPage = 1;
       } else {
         this.currentPage = item ? item : 1;
       }
-      let skip = (this.currentPage - 1) * this.searchInfo.limit;
-      let { returnDataList, totalRow } = await this.getProductList(this.searchInfo);
+      let skip = (this.currentPage - 1) * this.limit;
+      let { returnDataList, totalRow } = await this.getTransactionList({ skip: 0, limit: this.limit });
       this.$set(this, `list`, returnDataList);
       this.$set(this, `totalRow`, totalRow);
     },

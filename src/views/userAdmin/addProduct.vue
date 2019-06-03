@@ -21,9 +21,9 @@
                       <el-col :span="8">总分类</el-col>
                       <el-col :span="16">
                         <el-select v-model="input.totaltype" placeholder="请选择分类">
-                          <el-option :label="`产品`" :value="`0`"></el-option>
-                          <el-option :label="`技术`" :value="`1`"></el-option>
-                          <el-option :label="`服务`" :value="`2`"></el-option>
+                          <el-option :label="`产品`" :value="0"></el-option>
+                          <el-option :label="`技术`" :value="1"></el-option>
+                          <el-option :label="`服务`" :value="2"></el-option>
                         </el-select>
                       </el-col>
                     </el-form-item>
@@ -104,8 +104,8 @@
                     <el-form-item>
                       <el-col :span="8">供需类型</el-col>
                       <el-col :span="16">
-                        <el-radio v-model="input.gxtype" border label="0">需求</el-radio>
-                        <el-radio v-model="input.gxtype" border label="1">供给</el-radio>
+                        <el-radio v-model="input.gxtype" border :label="0">需求</el-radio>
+                        <el-radio v-model="input.gxtype" border :label="1">供给</el-radio>
                       </el-col>
                     </el-form-item>
                   </el-row>
@@ -144,7 +144,7 @@
               </el-col>
               <el-col :span="12">
                 <el-form :model="input">
-                  <div v-if="input.totaltype === '0'">
+                  <div v-if="input.totaltype === 0">
                     <el-row class="param_list">
                       <el-col :span="10">参数名称</el-col>
                       <el-col :span="12">参数内容</el-col>
@@ -162,7 +162,7 @@
                     </el-row>
                   </div>
 
-                  <div v-if="input.totaltype === '1'">
+                  <div v-if="input.totaltype === 1">
                     <el-row>
                       <el-form-item>
                         <el-col :span="8">应用方向</el-col>
@@ -204,7 +204,7 @@
                     </el-row>
                   </div>
 
-                  <div v-if="input.totaltype === '2'">
+                  <div v-if="input.totaltype === 2">
                     <el-row>
                       <el-form-item>
                         <el-col :span="8">应用领域</el-col>
@@ -313,9 +313,9 @@
             </el-row>
             <el-row>
               <el-col :span="6"></el-col>
-              <el-col :span="4"><el-button type="primary" @click="submit()">提&nbsp;&nbsp;&nbsp;&nbsp;交</el-button></el-col>
+              <el-col :span="4"><el-button v-if="!stateInfo" type="primary" @click="submit()">提&nbsp;&nbsp;&nbsp;&nbsp;交</el-button></el-col>
               <el-col :span="5"></el-col>
-              <el-col :span="4"><el-button type="info" @click="reset()">重&nbsp;&nbsp;&nbsp;&nbsp;置</el-button></el-col>
+              <el-col :span="4"><el-button v-if="!stateInfo" type="info" @click="reset()">重&nbsp;&nbsp;&nbsp;&nbsp;置</el-button></el-col>
             </el-row>
           </div>
         </div>
@@ -355,6 +355,13 @@ export default {
     };
   },
   async created() {
+    if (this.idInfo !== '') {
+      let { returnData, returnDataList } = await this.productOperation({ data: { id: this.idInfo }, type: 'info' });
+      let { data, img } = this.$objectListImg(returnData, this.$domain);
+      this.$set(this, `input`, data);
+      this.$set(this, `imgs`, img);
+      this.$set(this, `subForm`, returnDataList);
+    }
     let { returnDataList } = await this.productTypeList();
     this.$set(this, `productTypeSelectList`, returnDataList);
   },
@@ -383,10 +390,15 @@ export default {
     },
     async submit() {
       let newData = JSON.parse(JSON.stringify(this.input));
-      if (this.input.totaltype !== '2') {
-        newData.subForm = this.subForm;
+      if (this.stateInfo) {
+        await this.productOperation({ data: newData, type: 'productSave' });
+        if (this.input.totaltype !== '2') {
+          newData.subForm = this.subForm;
+        }
+      } else {
+        await this.productOperation({ data: { newData: newData, subForm: this.subForm }, type: 'productEdit' });
       }
-      await this.productOperation({ data: newData, type: 'productSave' });
+      this.$router.push({ path: '/publishInfoIndex' });
     },
   },
 };

@@ -11,6 +11,7 @@
               <li class="tit1" @click="changeInfo(0)">审核中信息</li>
               <li class="tit2" @click="changeInfo(1)">已经审核信息</li>
               <li class="tit2" @click="changeInfo(2)">交易成功信息</li>
+              <li class="tit2" @click="changeInfo(3)">交易中信息</li>
               <li class="tit3"><router-link to="/addProduct">信息发布</router-link></li>
               <div style="float:left;">
                 <el-table :data="list" stripe style="width: 100%">
@@ -21,7 +22,7 @@
                   </el-table-column>
                   <el-table-column width="600">
                     <template slot-scope="scope">
-                      <el-row>
+                      <el-row style="text-align:center;">
                         <el-col :span="24">
                           {{ scope.row.name }}
                         </el-col>
@@ -51,7 +52,7 @@
                           交易方式:
                         </el-col>
                         <el-col :span="18">
-                          {{ scope.row.jyfs }}
+                          {{ scope.row.jyfs | jyfs }}
                         </el-col>
                         <el-col :span="6">
                           联系人:
@@ -78,29 +79,22 @@
                     <template slot-scope="scope">
                       <el-row>
                         <el-col :span="24">
-                          <el-button
-                            v-if="searchForm.state === '0'"
-                            type="primary"
-                            icon="el-icon-edit"
-                            @click="$router.push(`/addProduct?id=${scope.row.id}&state=${scope.row.state}`)"
-                            circle
-                          ></el-button>
+                          <el-button v-if="tabs === 0" type="primary" icon="el-icon-edit" @click="toDetail(scope.row)" circle></el-button>
                         </el-col>
                       </el-row>
                       <el-row>
                         <el-col :span="24">
-                          <el-button v-if="searchForm.state === '0'" type="danger" icon="el-icon-delete" circle @click="toDelete(scope.row.id)"></el-button>
+                          <!-- <el-button v-if="tabs === 0" type="danger" icon="el-icon-delete" circle @click="toDelete(scope.row.id)"></el-button> -->
                         </el-col>
                       </el-row>
                       <el-row>
                         <el-col :span="24">
-                          <el-button
-                            v-if="searchForm.state !== '0'"
-                            type="primary"
-                            icon="el-icon-document"
-                            circle
-                            @click="$router.push(`/addProduct?id=${scope.row.id}`)"
-                          ></el-button>
+                          <el-button v-if="tabs === 1 || tabs === 2" type="primary" icon="el-icon-document" circle @click="toDetail(scope.row)"></el-button>
+                        </el-col>
+                      </el-row>
+                      <el-row>
+                        <el-col :span="24">
+                          <el-button v-if="tabs === 3" type="primary" icon="el-icon-document" circle @click="toDetail(scope.row)"></el-button>
                         </el-col>
                       </el-row>
                     </template>
@@ -126,6 +120,80 @@
       <div style="clear:both;"></div>
       <footers></footers>
     </div>
+    <el-dialog title="交易信息" center :visible.sync="dialog" :close-on-click-modal="false">
+      <el-row style="text-align:center;font-size:16px;">
+        <el-col :span="6">产品名称:</el-col>
+        <el-col :span="18">{{ tradeInfo.name }}</el-col>
+        <el-col :span="6">信息号:</el-col>
+        <el-col :span="18">{{ tradeInfo.id }}</el-col>
+        <el-col :span="6">产品分类:</el-col>
+        <el-col :span="18">{{ tradeInfo.totaltype === 0 ? '产品' : tradeInfo.totaltype === 1 ? '技术' : '服务' }}</el-col>
+        <el-col :span="6">
+          产品类型:
+        </el-col>
+        <el-col :span="18">
+          {{ { data: productTypeSelectList, searchItem: `code`, value: tradeInfo.product_type, label: `name` } | getName }}
+        </el-col>
+        <el-col :span="6">
+          价格:
+        </el-col>
+        <el-col :span="18"> {{ tradeInfo.price ? tradeInfo.price : `0` }}元/{{ tradeInfo.priceunit }} </el-col>
+        <el-col :span="6">
+          交易方式:
+        </el-col>
+        <el-col :span="18">
+          {{ tradeInfo.jyfs | jyfs }}
+        </el-col>
+      </el-row>
+      <el-table :data="subForm" stripe style="width: 100%">
+        <el-table-column prop="gm_name" label="交易人" width="180"> </el-table-column>
+        <el-table-column prop="description" label="交易说明" width="180"> </el-table-column>
+        <el-table-column prop="create_date" label="交易时间" width="180"> </el-table-column>
+      </el-table>
+    </el-dialog>
+    <el-dialog title="交易审核" center :visible.sync="tradeDialog" :close-on-click-modal="false">
+      <el-row>
+        <el-col :span="6">交易申请人:</el-col>
+        <el-col :span="18">{{ tradeInfo.gm_name }}</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="6">交易申请说明:</el-col>
+        <el-col :span="18">{{ tradeInfo.description }}</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="6">商品名称:</el-col>
+        <el-col :span="18">{{ tradeInfo.name }}</el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="6">
+          价格:
+        </el-col>
+        <el-col :span="18"> {{ tradeInfo.price ? tradeInfo.price : `0` }}元/{{ tradeInfo.priceunit }} </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="6">交易结果:</el-col>
+        <el-col :span="18">
+          <el-radio v-model="allowedForm.status" label="2" border><font style="color: #36e236;font-weight: 600;">同意</font></el-radio>
+          <el-radio v-model="allowedForm.status" label="3" border><font style="color: rgb(244, 12, 12);font-weight: 600;">拒绝</font></el-radio>
+        </el-col>
+        <el-col :span="6">结果回复:</el-col>
+        <el-col :span="18">
+          <el-input type="textarea" placeholder="请填写回复" v-model="allowedForm.describe" :autosize="{ minRows: 5 }"></el-input>
+        </el-col>
+      </el-row>
+      <div slot="footer" class="dialog-footer">
+        <el-row>
+          <el-col :span="12">
+            <el-button type="primary" style="width: 200px;font-size: larger;" @click="toAllowed()">审&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;核</el-button>
+          </el-col>
+          <el-col :span="12">
+            <el-button type="info" style="width: 200px;font-size: larger;" @click="() => (tradeDialog = false)">
+              返&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;回
+            </el-button>
+          </el-col>
+        </el-row>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -149,15 +217,20 @@ export default {
         noimg: require('@a/img/nophoto.png'),
       },
       list: [],
+      tradeInfo: {},
+      subForm: [],
+      allowedForm: {},
       searchForm: {
         limit: '10',
-        gxtype: '1',
-        state: '2', //信息审核与否,前两个标签使用的
+        gxtype: '0',
+        state: 0, //信息审核与否,前两个标签使用的
       },
       currentPage: 1,
       totalRow: 0,
       tabs: 0,
       productTypeSelectList: [],
+      dialog: false,
+      tradeDialog: false,
     };
   },
   computed: {},
@@ -172,7 +245,7 @@ export default {
     //2)第三个标签页是查看交易信息的=>需要参数gxtype
     //参数变量说明:通过上面(detailTitle组件)选择需求和供给=>gxtype
     //通过'已审核信息'和'审核中信息'两个标签页,改变的是state
-    ...mapActions(['selfProductList', 'selfTradeList', 'productOperation', 'productTypeList']),
+    ...mapActions(['selfProductList', 'selfTradeSuccessList', 'productOperation', 'productTypeList', 'tradelist', 'tradeOperation']),
     async changeType(pos) {
       this.searchForm.gxtype = pos;
       await this.search();
@@ -191,18 +264,67 @@ export default {
     async search(item) {
       this.currentPage = item ? item : 1;
       this.searchForm.skip = `${(this.currentPage - 1) * this.searchForm.limit}`;
-      if (this.tabs !== 2) {
+      if (this.tabs === 0 || this.tabs === 1) {
         let { returnDataList } = await this.selfProductList(this.searchForm);
         this.$set(this, `list`, returnDataList ? (returnDataList = this.$listImg(returnDataList, this.$domain)) : []);
-      } else {
+      } else if (this.tabs === 2) {
         let newData = JSON.parse(JSON.stringify(this.searchForm));
         delete newData.state;
-        let { returnDataList } = await this.selfTradeList(newData);
+        let { returnDataList } = await this.selfTradeSuccessList(newData);
+        this.$set(this, `list`, returnDataList ? (returnDataList = this.$listImg(returnDataList, this.$domain)) : []);
+      } else if (this.tabs === 3) {
+        let newData = JSON.parse(JSON.stringify(this.searchForm));
+        delete newData.state;
+        let { returnDataList } = await this.tradelist(newData);
         this.$set(this, `list`, returnDataList ? (returnDataList = this.$listImg(returnDataList, this.$domain)) : []);
       }
     },
     async toDelete(id) {
       await this.productOperation({ data: id, type: 'delete' });
+      this.search();
+    },
+    async toDetail(item) {
+      if (this.tabs === 0) {
+        this.$router.push(`/addProduct?id=${item.id}&state=${item.state}`);
+      } else if (this.tabs === 1) {
+        this.$router.push({ path: '/productDetailIndex', query: { id: item.id } });
+      } else if (this.tabs === 2) {
+        this.dialog = true;
+        this.$set(this, `tradeInfo`, item);
+        let { returnDataList } = await this.tradeOperation({ data: { id: item.id }, type: 'productTradeList' });
+        this.$set(this, `subForm`, returnDataList);
+      } else if (this.tabs === 3) {
+        this.tradeDialog = true;
+        let { returnData, returnDataList } = await this.tradeOperation({ data: { id: item.id }, type: 'tradeInfo' });
+        this.$set(this, `tradeInfo`, returnData);
+        this.$set(this.allowedForm, `id`, `${returnData.id}`);
+      }
+    },
+    async toAllowed() {
+      await this.tradeOperation({ data: this.allowedForm, type: 'tradeReview' });
+      this.tradeDialog = false;
+      this.search();
+    },
+  },
+  filters: {
+    jyfs(data) {
+      let result = '';
+      switch (data) {
+        case '0':
+          result = '公用';
+          break;
+        case '1':
+          result = '转让';
+          break;
+        case '2':
+          result = '竞拍';
+          break;
+
+        default:
+          result = '公用';
+          break;
+      }
+      return result;
     },
   },
 };

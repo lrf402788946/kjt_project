@@ -4,6 +4,7 @@ import * as login from './login';
 import * as register from './register';
 import * as menuList from './menuList';
 import * as transaction from './transaction';
+import * as indexPage from './indexPage';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -12,5 +13,6 @@ export default new Vuex.Store({
     register: register,
     menuList: menuList,
     transaction: transaction,
+    indexPage: indexPage,
   },
 });

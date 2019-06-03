@@ -5,8 +5,7 @@
         交易方式
       </div>
       <div>
-        <!--@change="toChangeTradeType()"-->
-        <el-radio-group v-model="type">
+        <el-radio-group v-model="type" @change="changeDisabled()">
           <el-radio-button :label="0">转让</el-radio-button>
           <el-radio-button :label="1">公用</el-radio-button>
         </el-radio-group>
@@ -19,7 +18,7 @@
 export default {
   name: 'tradeType',
   props: {
-    tradeType: { default: '' },
+    tradeType: { default: 0 },
   },
   components: {},
   data() {
@@ -30,7 +29,7 @@ export default {
   watch: {
     tradeType: {
       handler(val) {
-        this.type = val;
+        this.type = val ? val : 0;
       },
     },
   },
@@ -38,6 +37,9 @@ export default {
   methods: {
     toChangeTradeType() {
       this.$emit('toChange', this.type);
+    },
+    changeDisabled() {
+      this.type = this.tradeType ? this.tradeType : 0;
     },
   },
 };

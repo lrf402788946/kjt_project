@@ -1,40 +1,28 @@
 <template lang="html">
-  <div id="kyysListPage">
+  <div id="searchPage">
     <div class="wrapper">
       <headers></headers>
       <div class="main">
         <menus></menus>
         <div class="list">
-          <searchTab @toSearch="search" :type="searchInfo.code"></searchTab>
+          <searchTab @toSearch="search" :type="''"></searchTab>
           <div style="background:#fff; min-height:1070px;padding-bottom: 5%;">
             <div class="listtitle">
-              <h2>科技企业</h2>
+              <h2>查询结果</h2>
             </div>
             <div class="wai">
-              <div
-                style="min-height:200px;"
-                v-for="(item, index) in list"
-                :key="index"
-                @click="$router.push({ path: '/detailPage', query: { id: item.id, code: searchInfo.code } })"
-              >
+              <div style="min-height:200px;" v-for="(item, index) in list" :key="index" @click="toDetail(item)">
                 <div class="qys">
                   <div class="qyright">
                     <div class="qytopOne">
                       <div class="qytop">{{ item.name }}</div>
-                      <div class="adrs">
-                        <i class="el-icon-s-promotion"></i>
-                        <span>定位</span>
-                      </div>
                     </div>
                     <div class="qycenter">
                       <div class="qycenOne">
-                        地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：<span>{{ item.addr }}</span>
+                        类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：<span>{{ item.codeName }}</span>
                       </div>
-                    </div>
-                    <div class="qycenter">
                       <div class="qycenOne">
-                        <div style=" float:left;">企业介绍：</div>
-                        <span class="jianjie">{{ item.introduction }}</span>
+                        时&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;间：<span>{{ item.create_time }}</span>
                       </div>
                     </div>
                   </div>
@@ -71,7 +59,7 @@ import footers from '@/components/footers.vue';
 import searchTab from '@/components/searchTab.vue';
 import { mapActions, mapState } from 'vuex';
 export default {
-  name: 'kyysListPage',
+  name: 'searchPage',
   metaInfo: {
     title: '科技超时-科技企业',
   },
@@ -93,8 +81,7 @@ export default {
       searchInfo: {
         skip: 0,
         limit: 10,
-        code: this.$route.query.code || '',
-        name: '',
+        keyword: this.$route.query.info || '',
       },
     };
   },
@@ -102,19 +89,34 @@ export default {
     await this.search();
   },
   methods: {
-    ...mapActions(['getMenuList']),
+    ...mapActions(['searchKeyWord']),
     async search(item) {
       if (typeof item === 'object') {
         //条件查询
-        this.searchInfo.name = item.condition2;
+        this.searchInfo.keyword = item.condition2;
         this.currentPage = 1;
       } else {
         this.currentPage = item ? item : 1;
       }
       let skip = (this.currentPage - 1) * this.searchInfo.limit;
-      let { returnDataList, totalRow } = await this.getMenuList(this.searchInfo);
+      let { returnDataList, totalRow } = await this.searchKeyWord(this.searchInfo);
       this.$set(this, `list`, returnDataList);
       this.$set(this, `totalRow`, totalRow);
+    },
+    toDetail(item) {
+      let type = this.is_product(item.code);
+      let query = { id: item.id, code: item.code };
+      if (type) {
+        query['type'] = type;
+      }
+      this.$router.push({ path: '/detailPage', query: query });
+    },
+    is_product(code) {
+      if (code === 'YFFW' || code === 'JSCG' || code === 'CXCP' || code === 'ZXFW') {
+        return `product`;
+      } else {
+        return false;
+      }
     },
   },
 };

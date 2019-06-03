@@ -9,7 +9,12 @@ Vue.use(Vuex);
 const api = {
   user: '/user/user_info',
   selfProductList: '/product/product_list', //gxtype=>0需;1供;state=>0待审核;2通过审核
-  selfTransactionList: '/product/transaction_list', //gxtype,
+  selfTransactionSuccessList: '/product/transaction_list', //gxtype,
+  tradeList: '/product/transaction_sq_list', //gxtype,token,skip,limit
+  tradeInfo: '/product/transaction_info', //id
+  tradeAllowed: '/product/transaction_review', //id,state,describe
+  productTradeList: '/product/transaction_ok_list', //id
+  tradeReview: '/product/transaction_review',
   productTypeList: '/product/product_type',
   productSave: '/product/product_save',
   productEdit: '/product/product_edit',
@@ -42,8 +47,9 @@ const toRequest = async (uri, data = undefined, axios) => {
       Message.error(msg);
       return { result: false };
     } else {
-      console.log(data !== null);
-      data !== undefined && data !== null ? Message.success(msg) : '';
+      if (!uri.includes('save') && !uri.includes('edit') && uri.includes('delete')) {
+        Message.success(msg);
+      }
       if (!(Object.keys(returnData).length > 0) && !(returnDataList.length > 0)) console.warn(`${uri}--无数据`);
       return { result: result, returnData: returnData, returnDataList: returnDataList, totalRow: totalRow };
     }
@@ -81,18 +87,37 @@ export const actions = {
    * 查询产品相关
    */
   async selfProductList({ commit }, data) {
-    let { result, returnData, returnDataList } = await toRequest(api.selfProductList, { data: data }, this.$axios);
+    let { result, returnData, returnDataList = [] } = await toRequest(api.selfProductList, { data: data }, this.$axios);
     return { returnDataList };
   },
-  async selfTradeList({ commit }, data) {
-    let { result, returnData, returnDataList } = await toRequest(api.selfTransactionList, { data: data }, this.$axios);
+  /**
+   * 交易中列表
+   */
+  async tradelist({ commit }, data) {
+    let { result, returnData, returnDataList = [] } = await toRequest(api.tradeList, { data: data }, this.$axios);
+    return { returnDataList };
+  },
+  /**
+   * 交易操作
+   * @param {*} data
+   * @param {*} type
+   */
+  async tradeOperation({ commit }, { data, type }) {
+    let { result, returnData, returnDataList = [] } = await toRequest(_.get(api, type), { data: data }, this.$axios);
+    return { returnData, returnDataList };
+  },
+  /**
+   * 交易成功列表
+   */
+  async selfTradeSuccessList({ commit }, data) {
+    let { result, returnData, returnDataList = [] } = await toRequest(api.selfTransactionSuccessList, { data: data }, this.$axios);
     return { returnDataList };
   },
   /**
    * 查询产品类型列表
    */
   async productTypeList({ commit }) {
-    let { result, returnData, returnDataList } = await toRequest(api.productTypeList, null, this.$axios);
+    let { result, returnData, returnDataList = [] } = await toRequest(api.productTypeList, null, this.$axios);
     return { returnDataList };
   },
   /**
@@ -103,6 +128,12 @@ export const actions = {
   async productOperation({ commit }, { data, type }) {
     if (type === `delete`) {
       await toRequest(api.productDelete, { data: data }, this.$axios);
+    } else if (type === `info`) {
+      let { returnData, returnDataList = [] } = await toRequest(api.productDetailIndex, { data: data }, this.$axios);
+      return { returnData, returnDataList };
+    } else if (type === `productEdit`) {
+      let { newData, subForm } = data;
+      await toRequest(_.get(api, type), { data: newData, subForm: subForm }, this.$axios);
     } else {
       await toRequest(_.get(api, type), { data: data }, this.$axios);
     }
@@ -110,7 +141,7 @@ export const actions = {
 
   async transaction({ commit }, data) {
     if (data !== undefined) {
-      let { result, totalRow, returnDataList } = await toRequest(api.transactionMyList, { data: data }, this.$axios);
+      let { result, totalRow, returnDataList = [] } = await toRequest(api.transactionMyList, { data: data }, this.$axios);
       if (result) {
         return { returnDataList, totalRow };
       }
@@ -122,7 +153,7 @@ export const actions = {
    * @param id
    */
   async selProductDetail({ commit }, data) {
-    let { returnData, returnDataList } = await toRequest(api.productDetailIndex, { data: data }, this.$axios);
+    let { returnData, returnDataList = [] } = await toRequest(api.productDetailIndex, { data: data }, this.$axios);
     return { returnDataList, returnData };
   },
   /**

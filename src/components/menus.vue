@@ -3,7 +3,8 @@
     <div class="oneleft">
       <ul>
         <li>
-          <a href="#"><img :src="img.keji" style="vertical-align: middle;" /> 信息分类</a>
+          <router-link to="/"><img :src="img.keji" style="vertical-align: middle;" />信息分类</router-link>
+          <!-- <a href="#"><img :src="img.keji" style="vertical-align: middle;" /> 信息分类</a> -->
         </li>
         <li><router-link to="/schoolListPage?code=GXYS">高校院所</router-link></li>
         <li><router-link to="/kyysListPage?code=KYYS">科研院所</router-link></li>
@@ -13,7 +14,7 @@
         <li><router-link to="/jscgListPage?code=JSCG">技术成果</router-link></li>
         <li><router-link to="/productListPage?code=CXCP">创新产品</router-link></li>
         <li><router-link to="/zxfwListPage?code=ZXFW">咨询服务</router-link></li>
-        <li><a href="${contextPath}/Talent/toTech">创新人才</a></li>
+        <li><a href="#">创新人才</a></li>
       </ul>
       <slot></slot>
     </div>

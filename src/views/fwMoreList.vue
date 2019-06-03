@@ -1,22 +1,22 @@
 <template lang="html">
-  <div id="yffwListPage">
+  <div id="fwMoreList">
     <div class="wrapper">
       <headers></headers>
       <div class="main">
         <menus></menus>
         <div class="list">
-          <searchTab @toSearch="search" :type="searchInfo.code"></searchTab>
+          <searchTab @toSearch="search" :type="''"></searchTab>
           <div style="background:#fff;padding-bottom: 5%;">
             <div class="listtitle">
-              <h2>研发服务</h2>
+              <h2>更多服务</h2>
             </div>
             <div>
-              <div class="cps">
+              <div class="cps" v-if="list.length > 0">
                 <div
                   class="cp"
                   v-for="(item, index) in list"
                   :key="index"
-                  @click="$router.push({ path: '/detailPage', query: { id: item.id, code: searchInfo.code, type: `product` } })"
+                  @click="$router.push({ path: '/detailPage', query: { id: item.id, code: `ZXFW`, type: `product` } })"
                 >
                   <img :src="item.image1" />
                   <div class="wordInfo">
@@ -44,7 +44,7 @@
               style="padding-left: 30%;padding-top: 3%"
               v-model="currentPage"
               :total-rows="totalRow"
-              :limit="searchInfo.limit"
+              :limit="limit"
               @change="search"
               first-text="首页"
               prev-text="<"
@@ -67,9 +67,9 @@ import footers from '@/components/footers.vue';
 import searchTab from '@/components/searchTab.vue';
 import { mapActions, mapState } from 'vuex';
 export default {
-  name: 'yffwListPage',
+  name: 'fwMoreList',
   metaInfo: {
-    title: '科技超时-研发服务',
+    title: '科技超时-更多服务',
   },
   components: {
     menus,
@@ -89,8 +89,8 @@ export default {
       searchInfo: {
         skip: 0,
         limit: 10,
-        code: this.$route.query.code || '',
-        name: '',
+        name: this.$route.query.info || '',
+        totaltype: `2`,
       },
     };
   },

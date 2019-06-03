@@ -58,7 +58,7 @@ export default {
   components: {},
   data() {
     return {
-      dialog: true,
+      dialog: false,
       description: '',
     };
   },

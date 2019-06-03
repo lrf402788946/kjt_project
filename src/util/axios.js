@@ -13,9 +13,9 @@ axios.interceptors.request.use(
   config => {
     let url = config.url;
     let token = '';
-    if (config.method === `post` && sessionStorage.getItem('userInfo')) token = JSON.parse(sessionStorage.getItem('userInfo')).token;
+    if (config.method === `post` && sessionStorage.getItem('userInfo') !== null) token = JSON.parse(sessionStorage.getItem('userInfo')).token;
     if (!url.includes(`login`)) {
-      config.data ? (config.data.token = token) : '';
+      config.data && token !== '' ? (config.data.token = token) : '';
     }
     //过滤是否是管理员,管理员则不写login_id
     // if (!(userRoleList.filter(item => item.role_code === 'ROLE_ADMIN').length > 0)) url = isLoginFilter(url);
