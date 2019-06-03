@@ -85,14 +85,14 @@ export const actions = {
    * 查询产品相关
    */
   async selfProductList({ commit }, data) {
-    let { result, returnData, returnDataList } = await toRequest(api.selfProductList, { data: data }, this.$axios);
+    let { result, returnData, returnDataList = [] } = await toRequest(api.selfProductList, { data: data }, this.$axios);
     return { returnDataList };
   },
   /**
    * 交易中列表
    */
   async tradelist({ commit }, data) {
-    let { result, returnData, returnDataList } = await toRequest(api.tradeList, { data: data }, this.$axios);
+    let { result, returnData, returnDataList = [] } = await toRequest(api.tradeList, { data: data }, this.$axios);
     return { returnDataList };
   },
   /**
@@ -101,21 +101,21 @@ export const actions = {
    * @param {*} type
    */
   async tradeOperation({ commit }, { data, type }) {
-    let { result, returnData, returnDataList } = await toRequest(_.get(api, type), { data: data }, this.$axios);
+    let { result, returnData, returnDataList = [] } = await toRequest(_.get(api, type), { data: data }, this.$axios);
     return { returnData, returnDataList };
   },
   /**
    * 交易成功列表
    */
   async selfTradeSuccessList({ commit }, data) {
-    let { result, returnData, returnDataList } = await toRequest(api.selfTransactionSuccessList, { data: data }, this.$axios);
+    let { result, returnData, returnDataList = [] } = await toRequest(api.selfTransactionSuccessList, { data: data }, this.$axios);
     return { returnDataList };
   },
   /**
    * 查询产品类型列表
    */
   async productTypeList({ commit }) {
-    let { result, returnData, returnDataList } = await toRequest(api.productTypeList, null, this.$axios);
+    let { result, returnData, returnDataList = [] } = await toRequest(api.productTypeList, null, this.$axios);
     return { returnDataList };
   },
   /**
@@ -127,7 +127,7 @@ export const actions = {
     if (type === `delete`) {
       await toRequest(api.productDelete, { data: data }, this.$axios);
     } else if (type === `info`) {
-      let { returnData, returnDataList } = await toRequest(api.productDetailIndex, { data: data }, this.$axios);
+      let { returnData, returnDataList = [] } = await toRequest(api.productDetailIndex, { data: data }, this.$axios);
       return { returnData, returnDataList };
     } else if (type === `productEdit`) {
       let { newData, subForm } = data;
@@ -139,7 +139,7 @@ export const actions = {
 
   async transaction({ commit }, data) {
     if (data !== undefined) {
-      let { result, totalRow, returnDataList } = await toRequest(api.transactionMyList, { data: data }, this.$axios);
+      let { result, totalRow, returnDataList = [] } = await toRequest(api.transactionMyList, { data: data }, this.$axios);
       if (result) {
         return { returnDataList, totalRow };
       }
@@ -151,7 +151,7 @@ export const actions = {
    * @param id
    */
   async selProductDetail({ commit }, data) {
-    let { returnData, returnDataList } = await toRequest(api.productDetailIndex, { data: data }, this.$axios);
+    let { returnData, returnDataList = [] } = await toRequest(api.productDetailIndex, { data: data }, this.$axios);
     return { returnDataList, returnData };
   },
 };

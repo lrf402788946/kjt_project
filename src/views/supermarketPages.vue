@@ -3,26 +3,10 @@
     <div class="wrapper">
       <headers></headers>
       <div class="main">
-        <!-- wrapper contents head 开始 -->
         <div class="partone">
           <menus></menus>
           <div class="oneright" style="margin-top: 11px;">
-            <div class="sou">
-              <form class="sout" action="${contextPath}/Supermarket/search?type=ALL" method="post">
-                <input type="text" name="name" placeholder="输入产品关键字" />
-                <button class="searchBtn">
-                  <img :src="img.search" />
-                  <span>产品</span>
-                </button>
-              </form>
-              <form class="soub" action="${contextPath}/Supermarket/search?type=ZGX" method="post">
-                <input type="text" name="name" placeholder="输入供需关键字" />
-                <button class="searchBtn">
-                  <img :src="img.search" />
-                  <span>供求</span>
-                </button>
-              </form>
-            </div>
+            <searchTab @toSearch="search" :type="''"></searchTab>
             <div class="more">
               <div class="tabs">
                 <ul class="title" id="title">
@@ -192,6 +176,7 @@
 import headers from '@/components/headers.vue';
 import menus from '@/components/menus.vue';
 import footers from '@/components/footers.vue';
+import searchTab from '@/components/searchTab.vue';
 import { mapActions, mapState } from 'vuex';
 import _ from 'lodash';
 export default {
@@ -200,6 +185,7 @@ export default {
     menus,
     headers,
     footers,
+    searchTab,
   },
   data() {
     return {
@@ -261,6 +247,12 @@ export default {
       } else {
         this.$router.push({ path: '/login', query: { type: `0` } });
       }
+    },
+    /**
+     * 模糊查询
+     */
+    search(item) {
+      this.$router.push({ path: '/searchPage', query: { info: item.condition2 } });
     },
   },
 };

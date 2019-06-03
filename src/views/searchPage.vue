@@ -1,58 +1,50 @@
 <template lang="html">
-  <div id="kyysListPage">
+  <div id="searchPage">
     <div class="wrapper">
       <headers></headers>
       <div class="main">
         <menus></menus>
         <div class="list">
-          <searchTab @toSearch="search" :type="searchInfo.code"></searchTab>
-          <div style="background:#fff; height:60%;">
+          <searchTab @toSearch="search" :type="''"></searchTab>
+          <div style="background:#fff; min-height:1070px;padding-bottom: 5%;">
             <div class="listtitle">
-              <h2>科研院所</h2>
+              <h2>查询结果</h2>
             </div>
             <div class="wai">
-              <div>
-                <div class="qys" v-if="list.length > 0">
-                  <div
-                    class="qyleft"
-                    v-for="(item, index) in list"
-                    :key="index"
-                    @click="$router.push({ path: '/detailPage', query: { id: item.id, code: searchInfo.code } })"
-                  >
-                    <div class="qyleft1">
-                      <img :src="img.defalut_gif" />
-                    </div>
-                    <div class="qyleft2">
+              <div
+                style="min-height:200px;"
+                v-for="(item, index) in list"
+                :key="index"
+                @click="$router.push({ path: '/detailPage', query: { id: item.id, code: item.code } })"
+              >
+                <div class="qys">
+                  <div class="qyright">
+                    <div class="qytopOne">
                       <div class="qytop">{{ item.name }}</div>
-                      <div class="qybot">
-                        科研网址：<span>{{ item.homepage }}</span>
-                      </div>
-                      <div class="qybot">
-                        科研地址：<span>{{ item.addr }}</span>
-                      </div>
-                      <div class="qybot">
-                        科研方式:<span>{{ item.contact }}</span>
+                    </div>
+                    <div class="qycenter">
+                      <div class="qycenOne">
+                        类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：<span>{{ item.addr }}</span>
                       </div>
                     </div>
                   </div>
-                  <!-- </span> -->
                 </div>
+                <!-- 此处为判断 -->
               </div>
               <p v-if="!(list.length > 0)" style="text-align: center; height: 600px; margin: 33px 0 0 0;">无相关数据</p>
-              <!--差个分页-->
-              <b-pagination
-                v-if="list.length > 0"
-                style="padding-left: 30%;padding-top: 3%"
-                v-model="currentPage"
-                :total-rows="totalRow"
-                :limit="searchInfo.limit"
-                @change="search"
-                first-text="首页"
-                prev-text="<"
-                next-text=">"
-                last-text="末页"
-              ></b-pagination>
             </div>
+            <b-pagination
+              v-if="list.length > 0"
+              style="padding-left: 30%;padding-top: 3%"
+              v-model="currentPage"
+              :total-rows="totalRow"
+              :limit="searchInfo.limit"
+              @change="search"
+              first-text="首页"
+              prev-text="<"
+              next-text=">"
+              last-text="末页"
+            ></b-pagination>
           </div>
         </div>
       </div>
@@ -69,9 +61,9 @@ import footers from '@/components/footers.vue';
 import searchTab from '@/components/searchTab.vue';
 import { mapActions, mapState } from 'vuex';
 export default {
-  name: 'kyysListPage',
+  name: 'searchPage',
   metaInfo: {
-    title: '科技超时-科研院所',
+    title: '科技超时-科技企业',
   },
   components: {
     menus,
@@ -88,16 +80,13 @@ export default {
       list: [],
       currentPage: 1,
       totalRow: 0,
-      searchType: '',
       searchInfo: {
         skip: 0,
         limit: 10,
-        code: this.$route.query.code || '',
-        name: '',
+        name: this.$route.query.info || '',
       },
     };
   },
-  computed: {},
   async created() {
     await this.search();
   },
@@ -121,16 +110,17 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.main {
-    margin: 10px auto;
-    width: 1200px;
+.adrs{
+  text-align: right;
 }
-.page {
-    height: 28px;
-    margin-left: 380px;
-    margin-top: 30px !important;
-}
-.qys:nth-child(5) {
-    margin-bottom:0px !important;
+.qytop {
+    width: 80%;
+    height: 66px;
+    line-height: 66px;
+    font-size: 20px;
+    color: #215299;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 </style>

@@ -16,6 +16,8 @@ import addProduct from './views/userAdmin/addProduct.vue';
 import productDetailIndex from './views/userAdmin/productDetailIndex.vue';
 import fwMoreList from './views/fwMoreList.vue';
 import tradeMoreList from './views/tradeMoreList.vue';
+import searchPage from './views/searchPage.vue';
+
 Vue.use(Router);
 
 export default new Router({
@@ -114,6 +116,11 @@ export default new Router({
       path: '/tradeMoreList',
       name: 'tradeMoreList',
       component: tradeMoreList,
+    },
+    {
+      path: '/searchPage',
+      name: 'searchPage',
+      component: searchPage,
     },
   ],
 });

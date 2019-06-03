@@ -81,7 +81,7 @@ export const actions = {
    */
   async getTransactionList({ commit }, { skip, limit }) {
     let data = { skip: `${skip}`, limit: `${limit}` };
-    let { returnData, returnDataList, totalRow } = await toRequest(api.transactionList, { data: data }, this.$axios);
+    let { returnData, returnDataList = [], totalRow } = await toRequest(api.transactionList, { data: data }, this.$axios);
     return { returnDataList, totalRow };
   },
 };

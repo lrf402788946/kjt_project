@@ -105,7 +105,7 @@ export const actions = {
       return { result: true };
     } else if (payload !== undefined) {
       let { login_id, password } = payload;
-      let { result, returnData, returnDataList } = await toRequest(api.login, { data: { login_id: login_id, password: password } }, this.$axios);
+      let { result, returnData, returnDataList = [] } = await toRequest(api.login, { data: { login_id: login_id, password: password } }, this.$axios);
       if (result) {
         sessionStorage.setItem('userInfo', JSON.stringify(returnData));
         return { result: true };

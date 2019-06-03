@@ -5,7 +5,7 @@
       <div class="main">
         <menus></menus>
         <div class="list">
-          <searchTab @toSearch="search" :type="code"></searchTab>
+          <searchTab @toSearch="search" :type="searchInfo.code"></searchTab>
           <div style="background:#fff; height:60%;">
             <div class="listtitle">
               <h2>高校院所</h2>
@@ -17,7 +17,7 @@
                     class="qyleft"
                     v-for="(item, index) in list"
                     :key="index"
-                    @click="$router.push({ path: '/detailPage', query: { id: item.id, code: code } })"
+                    @click="$router.push({ path: '/detailPage', query: { id: item.id, code: searchInfo.code } })"
                   >
                     <div class="qyleft1">
                       <img :src="img.defalut_gif" />
@@ -44,7 +44,7 @@
                 style="padding-left: 30%;padding-top: 3%"
                 v-model="currentPage"
                 :total-rows="totalRow"
-                :limit="limit"
+                :limit="searchInfo.limit"
                 @change="search"
                 first-text="首页"
                 prev-text="<"
@@ -87,11 +87,12 @@ export default {
       list: [],
       currentPage: 1,
       totalRow: 0,
-      skip: 0,
-      limit: 10,
-      code: this.$route.query.code || '',
-      searchType: '',
-      searchInfo: { select: '', text: '' },
+      searchInfo: {
+        skip: 0,
+        limit: 10,
+        code: this.$route.query.code || '',
+        name: '',
+      },
     };
   },
   computed: {},
@@ -103,13 +104,13 @@ export default {
     async search(item) {
       if (typeof item === 'object') {
         //条件查询
-        this.searchInfo = item;
+        this.searchInfo.name = item.condition2;
         this.currentPage = 1;
       } else {
         this.currentPage = item ? item : 1;
       }
-      let skip = (this.currentPage - 1) * this.limit;
-      let { returnDataList, totalRow } = await this.getMenuList({ skip: skip, limit: this.limit, code: this.code });
+      let skip = (this.currentPage - 1) * this.searchInfo.limit;
+      let { returnDataList, totalRow } = await this.getMenuList(this.searchInfo);
       this.$set(this, `list`, returnDataList);
       this.$set(this, `totalRow`, totalRow);
     },

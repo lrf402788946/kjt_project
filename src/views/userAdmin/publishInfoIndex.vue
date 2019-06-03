@@ -84,7 +84,7 @@
                       </el-row>
                       <el-row>
                         <el-col :span="24">
-                          <el-button v-if="tabs === 0" type="danger" icon="el-icon-delete" circle @click="toDelete(scope.row.id)"></el-button>
+                          <!-- <el-button v-if="tabs === 0" type="danger" icon="el-icon-delete" circle @click="toDelete(scope.row.id)"></el-button> -->
                         </el-col>
                       </el-row>
                       <el-row>

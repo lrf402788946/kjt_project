@@ -5,6 +5,7 @@
       <div class="main">
         <menus></menus>
         <div class="list">
+          <searchTab @toSearch="search" :type="searchInfo.code"></searchTab>
           <div style="background:#fff;padding-bottom: 5%;">
             <div class="listtitle">
               <h2>技术成果</h2>
@@ -15,7 +16,7 @@
                   class="cp"
                   v-for="(item, index) in list"
                   :key="index"
-                  @click="$router.push({ path: '/detailPage', query: { id: item.id, code: code, type: `product` } })"
+                  @click="$router.push({ path: '/detailPage', query: { id: item.id, code: searchInfo.code, type: `product` } })"
                 >
                   <img :src="item.image1" />
                   <div class="wordInfo">
@@ -63,6 +64,7 @@
 import headers from '@/components/headers.vue';
 import menus from '@/components/menus.vue';
 import footers from '@/components/footers.vue';
+import searchTab from '@/components/searchTab.vue';
 import { mapActions, mapState } from 'vuex';
 export default {
   name: 'jscgListPage',
@@ -73,6 +75,7 @@ export default {
     menus,
     headers,
     footers,
+    searchTab,
   },
   data() {
     return {
@@ -83,11 +86,12 @@ export default {
       list: [],
       currentPage: 1,
       totalRow: 20,
-      skip: 0,
-      limit: 16,
-      code: this.$route.query.code || '',
-      searchType: '',
-      searchInfo: { select: '', text: '' },
+      searchInfo: {
+        skip: 0,
+        limit: 10,
+        code: this.$route.query.code || '',
+        name: '',
+      },
     };
   },
   computed: {},
@@ -104,8 +108,8 @@ export default {
       } else {
         this.currentPage = item ? item : 1;
       }
-      let skip = (this.currentPage - 1) * this.limit;
-      let { returnDataList, totalRow } = await this.getProductList({ skip: skip, limit: this.limit, code: this.code });
+      let skip = (this.currentPage - 1) * this.searchInfo.limit;
+      let { returnDataList, totalRow } = await this.getProductList(this.searchInfo);
       this.$set(this, `list`, returnDataList);
       this.$set(this, `totalRow`, totalRow);
     },
