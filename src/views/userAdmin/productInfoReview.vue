@@ -95,18 +95,18 @@
                 </el-table>
               </div>
             </ul>
-            <b-pagination
-              v-if="list.length > 0"
-              style="padding-left: 30%;padding-top: 3%;float:left;"
-              v-model="currentPage"
-              :total-rows="totalRow"
-              :limit="searchForm.limit"
-              @change="search"
-              first-text="首页"
-              prev-text="<"
-              next-text=">"
-              last-text="末页"
-            ></b-pagination>
+            
+            <el-pagination
+                  style="padding-left: 30%;padding-top: 3%;float:left;"
+                  background
+                  @current-change="search"
+                  :current-page.sync="currentPage"
+                  :page-size="searchForm.limit"
+                  :pager-count="5"
+                  layout="total,prev,pager,next"
+                  :total="totalRow"
+                >
+                </el-pagination>
           </div>
         </div>
       </div>
@@ -179,8 +179,9 @@ export default {
     async search(item) {
       this.currentPage = item ? item : 1;
       this.searchForm.skip = `${(this.currentPage - 1) * this.searchForm.limit}`;
-      let { returnDataList } = await this.selProductReviewList(this.searchForm);
+      let { returnDataList,totalRow} = await this.selProductReviewList(this.searchForm);
         this.$set(this, `list`, returnDataList ? (returnDataList = this.$listImg(returnDataList, this.$domain)) : []);
+        this.$set(this, 'totalRow', totalRow);
     },
     async toDelete(id) {
       this.deleteInput.id = id;
