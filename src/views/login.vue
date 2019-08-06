@@ -32,7 +32,7 @@
                     <input placeholder="用户名称" v-model="form.login_id" class="rt" />
                   </div>
                   <div class="name" style="width:500px;">
-                    <div class="nameTwo">用户名称</div>
+                    <div class="nameTwo">登录密码</div>
                     <input type="password" placeholder="登录密码" class="rt" v-model="form.password" />
                   </div>
                   <div style="position: absolute;">
