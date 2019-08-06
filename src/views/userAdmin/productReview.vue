@@ -224,7 +224,7 @@
                         <el-col :span="8">服务范围</el-col>
                         <el-col :span="16"><el-input v-model="input.fwfw"></el-input></el-col>
                       </el-form-item>
-                    </el-row> 
+                    </el-row>
                   </div>
                 </el-form>
               </el-col>
@@ -319,7 +319,7 @@
                 </el-upload>
               </el-col>
             </el-row>
-            
+
             <el-row>
               <el-col :span="6"></el-col>
               <el-col :span="4"><el-button type="primary" @click="submit()">通&nbsp;&nbsp;&nbsp;&nbsp;过</el-button></el-col>
@@ -369,7 +369,7 @@ export default {
     await this.searchDetail();
   },
   methods: {
-    ...mapActions(['productTypeList', 'productReview','selProductDetail']),
+    ...mapActions(['productTypeList', 'productReview', 'selProductDetail']),
     // 操作成功后处理
     async cardHandleAvatarSuccess(res, file, index) {
       if (index !== 0) {
@@ -381,10 +381,10 @@ export default {
       }
     },
     async searchDetail() {
-        let detailId = this.idInfo + '';
-        let { returnDataList, returnData } = await this.selProductDetail({ id: detailId });
-        this.$set(this, 'input', returnData);
-        this.$set(this, 'subForm', returnDataList);
+      let detailId = this.idInfo + '';
+      let { returnDataList, returnData } = await this.selProductDetail({ id: detailId });
+      this.$set(this, 'input', returnData);
+      this.$set(this, 'subForm', returnDataList);
     },
     fileUpload(res, file) {
       this.$set(this.input, `dzht`, `${res.msg}`);

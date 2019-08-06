@@ -1,5 +1,5 @@
 import Vue from 'vue';
 
-const domain = 'http://10.16.11.186:80';
+const domain = process.env.VUE_APP_AXIOS_BASE_URL;
 
 Vue.prototype.$domain = domain;

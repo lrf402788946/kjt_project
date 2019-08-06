@@ -70,6 +70,7 @@ export default {
   methods: {
     toSubmit() {
       this.$emit('toBuy', { id: this.info.id, description: this.description });
+      this.dialog = false;
     },
   },
 };

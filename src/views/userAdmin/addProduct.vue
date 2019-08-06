@@ -9,15 +9,15 @@
           <div class="insert">
             <el-row>
               <el-col :span="11">
-                <el-form :model="input">
+                <el-form :model="input" :rules="rules" ref="form">
                   <el-row>
-                    <el-form-item>
+                    <el-form-item prop="name">
                       <el-col :span="8">名称</el-col>
                       <el-col :span="16"><el-input v-model="input.name"></el-input> </el-col>
                     </el-form-item>
                   </el-row>
                   <el-row>
-                    <el-form-item>
+                    <el-form-item prop="totaltype">
                       <el-col :span="8">总分类</el-col>
                       <el-col :span="16">
                         <el-select v-model="input.totaltype" placeholder="请选择分类">
@@ -29,7 +29,7 @@
                     </el-form-item>
                   </el-row>
                   <el-row>
-                    <el-form-item>
+                    <el-form-item prop="product_type">
                       <el-col :span="8">类型</el-col>
                       <el-col :span="16">
                         <el-select v-model="input.product_type" placeholder="请选择类型">
@@ -39,7 +39,7 @@
                     </el-form-item>
                   </el-row>
                   <el-row>
-                    <el-form-item>
+                    <el-form-item prop="price">
                       <el-col :span="8">单价</el-col>
                       <el-col :span="14"><el-input v-model="input.price" type="number"></el-input></el-col>
                       <el-col :span="1"></el-col>
@@ -47,26 +47,26 @@
                     </el-form-item>
                   </el-row>
                   <el-row>
-                    <el-form-item>
+                    <el-form-item prop="priceunit">
                       <el-col :span="8">单位</el-col>
                       <el-col :span="16"><el-input v-model="input.priceunit"></el-input></el-col>
                     </el-form-item>
                   </el-row>
                   <el-row>
-                    <el-form-item>
+                    <el-form-item prop="contact_user">
                       <el-col :span="8">联系人</el-col>
                       <el-col :span="16"><el-input v-model="input.contact_user"></el-input></el-col>
                     </el-form-item>
                   </el-row>
                   <el-row>
-                    <el-form-item>
+                    <el-form-item prop="contact_tel">
                       <el-col :span="8">联系电话</el-col>
                       <el-col :span="16"><el-input v-model="input.contact_tel"></el-input></el-col>
                     </el-form-item>
                   </el-row>
 
                   <el-row>
-                    <el-form-item>
+                    <el-form-item prop="jyfs">
                       <el-col :span="8">交易方式</el-col>
                       <el-col :span="16">
                         <el-radio v-model="input.jyfs" label="公用"></el-radio>
@@ -77,7 +77,7 @@
                   </el-row>
 
                   <el-row>
-                    <el-form-item>
+                    <el-form-item prop="introduction">
                       <el-col :span="8">简介</el-col>
                       <el-col :span="16">
                         <el-input type="textarea" placeholder="请填写描述" v-model="input.introduction" :autosize="{ minRows: 5 }"></el-input>
@@ -101,7 +101,7 @@
                     </el-form-item>
                   </el-row>
                   <el-row>
-                    <el-form-item>
+                    <el-form-item prop="gxtype">
                       <el-col :span="8">供需类型</el-col>
                       <el-col :span="16">
                         <el-radio v-model="input.gxtype" border :label="0">需求</el-radio>
@@ -313,7 +313,7 @@
             </el-row>
             <el-row>
               <el-col :span="6"></el-col>
-              <el-col :span="4"><el-button v-if="!stateInfo" type="primary" @click="submit()">提&nbsp;&nbsp;&nbsp;&nbsp;交</el-button></el-col>
+              <el-col :span="4"><el-button v-if="!stateInfo" type="primary" @click="toSubmit()">提&nbsp;&nbsp;&nbsp;&nbsp;交</el-button></el-col>
               <el-col :span="5"></el-col>
               <el-col :span="4"><el-button v-if="!stateInfo" type="info" @click="reset()">重&nbsp;&nbsp;&nbsp;&nbsp;置</el-button></el-col>
             </el-row>
@@ -352,6 +352,17 @@ export default {
       subForm: [],
       idInfo: this.$route.query.id || '', //管理是新添还是查看/修改
       stateInfo: this.$route.query.stateInfo === 0, //管理是否允许编辑
+      rules: {
+        name: [{ required: true, message: '请输入名称', trigger: 'blur' }],
+        totaltype: [{ required: true, message: '请选择分类', trigger: 'change' }],
+        product_type: [{ required: true, message: '请选择类型', trigger: 'change' }],
+        price: [{ required: true, message: '请输入单价', trigger: 'blur' }],
+        priceunit: [{ required: true, message: '请输入单位', trigger: 'blur' }],
+        contact_user: [{ required: true, message: '请输入联系人', trigger: 'blur' }],
+        contact_tel: [{ required: true, message: '请输入联系电话', trigger: 'blur' }],
+        jyfs: [{ required: true, message: '请选择交易方式', trigger: 'change' }],
+        gxtype: [{ required: true, message: '请选择供需类型', trigger: 'change' }],
+      },
     };
   },
   async created() {
@@ -388,6 +399,16 @@ export default {
       this.subForm = [];
       this.imgs = {};
     },
+    toSubmit() {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.submit();
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
     async submit() {
       let newData = JSON.parse(JSON.stringify(this.input));
       if (this.stateInfo) {
@@ -404,14 +425,14 @@ export default {
 };
 </script>
 
-<style lang="css" scoped>
-.param_list{
+<style lang="less" scoped>
+.param_list {
   padding-left: 10px;
   padding-top: 10px;
   margin-left: 20px;
   margin-bottom: 0px !important;
 }
-i{
+i {
   line-height: 100px;
 }
 .el-row div {
@@ -422,14 +443,18 @@ i{
   margin-top: 50px;
   text-align: center;
 }
-.subBtn{
+.subBtn {
   width: -webkit-fill-available;
-  background: #409EFF;
+  background: #409eff;
   color: white;
 }
-.resetBtn{
+.resetBtn {
   width: -webkit-fill-available;
   color: white;
-  background:#909399;
+  background: #909399;
+}
+/deep/.el-form-item__error {
+  top: 2.5rem;
+  left: 3rem;
 }
 </style>

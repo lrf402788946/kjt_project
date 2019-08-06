@@ -4,13 +4,12 @@
       <headers></headers>
       <div class="main">
         <menus>
-          <div class="riginfo">
+          <!-- <div class="riginfo">
             <div class="simils" style="margin-top: 20px; margin-left:20px; width:200px;">
               <p><span></span>相似产品<span></span></p>
             </div>
             <div class="similpro">
               <dl class="dlR">
-                <!-- <%if(isSupplydemand!'' == 1){%> -->
                 <a v-if="i === 1" href="${contextPath}/Supermarket/toSupplydemandDetailsPage?id=${productxs.id!''}">
                   <dt><img :src="img.default" /></dt>
                   <dd>
@@ -34,7 +33,7 @@
               </dl>
               <p v-if="i === 3">没找到相似产品</p>
             </div>
-          </div>
+          </div> -->
         </menus>
         <div class="list" v-if="type === `product`">
           <!--产品详情-->
@@ -121,7 +120,6 @@ export default {
       this.tradeType = type;
     },
     async toBuy({ id, description }) {
-      console.log('in function:');
       await this.buyProduct({ id: id, description: description });
     },
   },

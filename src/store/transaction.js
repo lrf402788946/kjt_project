@@ -160,8 +160,8 @@ export const actions = {
    * 审核产品相关
    */
   async selProductReviewList({ commit }, data) {
-    let { result, returnData, returnDataList,totalRow} = await toRequest(api.selProductReviewList, { data: data }, this.$axios);
-    return { returnDataList,totalRow};
+    let { result, returnData, returnDataList, totalRow } = await toRequest(api.selProductReviewList, { data: data }, this.$axios);
+    return { returnDataList, totalRow };
   },
 
   /**

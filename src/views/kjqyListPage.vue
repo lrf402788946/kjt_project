@@ -22,8 +22,8 @@
                     <div class="qytopOne">
                       <div class="qytop">{{ item.name }}</div>
                       <div class="adrs">
-                        <i class="el-icon-s-promotion"></i>
-                        <span>定位</span>
+                        <!-- <i class="el-icon-s-promotion"></i>
+                        <span>定位</span> -->
                       </div>
                     </div>
                     <div class="qycenter">

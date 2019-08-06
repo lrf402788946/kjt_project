@@ -23,46 +23,70 @@
                         <el-col :span="24">
                           {{ scope.row.name }}
                         </el-col>
+                      </el-row>
+                      <el-row>
                         <el-col :span="6">
                           信息号:
                         </el-col>
-                        <el-col :span="18">
+                        <el-col :span="17">
                           {{ scope.row.id }}
                         </el-col>
+                      </el-row>
+                      <el-row>
                         <el-col :span="6">
                           产品分类:
                         </el-col>
-                        <el-col :span="18">
+                        <el-col :span="17">
                           {{ scope.row.totaltype === 0 ? '产品' : scope.row.totaltype === 1 ? '技术' : '服务' }}
                         </el-col>
+                      </el-row>
+                      <el-row>
+                        <el-col :span="6">
+                          产品分类:
+                        </el-col>
+                        <el-col :span="17">
+                          {{ scope.row.totaltype === 0 ? '产品' : scope.row.totaltype === 1 ? '技术' : '服务' }}
+                        </el-col>
+                      </el-row>
+                      <el-row>
                         <el-col :span="6">
                           产品类型:
                         </el-col>
-                        <el-col :span="18">
+                        <el-col :span="17">
                           {{ { data: productTypeSelectList, searchItem: `code`, value: scope.row.product_type, label: `name` } | getName }}
                         </el-col>
+                      </el-row>
+                      <el-row>
                         <el-col :span="6">
                           价格:
                         </el-col>
-                        <el-col :span="18"> {{ scope.row.price ? scope.row.price : `0` }}元/{{ scope.row.priceunit }} </el-col>
+                        <el-col :span="17"> {{ scope.row.price ? scope.row.price : `0` }}元/{{ scope.row.priceunit }} </el-col>
+                      </el-row>
+                      <el-row>
                         <el-col :span="6">
                           交易方式:
                         </el-col>
-                        <el-col :span="18">
+                        <el-col :span="17">
                           {{ scope.row.jyfs }}
                         </el-col>
+                      </el-row>
+                      <el-row>
                         <el-col :span="6">
                           联系人:
                         </el-col>
-                        <el-col :span="18">
+                        <el-col :span="17">
                           {{ scope.row.contact_user ? scope.row.contact_user : `&nbsp;` }}
                         </el-col>
+                      </el-row>
+                      <el-row>
                         <el-col :span="6">
                           联系电话:
                         </el-col>
                         <el-col :span="18">
                           {{ scope.row.contact_tel ? scope.row.contact_tel : `&nbsp;` }}
                         </el-col>
+                      </el-row>
+                      <el-row>
                         <el-col :span="6">
                           发布时间:
                         </el-col>
@@ -95,18 +119,18 @@
                 </el-table>
               </div>
             </ul>
-            
+
             <el-pagination
-                  style="padding-left: 30%;padding-top: 3%;float:left;"
-                  background
-                  @current-change="search"
-                  :current-page.sync="currentPage"
-                  :page-size="searchForm.limit"
-                  :pager-count="5"
-                  layout="total,prev,pager,next"
-                  :total="totalRow"
-                >
-                </el-pagination>
+              style="padding-left: 30%;padding-top: 3%;float:left;"
+              background
+              @current-change="search"
+              :current-page.sync="currentPage"
+              :page-size="searchForm.limit"
+              :pager-count="5"
+              layout="total,prev,pager,next"
+              :total="totalRow"
+            >
+            </el-pagination>
           </div>
         </div>
       </div>
@@ -138,8 +162,8 @@ export default {
       list: [],
       searchForm: {
         limit: '10',
-        gxtype: '1',
-        state: '2', //信息审核与否,前两个标签使用的
+        gxtype: '0',
+        state: '0', //信息审核与否,前两个标签使用的
       },
       currentPage: 1,
       totalRow: 0,
@@ -158,17 +182,15 @@ export default {
     //2)第三个标签页是查看交易信息的=>需要参数gxtype
     //参数变量说明:通过上面(detailTitle组件)选择需求和供给=>gxtype
     //通过'已审核信息'和'审核中信息'两个标签页,改变的是state
-    ...mapActions(['selProductReviewList','productOperation']),
+    ...mapActions(['selProductReviewList', 'productOperation']),
     async changeType(pos) {
-      console.log(pos);
-      console.log(222);
-      this.searchForm.gxtype = pos+'';
+      this.searchForm.gxtype = pos + '';
       await this.search();
     },
     async changeInfo(index) {
       this.tabs = index;
       if (index !== 2) {
-        index === 1 ? (this.searchForm.state = '2') : (this.searchForm.state = index+'');
+        index === 1 ? (this.searchForm.state = '2') : (this.searchForm.state = index + '');
       }
       let titleSpan = document.querySelectorAll('.tit > li');
       titleSpan.forEach((item, itemIndex) => {
@@ -179,9 +201,9 @@ export default {
     async search(item) {
       this.currentPage = item ? item : 1;
       this.searchForm.skip = `${(this.currentPage - 1) * this.searchForm.limit}`;
-      let { returnDataList,totalRow} = await this.selProductReviewList(this.searchForm);
-        this.$set(this, `list`, returnDataList ? (returnDataList = this.$listImg(returnDataList, this.$domain)) : []);
-        this.$set(this, 'totalRow', totalRow);
+      let { returnDataList, totalRow } = await this.selProductReviewList(this.searchForm);
+      this.$set(this, `list`, returnDataList ? (returnDataList = this.$listImg(returnDataList, this.$domain)) : []);
+      this.$set(this, 'totalRow', totalRow);
     },
     async toDelete(id) {
       this.deleteInput.id = id;
