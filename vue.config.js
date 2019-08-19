@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? '/kjt/' : './',
+  publicPath: process.env.NODE_ENV === 'production' ? '/kjcs/' : './',
   // pages: {
   //   index: 'src/pages/login/main.js',
   // },
@@ -22,7 +22,7 @@ module.exports = {
     //api地址前缀
     proxy: {
       '/kjcs': {
-        target: 'http://139.210.167.203:8080', //10.16.11.186:80  10.16.11.227:7001 /http://139.210.167.203:8080
+        target: 'http://10.16.11.186:80', //10.16.11.186:80  10.16.11.227:7001 /http://139.210.167.203:8080
         changeOrigin: true,
         ws: true,
         pathRewrite: {

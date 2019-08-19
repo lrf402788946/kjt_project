@@ -390,6 +390,7 @@ export default {
     },
     fileUpload(res, file) {
       this.$set(this.input, `dzht`, `${res.msg}`);
+      this.$set(this.imgs, `dzht`, `${process.env.VUE_APP_LOCATION}${res.msg}`);
     },
     cleanLine(index) {
       this.subForm.splice(index, 1);
@@ -411,13 +412,13 @@ export default {
     },
     async submit() {
       let newData = JSON.parse(JSON.stringify(this.input));
-      if (this.stateInfo) {
-        await this.productOperation({ data: newData, type: 'productSave' });
+      if (newData.id) {
+        await this.productOperation({ data: { newData: newData, subForm: this.subForm }, type: 'productEdit' });
+      } else {
+        await this.productOperation({ data: { newData: newData, subForm: this.subForm }, type: 'productSave' });
         if (this.input.totaltype !== '2') {
           newData.subForm = this.subForm;
         }
-      } else {
-        await this.productOperation({ data: { newData: newData, subForm: this.subForm }, type: 'productEdit' });
       }
       this.$router.push({ path: '/publishInfoIndex' });
     },

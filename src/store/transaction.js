@@ -28,7 +28,7 @@ const api = {
 /**
  * 是否输出结果
  */
-const result_is_log = true;
+const result_is_log = false;
 
 /**
  * 发送请求
@@ -135,7 +135,8 @@ export const actions = {
       let { newData, subForm } = data;
       await toRequest(_.get(api, type), { data: newData, subForm: subForm }, this.$axios);
     } else {
-      await toRequest(_.get(api, type), { data: data }, this.$axios);
+      let { newData, subForm } = data;
+      await toRequest(_.get(api, type), { data: newData, subForm: subForm }, this.$axios);
     }
   },
 
